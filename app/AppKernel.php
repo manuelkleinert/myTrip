@@ -27,6 +27,7 @@ class AppKernel extends Kernel
     {
         $collection->addBundles([
             new \AppBundle\AppBundle(),
+            new \MyTripBundle\MyTripBundle(),
             new \CoreShop\Bundle\SEOBundle\CoreShopSEOBundle(),
             new \Symfony\WebpackEncoreBundle\WebpackEncoreBundle(),
         ]);

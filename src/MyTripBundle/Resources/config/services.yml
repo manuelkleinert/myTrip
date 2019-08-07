@@ -1,0 +1,4 @@
+services:
+    # auto-register all controllers as services
+    MyTripBundle\Controller\:
+        resource: '../../Controller'
