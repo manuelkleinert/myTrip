@@ -1,4 +1,13 @@
+imports:
+    - { resource: 'services/*.yml' }
+
 services:
-    # auto-register all controllers as services
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
     MyTripBundle\Controller\:
         resource: '../../Controller'
+        public: true
+        tags: ['controller.service_arguments']

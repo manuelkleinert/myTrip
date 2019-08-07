@@ -3,5 +3,3 @@ my_trip:
     type:     annotation
     prefix:   /
 
-_pimcore:
-    resource: "@PimcoreCoreBundle/Resources/config/routing.yml"

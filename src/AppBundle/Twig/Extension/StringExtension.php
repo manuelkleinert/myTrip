@@ -1,17 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-/**
- * w-vision
- *
- * LICENSE
- *
- * For the full copyright and license information, please view the LICENSE.md
- * file that is distributed with this source code.
- *
- * @copyright  Copyright (c) 2019 w-vision AG (https://www.w-vision.ch)
- */
+declare(strict_types = 1);
 
 namespace AppBundle\Twig\Extension;
 
@@ -36,11 +25,11 @@ final class StringExtension extends AbstractExtension
     /**
      * Kebab-cases a string
      *
-     * @param string $string The string
-     * @param string $glue The string used to glue the words together (default is a hyphen)
-     * @param bool $lower Whether the string should be lower-cased (default is true)
-     * @param bool $removePunctuation Whether punctuation marks should be removed (default is true)
-     * @return string The kebab-cased string
+     * @param string $string
+     * @param string $glue
+     * @param bool $lower
+     * @param bool $removePunctuation
+     * @return string
      */
     public function kebabFilter(string $string, string $glue = '-', bool $lower = true, bool $removePunctuation = true): string
     {
