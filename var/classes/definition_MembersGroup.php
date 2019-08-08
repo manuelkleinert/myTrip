@@ -1,10 +1,11 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-08T16:36:47+02:00
+* Generated at: 2019-08-08T20:02:33+02:00
 * Inheritance: no
 * Variants: no
-* Changed by: system (0)
+* Changed by: admin (2)
+* IP: 172.18.0.1
 
 
 Fields Summary: 
@@ -14,13 +15,13 @@ Fields Summary:
 
 
 return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
-   'id' => 9,
+   'id' => '9',
    'name' => 'MembersGroup',
-   'description' => NULL,
-   'creationDate' => NULL,
-   'modificationDate' => 1565275007,
-   'userOwner' => NULL,
-   'userModification' => 0,
+   'description' => '',
+   'creationDate' => 0,
+   'modificationDate' => 1565287353,
+   'userOwner' => 0,
+   'userModification' => 2,
    'parentClass' => '\\MembersBundle\\Adapter\\Group\\AbstractGroup',
    'listingParentClass' => '',
    'useTraits' => '',
@@ -136,15 +137,16 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
      'locked' => false,
   )),
    'icon' => '/bundles/members/img/objectGroup.svg',
-   'previewUrl' => NULL,
-   'group' => NULL,
+   'previewUrl' => '',
+   'group' => '',
    'showAppLoggerTab' => false,
-   'linkGeneratorReference' => NULL,
+   'linkGeneratorReference' => '',
    'propertyVisibility' => 
   array (
     'grid' => 
     array (
       'id' => true,
+      'key' => false,
       'path' => true,
       'published' => true,
       'modificationDate' => true,
@@ -153,6 +155,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
     'search' => 
     array (
       'id' => true,
+      'key' => false,
       'path' => true,
       'published' => true,
       'modificationDate' => true,

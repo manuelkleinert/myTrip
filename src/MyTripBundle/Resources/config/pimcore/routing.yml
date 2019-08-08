@@ -1,5 +1,0 @@
-my_trip:
-    resource: "@MyTripBundle/Controller/"
-    type:     annotation
-    prefix:   /
-

@@ -13,7 +13,7 @@ export default {
   data: {
     apiKey: '',
     zoom: 12,
-    center: [0, 0],
+    center: [8.310473, 47.050052],
   },
 
   connected() {

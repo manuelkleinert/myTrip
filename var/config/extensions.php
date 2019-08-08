@@ -6,5 +6,8 @@ return [
         "CoreShop\\Bundle\\PimcoreBundle\\CoreShopPimcoreBundle" => TRUE,
         "EmailizrBundle\\EmailizrBundle" => TRUE,
         "MembersBundle\\MembersBundle" => TRUE
+    ],
+    "areabrick" => [
+
     ]
 ];

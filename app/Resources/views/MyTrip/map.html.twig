@@ -1,0 +1,42 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="map uk-width-1-1" uk-height-viewport data-uk-maps="apiKey:pk.eyJ1IjoibXBrODgiLCJhIjoiY2p6MWN4enhrMDFwbjN0cGlhcmY3a3hpZCJ9.dBwvFla9os7o4UITJdy5ig;"></div>
+
+    <button class="uk-icon-button uk-position-bottom-right uk-position-medium" type="button" data-uk-icon="plus">
+    </button>
+    <button class="uk-icon-button uk-position-top-left uk-position-medium"
+            type="button" data-uk-icon="menu" data-uk-toggle="target: #offcanvas-overlay">
+    </button>
+
+    <div id="offcanvas-overlay" data-uk-offcanvas="overlay: true">
+        <div class="uk-offcanvas-bar">
+            <button class="uk-offcanvas-close" type="button" data-uk-close></button>
+
+            <ul class="uk-nav-default uk-nav-parent-icon" data-uk-nav>
+                <li class="uk-active"><a href="#">Active</a></li>
+                <li class="uk-parent">
+                    <a href="#">Parent</a>
+                    <ul class="uk-nav-sub">
+                        <li><a href="#">Sub item</a></li>
+                        <li>
+                            <a href="#">Sub item</a>
+                            <ul>
+                                <li><a href="#">Sub item</a></li>
+                                <li><a href="#">Sub item</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="uk-parent">
+                    <a href="#">Parent</a>
+                    <ul class="uk-nav-sub">
+                        <li><a href="#">Sub item</a></li>
+                        <li><a href="#">Sub item</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+           </div>
+    </div>
+
+{% endblock %}

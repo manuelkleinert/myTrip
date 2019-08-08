@@ -1,7 +1,7 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-08T12:56:57+02:00
+* Generated at: 2019-08-08T20:01:11+02:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
@@ -25,7 +25,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'name' => 'Step',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1565261817,
+   'modificationDate' => 1565287271,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -149,7 +149,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -175,7 +175,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -230,7 +230,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
             array (
               0 => 
               array (
-                'classes' => 'transportable',
+                'classes' => 'Transportable',
               ),
             ),
              'pathFormatterClass' => '',
@@ -260,7 +260,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
               'type' => 'enum(\'document\',\'asset\',\'object\')',
             ),
              'phpdocType' => '\\Pimcore\\Model\\Document\\Page | \\Pimcore\\Model\\Document\\Snippet | \\Pimcore\\Model\\Document | \\Pimcore\\Model\\Asset | \\Pimcore\\Model\\DataObject\\AbstractObject',
-             'objectsAllowed' => false,
+             'objectsAllowed' => true,
              'assetsAllowed' => false,
              'assetTypes' => 
             array (
@@ -314,7 +314,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
             array (
               0 => 
               array (
-                'classes' => 'place',
+                'classes' => 'Place',
               ),
             ),
              'pathFormatterClass' => '',
