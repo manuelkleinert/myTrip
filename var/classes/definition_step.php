@@ -1,7 +1,7 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-07T23:11:38+02:00
+* Generated at: 2019-08-08T12:56:57+02:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
@@ -11,6 +11,8 @@
 Fields Summary: 
 - title [input]
 - dateTime [datetime]
+- temperature [numeric]
+- wetter [input]
 - text [wysiwyg]
 - transporation [manyToManyObjectRelation]
 - activity_event [manyToOneRelation]
@@ -20,10 +22,10 @@ Fields Summary:
 
 return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'id' => '4',
-   'name' => 'step',
+   'name' => 'Step',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1565212298,
+   'modificationDate' => 1565261817,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -94,7 +96,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => true,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -117,7 +119,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => true,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -127,6 +129,62 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleSearch' => false,
           )),
           2 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Numeric::__set_state(array(
+             'fieldtype' => 'numeric',
+             'width' => '',
+             'defaultValue' => NULL,
+             'queryColumnType' => 'double',
+             'columnType' => 'double',
+             'phpdocType' => 'float',
+             'integer' => false,
+             'unsigned' => false,
+             'minValue' => NULL,
+             'maxValue' => NULL,
+             'unique' => false,
+             'decimalSize' => NULL,
+             'decimalPrecision' => NULL,
+             'name' => 'temperature',
+             'title' => 'Temperature (C°)',
+             'tooltip' => '',
+             'mandatory' => false,
+             'noteditable' => false,
+             'index' => false,
+             'locked' => NULL,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          3 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Input::__set_state(array(
+             'fieldtype' => 'input',
+             'width' => NULL,
+             'queryColumnType' => 'varchar',
+             'columnType' => 'varchar',
+             'columnLength' => 190,
+             'phpdocType' => 'string',
+             'regex' => '',
+             'unique' => false,
+             'showCharCount' => false,
+             'name' => 'wetter',
+             'title' => 'Wetter',
+             'tooltip' => '',
+             'mandatory' => false,
+             'noteditable' => false,
+             'index' => false,
+             'locked' => NULL,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          4 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\Wysiwyg::__set_state(array(
              'fieldtype' => 'wysiwyg',
              'width' => '',
@@ -142,7 +200,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -151,7 +209,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          3 => 
+          5 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\ManyToManyObjectRelation::__set_state(array(
              'fieldtype' => 'manyToManyObjectRelation',
              'width' => '',
@@ -172,11 +230,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
             array (
               0 => 
               array (
-                'classes' => 'bicycle',
-              ),
-              1 => 
-              array (
-                'classes' => 'car',
+                'classes' => 'transportable',
               ),
             ),
              'pathFormatterClass' => '',
@@ -186,7 +240,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -194,7 +248,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          4 => 
+          6 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\ManyToOneRelation::__set_state(array(
              'fieldtype' => 'manyToOneRelation',
              'width' => '',
@@ -226,7 +280,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -234,7 +288,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          5 => 
+          7 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\ManyToOneRelation::__set_state(array(
              'fieldtype' => 'manyToOneRelation',
              'width' => '',
@@ -270,7 +324,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',

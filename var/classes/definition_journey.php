@@ -1,7 +1,7 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-07T22:31:19+02:00
+* Generated at: 2019-08-08T12:56:44+02:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
@@ -21,10 +21,10 @@ Fields Summary:
 
 return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'id' => '2',
-   'name' => 'journey',
+   'name' => 'Journey',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1565209879,
+   'modificationDate' => 1565261804,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -120,7 +120,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -145,7 +145,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',

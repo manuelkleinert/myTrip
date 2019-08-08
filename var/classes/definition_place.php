@@ -1,7 +1,7 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-07T21:56:41+02:00
+* Generated at: 2019-08-08T12:58:16+02:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
@@ -10,18 +10,20 @@
 
 Fields Summary: 
 - place [geopoint]
+- placeType [coreShopItemSelector]
+- placeAddress [textarea]
 - Title [input]
-- images [manyToManyObjectRelation]
 - text [wysiwyg]
+- images [advancedManyToManyRelation]
 */ 
 
 
 return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'id' => '3',
-   'name' => 'place',
+   'name' => 'Place',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1565207800,
+   'modificationDate' => 1565261896,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -99,7 +101,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -109,6 +111,69 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleSearch' => false,
           )),
           1 => 
+          CoreShop\Bundle\PimcoreBundle\CoreExtension\ItemSelector::__set_state(array(
+             'fieldtype' => 'coreShopItemSelector',
+             'folderName' => '/',
+             'className' => 'PlaceType',
+             'methodName' => 'getTitle',
+             'recursive' => false,
+             'sortBy' => 'byid',
+             'width' => '',
+             'height' => NULL,
+             'maxItems' => NULL,
+             'assetUploadPath' => NULL,
+             'queryColumnType' => 'text',
+             'phpdocType' => 'array',
+             'relationType' => true,
+             'objectsAllowed' => NULL,
+             'assetsAllowed' => NULL,
+             'assetTypes' => NULL,
+             'documentsAllowed' => NULL,
+             'documentTypes' => NULL,
+             'lazyLoading' => NULL,
+             'classes' => NULL,
+             'pathFormatterClass' => NULL,
+             'name' => 'placeType',
+             'title' => 'Type',
+             'tooltip' => '',
+             'mandatory' => false,
+             'noteditable' => false,
+             'index' => false,
+             'locked' => NULL,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          2 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Textarea::__set_state(array(
+             'fieldtype' => 'textarea',
+             'width' => '',
+             'height' => '',
+             'maxLength' => NULL,
+             'showCharCount' => false,
+             'excludeFromSearchIndex' => false,
+             'queryColumnType' => 'longtext',
+             'columnType' => 'longtext',
+             'phpdocType' => 'string',
+             'name' => 'placeAddress',
+             'title' => 'Address',
+             'tooltip' => '',
+             'mandatory' => false,
+             'noteditable' => false,
+             'index' => false,
+             'locked' => NULL,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          3 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\Input::__set_state(array(
              'fieldtype' => 'input',
              'width' => NULL,
@@ -125,7 +190,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -134,21 +199,70 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          2 => 
-          Pimcore\Model\DataObject\ClassDefinition\Data\ManyToManyObjectRelation::__set_state(array(
-             'fieldtype' => 'manyToManyObjectRelation',
+          4 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Wysiwyg::__set_state(array(
+             'fieldtype' => 'wysiwyg',
+             'width' => '',
+             'height' => '',
+             'queryColumnType' => 'longtext',
+             'columnType' => 'longtext',
+             'phpdocType' => 'string',
+             'toolbarConfig' => '',
+             'excludeFromSearchIndex' => false,
+             'name' => 'text',
+             'title' => 'Text',
+             'tooltip' => '',
+             'mandatory' => false,
+             'noteditable' => false,
+             'index' => false,
+             'locked' => false,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          5 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\AdvancedManyToManyRelation::__set_state(array(
+             'columns' => 
+            array (
+            ),
+             'columnKeys' => 
+            array (
+            ),
+             'fieldtype' => 'advancedManyToManyRelation',
+             'phpdocType' => '\\Pimcore\\Model\\DataObject\\Data\\ElementMetadata[]',
+             'optimizedAdminLoading' => false,
+             'enableBatchEdit' => false,
+             'allowMultipleAssignments' => false,
              'width' => '',
              'height' => '',
              'maxItems' => '',
+             'assetUploadPath' => '',
              'queryColumnType' => 'text',
-             'phpdocType' => 'array',
              'relationType' => true,
-             'visibleFields' => 
+             'objectsAllowed' => false,
+             'assetsAllowed' => true,
+             'assetTypes' => 
             array (
+              0 => 
+              array (
+                'assetTypes' => 'video',
+              ),
+              1 => 
+              array (
+                'assetTypes' => 'image',
+              ),
             ),
-             'optimizedAdminLoading' => false,
-             'visibleFieldDefinitions' => 
+             'documentsAllowed' => false,
+             'documentTypes' => 
             array (
+              0 => 
+              array (
+                'documentTypes' => '',
+              ),
             ),
              'lazyLoading' => true,
              'classes' => 
@@ -169,31 +283,6 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
-             'invisible' => false,
-             'visibleGridView' => false,
-             'visibleSearch' => false,
-          )),
-          3 => 
-          Pimcore\Model\DataObject\ClassDefinition\Data\Wysiwyg::__set_state(array(
-             'fieldtype' => 'wysiwyg',
-             'width' => '',
-             'height' => '',
-             'queryColumnType' => 'longtext',
-             'columnType' => 'longtext',
-             'phpdocType' => 'string',
-             'toolbarConfig' => '',
-             'excludeFromSearchIndex' => false,
-             'name' => 'text',
-             'title' => 'Text',
-             'tooltip' => '',
-             'mandatory' => false,
-             'noteditable' => false,
-             'index' => false,
-             'locked' => NULL,
-             'style' => '',
-             'permissions' => NULL,
-             'datatype' => 'data',
-             'relationType' => false,
              'invisible' => false,
              'visibleGridView' => false,
              'visibleSearch' => false,

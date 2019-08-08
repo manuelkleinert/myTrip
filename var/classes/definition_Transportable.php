@@ -1,7 +1,7 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-08T12:57:21+02:00
+* Generated at: 2019-08-08T13:01:52+02:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
@@ -9,21 +9,21 @@
 
 
 Fields Summary: 
-- gender [gender]
-- firstname [firstname]
-- lastname [lastname]
-- email [email]
-- newsletterActive [newsletterActive]
-- newsletterConfirmed [newsletterConfirmed]
+- title [input]
+- bookingnumber [input]
+- transportableType [coreShopItemSelector]
+- from [datetime]
+- to [datetime]
+- comment [wysiwyg]
 */ 
 
 
 return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
-   'id' => '1',
-   'name' => 'User',
+   'id' => '5',
+   'name' => 'Transportable',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1565261841,
+   'modificationDate' => 1565262112,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -78,37 +78,18 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
          'childs' => 
         array (
           0 => 
-          Pimcore\Model\DataObject\ClassDefinition\Data\Gender::__set_state(array(
-             'fieldtype' => 'gender',
-             'options' => 
-            array (
-              0 => 
-              array (
-                'key' => 'male',
-                'value' => 'male',
-              ),
-              1 => 
-              array (
-                'key' => 'female',
-                'value' => 'female',
-              ),
-              2 => 
-              array (
-                'key' => '',
-                'value' => 'unknown',
-              ),
-            ),
-             'width' => '',
-             'defaultValue' => NULL,
-             'optionsProviderClass' => NULL,
-             'optionsProviderData' => NULL,
+          Pimcore\Model\DataObject\ClassDefinition\Data\Input::__set_state(array(
+             'fieldtype' => 'input',
+             'width' => NULL,
              'queryColumnType' => 'varchar',
              'columnType' => 'varchar',
              'columnLength' => 190,
              'phpdocType' => 'string',
-             'dynamicOptions' => false,
-             'name' => 'gender',
-             'title' => 'Gender',
+             'regex' => '',
+             'unique' => false,
+             'showCharCount' => false,
+             'name' => 'title',
+             'title' => 'Title',
              'tooltip' => '',
              'mandatory' => true,
              'noteditable' => false,
@@ -123,8 +104,8 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleSearch' => false,
           )),
           1 => 
-          Pimcore\Model\DataObject\ClassDefinition\Data\Firstname::__set_state(array(
-             'fieldtype' => 'firstname',
+          Pimcore\Model\DataObject\ClassDefinition\Data\Input::__set_state(array(
+             'fieldtype' => 'input',
              'width' => NULL,
              'queryColumnType' => 'varchar',
              'columnType' => 'varchar',
@@ -132,11 +113,11 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'phpdocType' => 'string',
              'regex' => '',
              'unique' => false,
-             'showCharCount' => NULL,
-             'name' => 'firstname',
-             'title' => 'Firstname',
+             'showCharCount' => false,
+             'name' => 'bookingnumber',
+             'title' => 'Bookingnumber / Ticketnumber',
              'tooltip' => '',
-             'mandatory' => true,
+             'mandatory' => false,
              'noteditable' => false,
              'index' => false,
              'locked' => false,
@@ -149,46 +130,54 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleSearch' => false,
           )),
           2 => 
-          Pimcore\Model\DataObject\ClassDefinition\Data\Lastname::__set_state(array(
-             'fieldtype' => 'lastname',
-             'width' => NULL,
-             'queryColumnType' => 'varchar',
-             'columnType' => 'varchar',
-             'columnLength' => 190,
-             'phpdocType' => 'string',
-             'regex' => '',
-             'unique' => false,
-             'showCharCount' => NULL,
-             'name' => 'lastname',
-             'title' => 'Lastname',
+          CoreShop\Bundle\PimcoreBundle\CoreExtension\ItemSelector::__set_state(array(
+             'fieldtype' => 'coreShopItemSelector',
+             'folderName' => '/',
+             'className' => 'TransportableType',
+             'methodName' => 'getTitle',
+             'recursive' => false,
+             'sortBy' => 'byid',
+             'width' => '',
+             'height' => NULL,
+             'maxItems' => NULL,
+             'assetUploadPath' => NULL,
+             'queryColumnType' => 'text',
+             'phpdocType' => 'array',
+             'relationType' => true,
+             'objectsAllowed' => NULL,
+             'assetsAllowed' => NULL,
+             'assetTypes' => NULL,
+             'documentsAllowed' => NULL,
+             'documentTypes' => NULL,
+             'lazyLoading' => NULL,
+             'classes' => NULL,
+             'pathFormatterClass' => NULL,
+             'name' => 'transportableType',
+             'title' => 'Type',
              'tooltip' => '',
-             'mandatory' => true,
+             'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => false,
+             'locked' => NULL,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
-             'relationType' => false,
              'invisible' => false,
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
           3 => 
-          Pimcore\Model\DataObject\ClassDefinition\Data\Email::__set_state(array(
-             'fieldtype' => 'email',
-             'width' => NULL,
-             'queryColumnType' => 'varchar',
-             'columnType' => 'varchar',
-             'columnLength' => 190,
-             'phpdocType' => 'string',
-             'regex' => '',
-             'unique' => false,
-             'showCharCount' => NULL,
-             'name' => 'email',
-             'title' => 'Email',
+          Pimcore\Model\DataObject\ClassDefinition\Data\Datetime::__set_state(array(
+             'fieldtype' => 'datetime',
+             'queryColumnType' => 'bigint(20)',
+             'columnType' => 'bigint(20)',
+             'phpdocType' => '\\Carbon\\Carbon',
+             'defaultValue' => NULL,
+             'useCurrentDate' => false,
+             'name' => 'from',
+             'title' => 'From',
              'tooltip' => '',
-             'mandatory' => true,
+             'mandatory' => false,
              'noteditable' => false,
              'index' => false,
              'locked' => false,
@@ -201,14 +190,15 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleSearch' => false,
           )),
           4 => 
-          Pimcore\Model\DataObject\ClassDefinition\Data\NewsletterActive::__set_state(array(
-             'fieldtype' => 'newsletterActive',
+          Pimcore\Model\DataObject\ClassDefinition\Data\Datetime::__set_state(array(
+             'fieldtype' => 'datetime',
+             'queryColumnType' => 'bigint(20)',
+             'columnType' => 'bigint(20)',
+             'phpdocType' => '\\Carbon\\Carbon',
              'defaultValue' => NULL,
-             'queryColumnType' => 'tinyint(1)',
-             'columnType' => 'tinyint(1)',
-             'phpdocType' => 'boolean',
-             'name' => 'newsletterActive',
-             'title' => 'Newsletter Active',
+             'useCurrentDate' => false,
+             'name' => 'to',
+             'title' => 'To',
              'tooltip' => '',
              'mandatory' => false,
              'noteditable' => false,
@@ -223,17 +213,20 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleSearch' => false,
           )),
           5 => 
-          Pimcore\Model\DataObject\ClassDefinition\Data\NewsletterConfirmed::__set_state(array(
-             'fieldtype' => 'newsletterConfirmed',
-             'defaultValue' => NULL,
-             'queryColumnType' => 'tinyint(1)',
-             'columnType' => 'tinyint(1)',
-             'phpdocType' => 'boolean',
-             'name' => 'newsletterConfirmed',
-             'title' => 'Newsletter Confirmed',
+          Pimcore\Model\DataObject\ClassDefinition\Data\Wysiwyg::__set_state(array(
+             'fieldtype' => 'wysiwyg',
+             'width' => '',
+             'height' => '',
+             'queryColumnType' => 'longtext',
+             'columnType' => 'longtext',
+             'phpdocType' => 'string',
+             'toolbarConfig' => '',
+             'excludeFromSearchIndex' => false,
+             'name' => 'comment',
+             'title' => 'Comment',
              'tooltip' => '',
              'mandatory' => false,
-             'noteditable' => true,
+             'noteditable' => false,
              'index' => false,
              'locked' => false,
              'style' => '',
