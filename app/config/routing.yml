@@ -1,7 +1,10 @@
+_pimcore:
+    resource: "@PimcoreCoreBundle/Resources/config/routing.yml"
+
 my_trip:
     resource: "@MyTripBundle/Controller/"
     type:     annotation
     prefix:   /
 
-_pimcore:
-    resource: "@PimcoreCoreBundle/Resources/config/routing.yml"
+members_auth:
+    resource: '@MembersBundle/Resources/config/pimcore/routing/all.yml'

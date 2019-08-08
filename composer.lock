@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a7cbfda1cc217916edd6b81f214f1426",
+    "content-hash": "7011493a83c515af8effc3a5e05901f1",
     "packages": [
         {
             "name": "amnuts/opcache-gui",
@@ -142,7 +142,7 @@
                 {
                     "name": "Tobias Nyholm",
                     "email": "tobias.nyholm@gmail.com",
-                    "homepage": "https://github.com/Nyholm"
+                    "homepage": "https://github.com/nyholm"
                 },
                 {
                     "name": "Nicolas Grekas",
@@ -597,6 +597,63 @@
                 "pimcore"
             ],
             "time": "2019-06-24T11:35:31+00:00"
+        },
+        {
+            "name": "dachcom-digital/members",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dachcom-digital/pimcore-members.git",
+                "reference": "1973733654aafd2d493344e3468f03b9b6ec69e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dachcom-digital/pimcore-members/zipball/1973733654aafd2d493344e3468f03b9b6ec69e8",
+                "reference": "1973733654aafd2d493344e3468f03b9b6ec69e8",
+                "shasum": ""
+            },
+            "require": {
+                "pimcore/pimcore": "^6.0.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "~2.4.0",
+                "phpstan/phpstan": "^0.11.1",
+                "phpstan/phpstan-symfony": "^0.11.0",
+                "symplify/easy-coding-standard": "^5.4"
+            },
+            "type": "pimcore-bundle",
+            "extra": {
+                "pimcore": {
+                    "bundles": [
+                        "MembersBundle\\MembersBundle"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MembersBundle\\": "src/MembersBundle"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "DACHCOM.DIGITAL Stefan Hagspiel",
+                    "role": "Developer",
+                    "email": "shagspiel@dachcom.ch",
+                    "homepage": "http://www.dachcom.com/"
+                }
+            ],
+            "description": "Pimcore User, Object, Asset and Document Authentication",
+            "homepage": "https://github.com/dachcom-digital/pimcore-members",
+            "keywords": [
+                "Authentication",
+                "members",
+                "pimcore"
+            ],
+            "time": "2019-07-22T10:54:42+00:00"
         },
         {
             "name": "danielstjules/stringy",
@@ -2224,13 +2281,13 @@
             "authors": [
                 {
                     "name": "Neuman Vong",
-                    "role": "Developer",
-                    "email": "neuman+pear@twilio.com"
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
                 },
                 {
                     "name": "Anant Narayanan",
-                    "role": "Developer",
-                    "email": "anant@php.net"
+                    "email": "anant@php.net",
+                    "role": "Developer"
                 }
             ],
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
@@ -2350,16 +2407,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.107",
+            "version": "v0.108",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "0764564d5c3f4e140a3966d9996da758e15458a0"
+                "reference": "a10ef10fae0a51e49ad6a9a9fe61421ef7f20d8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/0764564d5c3f4e140a3966d9996da758e15458a0",
-                "reference": "0764564d5c3f4e140a3966d9996da758e15458a0",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/a10ef10fae0a51e49ad6a9a9fe61421ef7f20d8e",
+                "reference": "a10ef10fae0a51e49ad6a9a9fe61421ef7f20d8e",
                 "shasum": ""
             },
             "require": {
@@ -2383,7 +2440,7 @@
             "keywords": [
                 "google"
             ],
-            "time": "2019-08-05T00:22:58+00:00"
+            "time": "2019-08-07T21:23:23+00:00"
         },
         {
             "name": "google/auth",
@@ -2766,9 +2823,9 @@
             "authors": [
                 {
                     "name": "Ashot Khanamiryan",
-                    "role": "Developer",
                     "email": "a.khanamiryan@gmail.com",
-                    "homepage": "https://github.com/khanamiryan"
+                    "homepage": "https://github.com/khanamiryan",
+                    "role": "Developer"
                 }
             ],
             "description": "QR code decoder / reader",
@@ -2941,9 +2998,9 @@
             "authors": [
                 {
                     "name": "Joe Gillotti",
-                    "role": "Author",
                     "email": "joe@joegillotti.com",
-                    "homepage": "http://joegillotti.com"
+                    "homepage": "http://joegillotti.com",
+                    "role": "Author"
                 }
             ],
             "description": "App and library for easily parsing and displaying system information of the host, like network/torrents/cpu/memory/usb/pci/sound cards/filesystems/raid array/ipmi/etc.",
@@ -3993,28 +4050,28 @@
             "authors": [
                 {
                     "name": "Jim Wigginton",
-                    "role": "Lead Developer",
-                    "email": "terrafrost@php.net"
+                    "email": "terrafrost@php.net",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Patrick Monnerat",
-                    "role": "Developer",
-                    "email": "pm@datasphere.ch"
+                    "email": "pm@datasphere.ch",
+                    "role": "Developer"
                 },
                 {
                     "name": "Andreas Fischer",
-                    "role": "Developer",
-                    "email": "bantu@phpbb.com"
+                    "email": "bantu@phpbb.com",
+                    "role": "Developer"
                 },
                 {
                     "name": "Hans-Jürgen Petrich",
-                    "role": "Developer",
-                    "email": "petrich@tronic-media.com"
+                    "email": "petrich@tronic-media.com",
+                    "role": "Developer"
                 },
                 {
                     "name": "Graham Campbell",
-                    "role": "Developer",
-                    "email": "graham@alt-three.com"
+                    "email": "graham@alt-three.com",
+                    "role": "Developer"
                 }
             ],
             "description": "PHP Secure Communications Library - Pure-PHP implementations of RSA, AES, SSH2, SFTP, X.509 etc.",
@@ -4172,9 +4229,9 @@
             "authors": [
                 {
                     "name": "pimcore Team",
-                    "role": "Developer",
                     "email": "info@pimcore.com",
-                    "homepage": "http://www.pimcore.org/"
+                    "homepage": "http://www.pimcore.org/",
+                    "role": "Developer"
                 }
             ],
             "description": "Content & Product Management Framework (CMS/PIM/E-Commerce)",
@@ -4835,9 +4892,9 @@
             "authors": [
                 {
                     "name": "Evert Pot",
-                    "role": "Developer",
                     "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/"
+                    "homepage": "http://evertpot.com/",
+                    "role": "Developer"
                 }
             ],
             "description": "WebDAV Framework for PHP",
@@ -4890,9 +4947,9 @@
             "authors": [
                 {
                     "name": "Evert Pot",
-                    "role": "Developer",
                     "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/"
+                    "homepage": "http://evertpot.com/",
+                    "role": "Developer"
                 }
             ],
             "description": "sabre/event is a library for lightweight event-based programming",
@@ -4952,9 +5009,9 @@
             "authors": [
                 {
                     "name": "Evert Pot",
-                    "role": "Developer",
                     "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/"
+                    "homepage": "http://evertpot.com/",
+                    "role": "Developer"
                 }
             ],
             "description": "The sabre/http library provides utilities for dealing with http requests and responses. ",
@@ -5154,14 +5211,14 @@
             "authors": [
                 {
                     "name": "Evert Pot",
-                    "role": "Developer",
                     "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/"
+                    "homepage": "http://evertpot.com/",
+                    "role": "Developer"
                 },
                 {
                     "name": "Markus Staab",
-                    "role": "Developer",
-                    "email": "markus.staab@redaxo.de"
+                    "email": "markus.staab@redaxo.de",
+                    "role": "Developer"
                 }
             ],
             "description": "sabre/xml is an XML library that you may not hate.",
@@ -5176,16 +5233,16 @@
         },
         {
             "name": "scheb/two-factor-bundle",
-            "version": "v3.21.0",
+            "version": "v3.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scheb/two-factor-bundle.git",
-                "reference": "94cc6f2e0fd8a7b683246d95fcad9b15ca828fc6"
+                "reference": "94dfeaa7c613af7e24830822f378cc4023ce43ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scheb/two-factor-bundle/zipball/94cc6f2e0fd8a7b683246d95fcad9b15ca828fc6",
-                "reference": "94cc6f2e0fd8a7b683246d95fcad9b15ca828fc6",
+                "url": "https://api.github.com/repos/scheb/two-factor-bundle/zipball/94dfeaa7c613af7e24830822f378cc4023ce43ca",
+                "reference": "94dfeaa7c613af7e24830822f378cc4023ce43ca",
                 "shasum": ""
             },
             "require": {
@@ -5234,7 +5291,7 @@
                 "two-factor",
                 "two-step"
             ],
-            "time": "2019-07-12T16:11:05+00:00"
+            "time": "2019-08-07T18:26:29+00:00"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -6476,8 +6533,8 @@
             "authors": [
                 {
                     "name": "Tijs Verkoyen",
-                    "role": "Developer",
-                    "email": "css_to_inline_styles@verkoyen.eu"
+                    "email": "css_to_inline_styles@verkoyen.eu",
+                    "role": "Developer"
                 }
             ],
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
@@ -6584,19 +6641,19 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "role": "Lead Developer",
                     "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org"
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Armin Ronacher",
-                    "role": "Project Founder",
-                    "email": "armin.ronacher@active-4.com"
+                    "email": "armin.ronacher@active-4.com",
+                    "role": "Project Founder"
                 },
                 {
                     "name": "Twig Team",
-                    "role": "Contributors",
-                    "homepage": "https://twig.symfony.com/contributors"
+                    "homepage": "https://twig.symfony.com/contributors",
+                    "role": "Contributors"
                 }
             ],
             "description": "Twig, the flexible, fast, and secure template language for PHP",

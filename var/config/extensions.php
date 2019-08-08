@@ -4,6 +4,7 @@ return [
     "bundle" => [
         "WvisionBundle\\WvisionBundle" => TRUE,
         "CoreShop\\Bundle\\PimcoreBundle\\CoreShopPimcoreBundle" => TRUE,
-        "EmailizrBundle\\EmailizrBundle" => TRUE
+        "EmailizrBundle\\EmailizrBundle" => TRUE,
+        "MembersBundle\\MembersBundle" => TRUE
     ]
 ];

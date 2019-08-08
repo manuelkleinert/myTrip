@@ -1,32 +1,37 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-08T12:57:21+02:00
+* Generated at: 2019-08-08T16:38:32+02:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
-* IP: 172.18.0.1
+* IP: 192.168.144.1
 
 
 Fields Summary: 
+- userName [input]
 - gender [gender]
 - firstname [firstname]
 - lastname [lastname]
 - email [email]
 - newsletterActive [newsletterActive]
 - newsletterConfirmed [newsletterConfirmed]
+- password [password]
+- confirmationToken [input]
+- lastLogin [datetime]
+- passwordRequestedAt [datetime]
 */ 
 
 
 return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
-   'id' => '1',
-   'name' => 'User',
+   'id' => '8',
+   'name' => 'MembersUser',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1565261841,
-   'userOwner' => 2,
+   'modificationDate' => 1565275112,
+   'userOwner' => 0,
    'userModification' => 2,
-   'parentClass' => '',
+   'parentClass' => '\\MembersBundle\\Adapter\\User\\AbstractUser',
    'listingParentClass' => '',
    'useTraits' => '',
    'listingUseTraits' => '',
@@ -63,7 +68,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
          'labelWidth' => 100,
          'layout' => NULL,
          'border' => false,
-         'icon' => '',
+         'icon' => NULL,
          'name' => 'Layout',
          'type' => NULL,
          'region' => NULL,
@@ -78,6 +83,32 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
          'childs' => 
         array (
           0 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Input::__set_state(array(
+             'fieldtype' => 'input',
+             'width' => NULL,
+             'queryColumnType' => 'varchar',
+             'columnType' => 'varchar',
+             'columnLength' => 190,
+             'phpdocType' => 'string',
+             'regex' => '',
+             'unique' => false,
+             'showCharCount' => false,
+             'name' => 'userName',
+             'title' => 'User Name',
+             'tooltip' => '',
+             'mandatory' => false,
+             'noteditable' => false,
+             'index' => false,
+             'locked' => false,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          1 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\Gender::__set_state(array(
              'fieldtype' => 'gender',
              'options' => 
@@ -98,7 +129,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
                 'value' => 'unknown',
               ),
             ),
-             'width' => '',
+             'width' => NULL,
              'defaultValue' => NULL,
              'optionsProviderClass' => NULL,
              'optionsProviderData' => NULL,
@@ -110,10 +141,10 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'name' => 'gender',
              'title' => 'Gender',
              'tooltip' => '',
-             'mandatory' => true,
+             'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => false,
+             'locked' => NULL,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -122,7 +153,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          1 => 
+          2 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\Firstname::__set_state(array(
              'fieldtype' => 'firstname',
              'width' => NULL,
@@ -136,10 +167,10 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'name' => 'firstname',
              'title' => 'Firstname',
              'tooltip' => '',
-             'mandatory' => true,
+             'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => false,
+             'locked' => NULL,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -148,7 +179,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          2 => 
+          3 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\Lastname::__set_state(array(
              'fieldtype' => 'lastname',
              'width' => NULL,
@@ -162,10 +193,10 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'name' => 'lastname',
              'title' => 'Lastname',
              'tooltip' => '',
-             'mandatory' => true,
+             'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => false,
+             'locked' => NULL,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -174,7 +205,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          3 => 
+          4 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\Email::__set_state(array(
              'fieldtype' => 'email',
              'width' => NULL,
@@ -186,12 +217,12 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'unique' => false,
              'showCharCount' => NULL,
              'name' => 'email',
-             'title' => 'Email',
+             'title' => 'email',
              'tooltip' => '',
-             'mandatory' => true,
+             'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => false,
+             'locked' => NULL,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -200,7 +231,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          4 => 
+          5 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\NewsletterActive::__set_state(array(
              'fieldtype' => 'newsletterActive',
              'defaultValue' => NULL,
@@ -209,6 +240,53 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'phpdocType' => 'boolean',
              'name' => 'newsletterActive',
              'title' => 'Newsletter Active',
+             'tooltip' => '',
+             'mandatory' => false,
+             'noteditable' => false,
+             'index' => false,
+             'locked' => NULL,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          6 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\NewsletterConfirmed::__set_state(array(
+             'fieldtype' => 'newsletterConfirmed',
+             'defaultValue' => NULL,
+             'queryColumnType' => 'tinyint(1)',
+             'columnType' => 'tinyint(1)',
+             'phpdocType' => 'boolean',
+             'name' => 'newsletterConfirmed',
+             'title' => 'Newsletter Confirmed',
+             'tooltip' => '',
+             'mandatory' => false,
+             'noteditable' => true,
+             'index' => false,
+             'locked' => NULL,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          7 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Password::__set_state(array(
+             'fieldtype' => 'password',
+             'width' => '',
+             'queryColumnType' => 'varchar(190)',
+             'columnType' => 'varchar(190)',
+             'phpdocType' => 'string',
+             'algorithm' => 'password_hash',
+             'salt' => '',
+             'saltlocation' => 'back',
+             'name' => 'password',
+             'title' => 'password',
              'tooltip' => '',
              'mandatory' => false,
              'noteditable' => false,
@@ -222,15 +300,65 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          5 => 
-          Pimcore\Model\DataObject\ClassDefinition\Data\NewsletterConfirmed::__set_state(array(
-             'fieldtype' => 'newsletterConfirmed',
+          8 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Input::__set_state(array(
+             'fieldtype' => 'input',
+             'width' => NULL,
+             'queryColumnType' => 'varchar',
+             'columnType' => 'varchar',
+             'columnLength' => 190,
+             'phpdocType' => 'string',
+             'regex' => '',
+             'unique' => NULL,
+             'showCharCount' => NULL,
+             'name' => 'confirmationToken',
+             'title' => 'Confirmation Token',
+             'tooltip' => '',
+             'mandatory' => false,
+             'noteditable' => true,
+             'index' => false,
+             'locked' => false,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          9 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Datetime::__set_state(array(
+             'fieldtype' => 'datetime',
+             'queryColumnType' => 'bigint(20)',
+             'columnType' => 'bigint(20)',
+             'phpdocType' => '\\Carbon\\Carbon',
              'defaultValue' => NULL,
-             'queryColumnType' => 'tinyint(1)',
-             'columnType' => 'tinyint(1)',
-             'phpdocType' => 'boolean',
-             'name' => 'newsletterConfirmed',
-             'title' => 'Newsletter Confirmed',
+             'useCurrentDate' => false,
+             'name' => 'lastLogin',
+             'title' => 'Last Login',
+             'tooltip' => '',
+             'mandatory' => false,
+             'noteditable' => true,
+             'index' => false,
+             'locked' => false,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          10 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Datetime::__set_state(array(
+             'fieldtype' => 'datetime',
+             'queryColumnType' => 'bigint(20)',
+             'columnType' => 'bigint(20)',
+             'phpdocType' => '\\Carbon\\Carbon',
+             'defaultValue' => NULL,
+             'useCurrentDate' => false,
+             'name' => 'passwordRequestedAt',
+             'title' => 'Password Requested At',
              'tooltip' => '',
              'mandatory' => false,
              'noteditable' => true,
@@ -250,7 +378,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
     ),
      'locked' => false,
   )),
-   'icon' => '',
+   'icon' => '/bundles/members/img/objectUser.svg',
    'previewUrl' => '',
    'group' => '',
    'showAppLoggerTab' => false,

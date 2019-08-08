@@ -1,11 +1,11 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-08T12:56:44+02:00
+* Generated at: 2019-08-08T16:39:25+02:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
-* IP: 172.18.0.1
+* IP: 192.168.144.1
 
 
 Fields Summary: 
@@ -16,6 +16,7 @@ Fields Summary:
 - to [date]
 - owner [manyToOneRelation]
 - share [manyToManyObjectRelation]
+- private [checkbox]
 */ 
 
 
@@ -24,7 +25,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'name' => 'Journey',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1565261804,
+   'modificationDate' => 1565275165,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -226,7 +227,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
             array (
               0 => 
               array (
-                'classes' => 'user',
+                'classes' => 'MembersUser',
               ),
             ),
              'pathFormatterClass' => '',
@@ -263,6 +264,10 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'lazyLoading' => true,
              'classes' => 
             array (
+              0 => 
+              array (
+                'classes' => 'MembersUser',
+              ),
             ),
              'pathFormatterClass' => '',
              'name' => 'share',
@@ -275,6 +280,28 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          7 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Checkbox::__set_state(array(
+             'fieldtype' => 'checkbox',
+             'defaultValue' => NULL,
+             'queryColumnType' => 'tinyint(1)',
+             'columnType' => 'tinyint(1)',
+             'phpdocType' => 'boolean',
+             'name' => 'private',
+             'title' => 'Private Journey',
+             'tooltip' => '',
+             'mandatory' => false,
+             'noteditable' => false,
+             'index' => false,
+             'locked' => NULL,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
              'invisible' => false,
              'visibleGridView' => false,
              'visibleSearch' => false,
