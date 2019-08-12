@@ -1,3 +1,6 @@
+imports:
+    - { resource: 'services/*.yml' }
+
 services:
 
     # auto-register all controllers as services

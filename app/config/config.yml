@@ -8,6 +8,18 @@ imports:
 webpack_encore:
     output_path: '%kernel.project_dir%/web/build'
 
+# Members
+members:
+    post_register_type: 'confirm_by_mail'
+    send_admin_mail_after_register: false
+    send_user_mail_after_confirmed: false
+    emails:
+        default:
+            register_confirm: '/{_locale}/email/register-confirm'
+            register_confirmed: '/{_locale}/email/register-confirmed'
+            register_password_resetting: '/{_locale}/email/password-reset'
+            admin_register_notification: '/{_locale}/email/admin-register-notification'
+
 pimcore:
 
 #### TRANSLATIONS

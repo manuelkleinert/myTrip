@@ -1,0 +1,7 @@
+
+services:
+
+  AppBundle\Controller\MyTripController:
+    arguments:
+      - '@session'
+      - '@security.token_storage'

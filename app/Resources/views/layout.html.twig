@@ -1,16 +1,16 @@
 <!doctype html>
 {% spaceless %}
-<html lang="{{ app.request.locale|slice(0, 2) }}">
-<head>{% include 'Layout/html-head.html.twig' %}</head>
-<body>
-{# page header #}
-{% include 'Layout/header.html.twig' %}
-<main class="main-content" data-uk-height-viewport="expand: true">
-    {# page content #}
-    {% block content %}{% endblock %}
-</main>
-{# page footer #}
-{% include 'Layout/footer.html.twig' %}
-</body>
-</html>
+    <html lang="{{ app.request.locale|slice(0, 2) }}">
+        <head>{% include 'Layout/html-head.html.twig' %}</head>
+        <body>
+        {# page header #}
+        {% include 'Layout/header.html.twig' %}
+        <main class="main-content" data-uk-height-viewport="expand: true">
+            {# page content #}
+            {% block content %}{% endblock %}
+        </main>
+        {# page footer #}
+        {% include 'Layout/footer.html.twig' %}
+        </body>
+    </html>
 {% endspaceless %}
