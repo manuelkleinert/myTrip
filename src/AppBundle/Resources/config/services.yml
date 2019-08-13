@@ -2,13 +2,6 @@ imports:
     - { resource: 'services/*.yml' }
 
 services:
-
-    # auto-register all controllers as services
-    AppBundle\Controller\:
-        resource: '../../Controller'
-        public: true
-        tags: ['controller.service_arguments']
-
     # Templating
     AppBundle\Templating\LanguageSwitcher:
         arguments:

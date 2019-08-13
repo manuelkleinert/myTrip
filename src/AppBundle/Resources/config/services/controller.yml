@@ -1,7 +1,13 @@
-
 services:
+
+  # auto-register all controllers as services
+  AppBundle\Controller\:
+    resource: '../../Controller'
+    public: true
+    tags: ['controller.service_arguments']
 
   AppBundle\Controller\MyTripController:
     arguments:
       - '@session'
       - '@security.token_storage'
+    tags: ['controller.service_arguments']

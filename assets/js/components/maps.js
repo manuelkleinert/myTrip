@@ -1,5 +1,6 @@
 import mapBoxGl from 'mapbox-gl';
 import MapBoxGeocoder from 'mapbox-gl-geocoder';
+import { $ } from 'uikit/src/js/util';
 
 export default {
   args: 'apiKey',
@@ -36,6 +37,17 @@ export default {
         accessToken: mapBoxGl.accessToken,
         mapboxgl: mapBoxGl,
       }));
+
+      this.map.on('click', (e) => {
+        /**
+         * @method offcanvas
+         */
+        UIkit.offcanvas($('.journey-overlay')).show();
+
+        const features = this.map.queryRenderedFeatures(e.point);
+        console.log(e);
+        console.log(JSON.stringify(features, null, 2));
+      });
     },
   },
 };

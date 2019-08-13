@@ -1,7 +1,7 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-08T20:01:11+02:00
+* Generated at: 2019-08-13T20:52:48+02:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
@@ -11,12 +11,14 @@
 Fields Summary: 
 - title [input]
 - dateTime [datetime]
+- dateTimeTo [datetime]
 - temperature [numeric]
 - wetter [input]
 - text [wysiwyg]
 - transporation [manyToManyObjectRelation]
 - activity_event [manyToOneRelation]
 - place [manyToOneRelation]
+- geoPoint [geopoint]
 */ 
 
 
@@ -25,7 +27,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'name' => 'Step',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1565287271,
+   'modificationDate' => 1565722368,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -93,7 +95,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'name' => 'title',
              'title' => 'Title',
              'tooltip' => '',
-             'mandatory' => true,
+             'mandatory' => false,
              'noteditable' => false,
              'index' => false,
              'locked' => false,
@@ -114,12 +116,12 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'defaultValue' => NULL,
              'useCurrentDate' => false,
              'name' => 'dateTime',
-             'title' => 'dateTime',
+             'title' => 'Date Time',
              'tooltip' => '',
-             'mandatory' => true,
+             'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => false,
+             'locked' => NULL,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -129,6 +131,29 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleSearch' => false,
           )),
           2 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Datetime::__set_state(array(
+             'fieldtype' => 'datetime',
+             'queryColumnType' => 'bigint(20)',
+             'columnType' => 'bigint(20)',
+             'phpdocType' => '\\Carbon\\Carbon',
+             'defaultValue' => NULL,
+             'useCurrentDate' => false,
+             'name' => 'dateTimeTo',
+             'title' => 'Date Time To',
+             'tooltip' => '',
+             'mandatory' => false,
+             'noteditable' => false,
+             'index' => false,
+             'locked' => NULL,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          3 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\Numeric::__set_state(array(
              'fieldtype' => 'numeric',
              'width' => '',
@@ -158,7 +183,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          3 => 
+          4 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\Input::__set_state(array(
              'fieldtype' => 'input',
              'width' => NULL,
@@ -184,7 +209,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          4 => 
+          5 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\Wysiwyg::__set_state(array(
              'fieldtype' => 'wysiwyg',
              'width' => '',
@@ -209,7 +234,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          5 => 
+          6 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\ManyToManyObjectRelation::__set_state(array(
              'fieldtype' => 'manyToManyObjectRelation',
              'width' => '',
@@ -248,7 +273,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          6 => 
+          7 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\ManyToOneRelation::__set_state(array(
              'fieldtype' => 'manyToOneRelation',
              'width' => '',
@@ -288,7 +313,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          7 => 
+          8 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\ManyToOneRelation::__set_state(array(
              'fieldtype' => 'manyToOneRelation',
              'width' => '',
@@ -328,6 +353,39 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          9 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Geopoint::__set_state(array(
+             'fieldtype' => 'geopoint',
+             'queryColumnType' => 
+            array (
+              'longitude' => 'double',
+              'latitude' => 'double',
+            ),
+             'columnType' => 
+            array (
+              'longitude' => 'double',
+              'latitude' => 'double',
+            ),
+             'phpdocType' => '\\Pimcore\\Model\\DataObject\\Data\\Geopoint',
+             'lat' => 0.0,
+             'lng' => 0.0,
+             'zoom' => 1,
+             'mapType' => 'roadmap',
+             'name' => 'geoPoint',
+             'title' => 'Geo Point',
+             'tooltip' => '',
+             'mandatory' => true,
+             'noteditable' => false,
+             'index' => false,
+             'locked' => NULL,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
              'invisible' => false,
              'visibleGridView' => false,
              'visibleSearch' => false,

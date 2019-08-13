@@ -1,7 +1,7 @@
 <?php
-
 namespace AppBundle\Controller;
 
+use AppBundle\Form\Type\StepType;
 use Pimcore\Controller\FrontendController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -9,19 +9,22 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class MyTripController extends FrontendController
 {
-
-
     /**
      * @var object|string
      */
     private $loginUser;
 
+    /**
+     * @var Session
+     */
+    private $session;
 
     /**
-     * MyTripController constructor.
-     * @param Session $session
-     * @param TokenStorage $tokenStorage
+     * @var TokenStorage
      */
+    private $tokenStorage;
+
+
     public function __construct(
         Session $session,
         TokenStorage $tokenStorage
@@ -30,8 +33,6 @@ class MyTripController extends FrontendController
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
         $this->loginUser = $this->tokenStorage->getToken()->getUser();
-
-        $this->view->loginUser = $this->loginUser;
     }
 
     /**
@@ -41,6 +42,12 @@ class MyTripController extends FrontendController
     {
         $this->get('coreshop.seo.presentation')->updateSeoMetadata($this->document);
 
-        return $this->renderTemplate('MyTrip/map.html.twig');
+        // Form
+        $form = $this->createForm(StepType::class);
+
+        return $this->renderTemplate('MyTrip/map.html.twig', [
+            'loginUser' => $this->loginUser,
+            'stepFrom' => $form->createView()
+        ]);
     }
 }
