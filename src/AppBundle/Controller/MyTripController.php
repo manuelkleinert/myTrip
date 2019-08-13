@@ -1,7 +1,6 @@
 <?php
 namespace AppBundle\Controller;
 
-use AppBundle\Form\Type\StepType;
 use Pimcore\Controller\FrontendController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -42,12 +41,8 @@ class MyTripController extends FrontendController
     {
         $this->get('coreshop.seo.presentation')->updateSeoMetadata($this->document);
 
-        // Form
-        $form = $this->createForm(StepType::class);
-
         return $this->renderTemplate('MyTrip/map.html.twig', [
-            'loginUser' => $this->loginUser,
-            'stepFrom' => $form->createView()
+            'loginUser' => $this->loginUser
         ]);
     }
 }

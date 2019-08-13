@@ -7,7 +7,7 @@
 @import '~uikit/src/scss/components/link.scss';
 @import '~uikit/src/scss/components/heading.scss';
 //@import '~uikit/src/scss/components/divider.scss';
-//@import '~uikit/src/scss/components/list.scss';
+@import '~uikit/src/scss/components/list.scss';
 //@import '~uikit/src/scss/components/description-list.scss';
 //@import '~uikit/src/scss/components/table.scss';
 @import '~uikit/src/scss/components/icon.scss';
@@ -44,7 +44,7 @@
 //@import '~uikit/src/scss/components/tab.scss';
 //@import '~uikit/src/scss/components/slidenav.scss'; // After: Icon
 //@import '~uikit/src/scss/components/dotnav.scss';
-//@import '~uikit/src/scss/components/thumbnav.scss';
+@import '~uikit/src/scss/components/thumbnav.scss';
 
 // JavaScript
 //@import '~uikit/src/scss/components/accordion.scss';
@@ -63,7 +63,7 @@
 // Scroll
 
 // Additional
-//@import '~uikit/src/scss/components/iconnav.scss';
+@import '~uikit/src/scss/components/iconnav.scss';
 //@import '~uikit/src/scss/components/notification.scss';
 //@import '~uikit/src/scss/components/tooltip.scss';
 //@import '~uikit/src/scss/components/placeholder.scss';

@@ -10,9 +10,34 @@
             <div class="uk-offcanvas-bar">
                 <button class="uk-offcanvas-close" type="button" uk-close></button>
 
-                {{ form_start(stepFrom, {attr: {'data-uk-poolsubmit':'button:.header-configuration-save'}}) }}
+                <div class="uk-margin">
+                    <label class="uk-form-label">{{ 'app.form.step.label.title'|trans }}</label>
+                    <div class="uk-form-controls">
+                        <input name="title" class="uk-input" type="text" placeholder="{{ 'app.form.step.label.placeholder.title'|trans }}">
+                    </div>
+                </div>
 
-                {{ form_end(stepFrom) }}
+                <div class="uk-margin">
+                    <label class="uk-form-label">{{ 'app.form.step.label.date.time'|trans }}</label>
+                    <div class="uk-form-controls">
+                        <input name="dateTime" class="uk-input" type="text" placeholder="{{ 'app.form.step.label.placeholder.date.time'|trans }}">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <label class="uk-form-label">{{ 'app.form.step.label.date.time.to'|trans }}</label>
+                    <div class="uk-form-controls">
+                        <input name="dateTimeTo" class="uk-input" type="text" placeholder="{{ 'app.form.step.label.placeholder.date.time.to'|trans }}">
+                    </div>
+                </div>
+
+                <ul class="uk-iconnav">
+                    <li><a href="#" class="uk-icon" data-uk-icon="mt-car"></a></li>
+                    <li><a href="#" data-uk-icon="file-edit"></a></li>
+                    <li><a href="#" data-uk-icon="copy"></a></li>
+                    <li><a href="#" data-uk-icon="trash"></a></li>
+                </ul>
+
             </div>
         </div>
 
