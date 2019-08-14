@@ -1,6 +1,6 @@
 import mapBoxGl from 'mapbox-gl';
 import MapBoxGeocoder from 'mapbox-gl-geocoder';
-import { $ } from 'uikit/src/js/util';
+import mapStep from '../utils/map-step';
 
 export default {
   args: 'apiKey',
@@ -38,16 +38,12 @@ export default {
         mapboxgl: mapBoxGl,
       }));
 
-      this.map.on('click', (e) => {
-        /**
-         * @method offcanvas
-         */
-        UIkit.offcanvas($('.journey-overlay')).show();
+      this.map.addControl(new mapBoxGl.GeolocateControl({
+        positionOptions: { enableHighAccuracy: true },
+        trackUserLocation: true,
+      }));
 
-        const features = this.map.queryRenderedFeatures(e.point);
-        console.log(e);
-        console.log(JSON.stringify(features, null, 2));
-      });
+      mapStep({ map: this.map });
     },
   },
 };

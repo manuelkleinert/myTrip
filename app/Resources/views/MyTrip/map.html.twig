@@ -1,33 +1,59 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
     {% if loginUser %}
-        <div class="map uk-width-1-1" uk-height-viewport data-uk-maps="apiKey:pk.eyJ1IjoibXBrODgiLCJhIjoiY2p6MWN4enhrMDFwbjN0cGlhcmY3a3hpZCJ9.dBwvFla9os7o4UITJdy5ig;"></div>
+        <div class="map uk-width-1-1" uk-height-viewport
+             data-uk-maps="apiKey:pk.eyJ1IjoibXBrODgiLCJhIjoiY2p6MWN4enhrMDFwbjN0cGlhcmY3a3hpZCJ9.dBwvFla9os7o4UITJdy5ig;"></div>
 
         <button class="uk-icon-button uk-position-bottom-right uk-position-medium" type="button" data-uk-icon="plus">
         </button>
 
-        <div class="journey-overlay" id=journey-overlay" data-uk-offcanvas="overlay: true">
+        <div class="journey-overlay" id=journey-overlay" data-uk-offcanvas="mode: push;">
             <div class="uk-offcanvas-bar">
                 <button class="uk-offcanvas-close" type="button" uk-close></button>
 
                 <div class="uk-margin">
                     <label class="uk-form-label">{{ 'app.form.step.label.title'|trans }}</label>
                     <div class="uk-form-controls">
-                        <input name="title" class="uk-input" type="text" placeholder="{{ 'app.form.step.label.placeholder.title'|trans }}">
+                        <input name="title" class="uk-input" type="text"
+                               placeholder="{{ 'app.form.step.label.placeholder.title'|trans }}">
                     </div>
                 </div>
 
-                <div class="uk-margin">
-                    <label class="uk-form-label">{{ 'app.form.step.label.date.time'|trans }}</label>
-                    <div class="uk-form-controls">
-                        <input name="dateTime" class="uk-input" type="text" placeholder="{{ 'app.form.step.label.placeholder.date.time'|trans }}">
+                <div class="uk-margin uk-grid uk-child-width-1-2@m">
+                    <div>
+                        <div class="uk-margin">
+                            <label class="uk-form-label">{{ 'app.form.step.label.date.time'|trans }}</label>
+                            <div class="uk-form-controls">
+                                <input name="dateTime" class="uk-input" type="text"
+                                       placeholder="{{ 'app.form.step.label.placeholder.date.time'|trans }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="uk-form-label">{{ 'app.form.step.label.date.time.to'|trans }}</label>
+                        <div class="uk-form-controls">
+                            <input name="dateTimeTo" class="uk-input" type="text"
+                                   placeholder="{{ 'app.form.step.label.placeholder.date.time.to'|trans }}">
+                        </div>
                     </div>
                 </div>
 
-                <div class="uk-margin">
-                    <label class="uk-form-label">{{ 'app.form.step.label.date.time.to'|trans }}</label>
-                    <div class="uk-form-controls">
-                        <input name="dateTimeTo" class="uk-input" type="text" placeholder="{{ 'app.form.step.label.placeholder.date.time.to'|trans }}">
+                <div class="uk-margin uk-grid uk-child-width-1-2@m">
+                    <div>
+                        <label class="uk-form-label">{{ 'app.form.step.label.lat'|trans }}</label>
+                        <div class="uk-form-controls">
+                            <input name="lat" disabled class="uk-input" type="text"
+                                   placeholder="{{ 'app.form.step.label.placeholder.lat'|trans }}">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="uk-margin">
+                            <label class="uk-form-label">{{ 'app.form.step.label.lng'|trans }}</label>
+                            <div class="uk-form-controls">
+                                <input name="lng" disabled class="uk-input" type="text"
+                                       placeholder="{{ 'app.form.step.label.placeholder.lng'|trans }}">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -37,6 +63,12 @@
                     <li><a href="#" data-uk-icon="copy"></a></li>
                     <li><a href="#" data-uk-icon="trash"></a></li>
                 </ul>
+
+                <div class="uk-margin">
+                    <button class="uk-button uk-button-default uk-button-small">
+                        {{ 'app.form.step.button.add'|trans }}
+                    </button>
+                </div>
 
             </div>
         </div>
