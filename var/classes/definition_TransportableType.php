@@ -1,7 +1,7 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-08T13:00:33+02:00
+* Generated at: 2019-08-15T16:54:44+02:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
@@ -9,7 +9,9 @@
 
 
 Fields Summary: 
-- title [input]
+- localizedfields [localizedfields]
+-- title [input]
+- icon [image]
 */ 
 
 
@@ -18,7 +20,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'name' => 'TransportableType',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1565262033,
+   'modificationDate' => 1565880883,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -73,18 +75,77 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
          'childs' => 
         array (
           0 => 
-          Pimcore\Model\DataObject\ClassDefinition\Data\Input::__set_state(array(
-             'fieldtype' => 'input',
-             'width' => NULL,
-             'queryColumnType' => 'varchar',
-             'columnType' => 'varchar',
-             'columnLength' => 190,
-             'phpdocType' => 'string',
-             'regex' => '',
-             'unique' => false,
-             'showCharCount' => false,
-             'name' => 'title',
-             'title' => 'Title',
+          Pimcore\Model\DataObject\ClassDefinition\Data\Localizedfields::__set_state(array(
+             'fieldtype' => 'localizedfields',
+             'phpdocType' => '\\Pimcore\\Model\\DataObject\\Localizedfield',
+             'childs' => 
+            array (
+              0 => 
+              Pimcore\Model\DataObject\ClassDefinition\Data\Input::__set_state(array(
+                 'fieldtype' => 'input',
+                 'width' => NULL,
+                 'queryColumnType' => 'varchar',
+                 'columnType' => 'varchar',
+                 'columnLength' => 190,
+                 'phpdocType' => 'string',
+                 'regex' => '',
+                 'unique' => false,
+                 'showCharCount' => false,
+                 'name' => 'title',
+                 'title' => 'Title',
+                 'tooltip' => '',
+                 'mandatory' => true,
+                 'noteditable' => false,
+                 'index' => false,
+                 'locked' => false,
+                 'style' => '',
+                 'permissions' => NULL,
+                 'datatype' => 'data',
+                 'relationType' => false,
+                 'invisible' => false,
+                 'visibleGridView' => false,
+                 'visibleSearch' => false,
+              )),
+            ),
+             'name' => 'localizedfields',
+             'region' => NULL,
+             'layout' => NULL,
+             'title' => '',
+             'width' => '',
+             'height' => '',
+             'maxTabs' => NULL,
+             'labelWidth' => NULL,
+             'border' => false,
+             'provideSplitView' => false,
+             'tabPosition' => NULL,
+             'hideLabelsWhenTabsReached' => NULL,
+             'referencedFields' => 
+            array (
+            ),
+             'tooltip' => NULL,
+             'mandatory' => NULL,
+             'noteditable' => NULL,
+             'index' => NULL,
+             'locked' => NULL,
+             'style' => NULL,
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
+             'invisible' => false,
+             'visibleGridView' => true,
+             'visibleSearch' => true,
+          )),
+          1 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Image::__set_state(array(
+             'fieldtype' => 'image',
+             'width' => '',
+             'height' => '',
+             'uploadPath' => '',
+             'queryColumnType' => 'int(11)',
+             'columnType' => 'int(11)',
+             'phpdocType' => '\\Pimcore\\Model\\Asset\\Image',
+             'name' => 'icon',
+             'title' => 'Icon',
              'tooltip' => '',
              'mandatory' => true,
              'noteditable' => false,

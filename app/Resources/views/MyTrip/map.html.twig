@@ -57,12 +57,15 @@
                     </div>
                 </div>
 
-                <ul class="uk-iconnav">
-                    <li><a href="#" class="uk-icon" data-uk-icon="mt-car"></a></li>
-                    <li><a href="#" data-uk-icon="file-edit"></a></li>
-                    <li><a href="#" data-uk-icon="copy"></a></li>
-                    <li><a href="#" data-uk-icon="trash"></a></li>
-                </ul>
+                {% if transportableTypeList is defined and transportableTypeList is not empty %}
+                    <ul class="uk-iconnav">
+                        {% for transportable in transportableTypeList %}
+                            <li>
+                                <img src="{{ transportable.getIcon() }}" uk-svg>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
 
                 <div class="uk-margin">
                     <button class="uk-button uk-button-default uk-button-small">
