@@ -18,5 +18,22 @@ return [
         "legacy" => FALSE,
         "creationDate" => 1553768287,
         "modificationDate" => 1553768290
+    ],
+    2 => [
+        "id" => 2,
+        "name" => "mt_journey",
+        "pattern" => "/^\\/([a-z]{2})\\/mt([0-9])/",
+        "reverse" => "/%_locale/mt%id",
+        "module" => "AppBundle",
+        "controller" => "@AppBundle\\Controller\\MyTripController",
+        "action" => "map",
+        "variables" => "_locale,id",
+        "defaults" => "",
+        "siteId" => [
+
+        ],
+        "priority" => 2,
+        "creationDate" => 1565955049,
+        "modificationDate" => 1565955466
     ]
 ];

@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Controller;
 
 use Pimcore\Controller\FrontendController;
@@ -8,6 +9,7 @@ use Pimcore\Model\DataObject\TransportableType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class MyTripController extends FrontendController
@@ -27,7 +29,17 @@ class MyTripController extends FrontendController
      */
     private $tokenStorage;
 
+    /**
+     * @var Journey
+     */
+    private $journey;
 
+
+    /**
+     * MyTripController constructor.
+     * @param Session $session
+     * @param TokenStorage $tokenStorage
+     */
     public function __construct(
         Session $session,
         TokenStorage $tokenStorage
@@ -39,17 +51,20 @@ class MyTripController extends FrontendController
     }
 
     /**
+     * @param Request $request
      * @return Response
      * @throws \Exception
      */
-    public function mapAction(): Response
+    public function mapAction(Request $request): Response
     {
         $this->get('coreshop.seo.presentation')->updateSeoMetadata($this->document);
+        $this->journey = Journey::getById($request->get('id'));
 
         if ($this->loginUser instanceof MembersUser) {
             $journeyList = new Journey\Listing();
-            $journeyList->setCondition('owner__id = :userId OR share LIKE \'%,:userId,%\'', [
-                'userId' => $this->loginUser->getId()
+            $journeyList->setCondition('owner__id = :userId OR share LIKE :userIdLike', [
+                'userId' => $this->loginUser->getId(),
+                'userIdLike' => sprintf('%%,%s,%%', $this->loginUser->getId())
             ]);
             $journeyList->setOrderKey('from');
             $journeyList->setOrder('DESC');
@@ -64,30 +79,52 @@ class MyTripController extends FrontendController
                 'user' => $this->loginUser,
                 'transportableTypeList' => $transportableTypeList,
                 'journeyList' => $journeyList,
+                'journeyId' => $this->journeyAccess($this->journey) ? $this->journey->getId() : null
+            ]);
+        }
+
+        if ($this->journeyAccess($this->journey)) {
+            return $this->renderTemplate('MyTrip/map.html.twig', [
+                'journeyId' => $this->journey->getId()
             ]);
         }
 
         return $this->renderTemplate('MyTrip/map.html.twig');
     }
 
-  /**
-   * @return JsonResponse
-   */
-    public function addStep(): JsonResponse
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function addStep(Request $request): JsonResponse
     {
 
-      $data = [
-        'message' => 'error.not.login',
-        'success' => false,
-      ];
+        p_r($request->request);
+        p_r($request->isXmlHttpRequest());
+        p_r($request->query);
 
-      if ($this->loginUser instanceof MembersUser) {
         $data = [
-          'message' => 'app.step.is.save',
-          'success' => true,
+            'message' => 'error.not.login',
+            'success' => false,
         ];
-      }
 
-      return new JsonResponse($data);
+        if ($this->loginUser instanceof MembersUser) {
+            $data = [
+                'message' => 'app.step.is.save',
+                'success' => true,
+            ];
+        }
+
+        return new JsonResponse($data);
+    }
+
+    /**
+     * @param $journey
+     * @return bool
+     */
+    private function journeyAccess($journey)
+    {
+        return $journey instanceof Journey && (!$journey->getPrivate() || $journey->getOwner() === $this->loginUser
+                || in_array($this->loginUser, $this->journey->getShare(), true));
     }
 }

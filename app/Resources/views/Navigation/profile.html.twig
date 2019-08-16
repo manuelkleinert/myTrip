@@ -15,15 +15,20 @@
             {{ user.getUserName() }}
 
             <div class="uk-grid uk-child-width-1-2@m">
-                <button class="mt-journey-button add-journey">
+                <button class="mt-journey-item add-journey">
                     {{ 'app.journey.add.button.title'|trans }}
                 </button>
 
                 {% if journeyList is defined and journeyList is not empty %}
                     {% for journey in journeyList %}
-                        <button class="mt-journey-button" data-id="{{ journey.getId() }}">
+                        <a class="mt-journey-item" href="{{ pimcore_url({
+                            _locale: app.request.locale,
+                            id:journey.getId()
+                        }, 'mt_journey') }}">
                             {{ journey.getTitle() }}
-                        </button>
+                            {{ journey.getFrom() }}
+                            {{ journey.getTo() }}
+                        </a>
                     {% endfor %}
                 {% endif %}
             </div>

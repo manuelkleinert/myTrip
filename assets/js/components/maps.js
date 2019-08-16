@@ -6,12 +6,14 @@ export default {
   args: 'apiKey',
 
   props: {
+    mtId: Number,
     apiKey: String,
     zoom: Number,
     center: String,
   },
 
   data: {
+    mtId: null,
     apiKey: '',
     zoom: 12,
     center: [8.310473, 47.050052],
@@ -43,7 +45,12 @@ export default {
         trackUserLocation: true,
       }));
 
-      mapStep({ map: this.map });
+      if (this.mtId !== null) {
+        mapStep({
+          journeyId: this.mtId,
+          map: this.map
+        });
+      }
     },
   },
 };

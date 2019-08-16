@@ -21,6 +21,7 @@ export default function MapStep(args) {
       on(this.addButton, 'click', this.saveStep.bind(this));
 
       this.data = {
+        journeyId: args.journeyId,
         title: '',
         lat: '',
         lng: '',
@@ -57,7 +58,7 @@ export default function MapStep(args) {
     setForm() {
       each(this.data, (data, key) => {
         const formField = $('[name="' + key + '"]', this.editModal); // eslint-disable-line prefer-template
-        formField.value = data;
+        if (formField) { formField.value = data; }
       });
     }
 
@@ -65,7 +66,8 @@ export default function MapStep(args) {
       ajax('/ajax/add-step', {
         method: 'POST',
         headers: { 'X-Requested-With': 'XMLHttpRequest' },
-        data: this.data,
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(this.data),
         responseType: 'json',
       }).then((xhr) => {
         console.log(xhr);

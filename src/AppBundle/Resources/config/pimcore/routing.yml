@@ -5,4 +5,6 @@ app:
 my_trip:
     path: /ajax/add-step
     controller: AppBundle\Controller\MyTripController::addStep
+    methods:
+        - POST
 
