@@ -1,4 +1,11 @@
-import { $, each } from 'uikit/src/js/util';
+import {
+  $,
+  $$,
+  on,
+  each,
+  attr,
+  ajax,
+} from 'uikit/src/js/util';
 
 export default function MapStep(args) {
   class EditStep {
@@ -6,19 +13,26 @@ export default function MapStep(args) {
       this.map = args.map;
       this.feature = null;
       this.editModal = $('.journey-overlay');
+      this.transportableType = $$('button[data-transportable-type]', this.editModal);
+      this.addButton = $('button.mt-add-step');
+
       this.map.on('click', this.loadData.bind(this));
+      on(this.transportableType, 'click', this.setTransportableType.bind(this));
+      on(this.addButton, 'click', this.saveStep.bind(this));
+
       this.data = {
         title: '',
         lat: '',
         lng: '',
+        transportableType: null,
       };
     }
 
-    loadData(event) {
+    loadData(e) {
       this.feature = null;
-      this.features = this.map.queryRenderedFeatures(event.point);
-      this.data.lat = event.lngLat.lat;
-      this.data.lng = event.lngLat.lng;
+      this.features = this.map.queryRenderedFeatures(e.point);
+      this.data.lat = e.lngLat.lat;
+      this.data.lng = e.lngLat.lng;
       this.data.title = '';
 
       /** @method offcanvas */
@@ -34,13 +48,30 @@ export default function MapStep(args) {
       this.setForm();
     }
 
+    setTransportableType(e) {
+      each(this.transportableType, (type) => { type.classList.remove('mt-select'); });
+      e.currentTarget.classList.add('mt-select');
+      this.data.transportableType = attr(e.currentTarget, 'data-transportable-type');
+    }
+
     setForm() {
       each(this.data, (data, key) => {
-        /** @method formField */
         const formField = $('[name="' + key + '"]', this.editModal); // eslint-disable-line prefer-template
         formField.value = data;
       });
     }
+
+    saveStep() {
+      ajax('/ajax/add-step', {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        data: this.data,
+        responseType: 'json',
+      }).then((xhr) => {
+        console.log(xhr);
+      });
+    }
   }
+
   return new EditStep();
 }

@@ -2,8 +2,11 @@
 namespace AppBundle\Controller;
 
 use Pimcore\Controller\FrontendController;
+use Pimcore\Model\DataObject\Journey;
+use Pimcore\Model\DataObject\MembersUser;
 use Pimcore\Model\DataObject\TransportableType;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
@@ -43,13 +46,48 @@ class MyTripController extends FrontendController
     {
         $this->get('coreshop.seo.presentation')->updateSeoMetadata($this->document);
 
-        $transportableTypeList = new TransportableType\Listing();
-        $transportableTypeList->setOrderKey('o_index');
-        $transportableTypeList->setOrder('ASC');
+        if ($this->loginUser instanceof MembersUser) {
+            $journeyList = new Journey\Listing();
+            $journeyList->setCondition('owner__id = :userId OR share LIKE \'%,:userId,%\'', [
+                'userId' => $this->loginUser->getId()
+            ]);
+            $journeyList->setOrderKey('from');
+            $journeyList->setOrder('DESC');
+            $journeyList->load();
 
-        return $this->renderTemplate('MyTrip/map.html.twig', [
-            'loginUser' => $this->loginUser,
-            'transportableTypeList' => $transportableTypeList,
-        ]);
+            $transportableTypeList = new TransportableType\Listing();
+            $transportableTypeList->setOrderKey('o_index');
+            $transportableTypeList->setOrder('ASC');
+            $transportableTypeList->load();
+
+            return $this->renderTemplate('MyTrip/map.html.twig', [
+                'user' => $this->loginUser,
+                'transportableTypeList' => $transportableTypeList,
+                'journeyList' => $journeyList,
+            ]);
+        }
+
+        return $this->renderTemplate('MyTrip/map.html.twig');
+    }
+
+  /**
+   * @return JsonResponse
+   */
+    public function addStep(): JsonResponse
+    {
+
+      $data = [
+        'message' => 'error.not.login',
+        'success' => false,
+      ];
+
+      if ($this->loginUser instanceof MembersUser) {
+        $data = [
+          'message' => 'app.step.is.save',
+          'success' => true,
+        ];
+      }
+
+      return new JsonResponse($data);
     }
 }

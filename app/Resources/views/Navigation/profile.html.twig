@@ -1,3 +1,4 @@
+
 <button class="uk-icon-button uk-position-top-left uk-position-medium"
         type="button" data-uk-icon="menu" data-uk-toggle="target: #profile-overlay">
 </button>
@@ -5,28 +6,35 @@
 <div id="profile-overlay" data-uk-offcanvas="overlay: true">
     <div class="uk-offcanvas-bar">
         <button class="uk-offcanvas-close" type="button" data-uk-close></button>
-        <ul class="uk-nav-default uk-nav-parent-icon" data-uk-nav>
-            <li class="uk-active"><a href="#">Active</a></li>
-            <li class="uk-parent">
-                <a href="#">Parent</a>
-                <ul class="uk-nav-sub">
-                    <li><a href="#">Sub item</a></li>
-                    <li>
-                        <a href="#">Sub item</a>
-                        <ul>
-                            <li><a href="#">Sub item</a></li>
-                            <li><a href="#">Sub item</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="uk-parent">
-                <a href="#">Parent</a>
-                <ul class="uk-nav-sub">
-                    <li><a href="#">Sub item</a></li>
-                    <li><a href="#">Sub item</a></li>
-                </ul>
-            </li>
-        </ul>
+        {% if user is defined %}
+
+            <div class="uk-border-circle">
+                <span data-uk-icon="user"></span>
+            </div>
+
+            {{ user.getUserName() }}
+
+            <div class="uk-grid uk-child-width-1-2@m">
+                <button class="mt-journey-button add-journey">
+                    {{ 'app.journey.add.button.title'|trans }}
+                </button>
+
+                {% if journeyList is defined and journeyList is not empty %}
+                    {% for journey in journeyList %}
+                        <button class="mt-journey-button" data-id="{{ journey.getId() }}">
+                            {{ journey.getTitle() }}
+                        </button>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+        {% else %}
+            <a href="/{{ app.request.locale }}/members/register" class="uk-button">
+                {{ 'app.button.registration'|trans }}
+            </a>
+            <a href="/{{ app.request.locale }}/members/login" class="uk-button">
+                {{ 'app.button.login'|trans }}
+            </a>
+        {% endif %}
     </div>
 </div>

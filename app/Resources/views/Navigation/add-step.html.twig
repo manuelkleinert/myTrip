@@ -1,0 +1,71 @@
+{% if user is defined %}
+    <button class="uk-icon-button uk-position-bottom-right uk-position-medium" type="button" data-uk-icon="plus"></button>
+
+    <div class="journey-overlay" id=journey-overlay" data-uk-offcanvas="mode: push;">
+        <div class="uk-offcanvas-bar">
+            <button class="uk-offcanvas-close" type="button" data-uk-close></button>
+
+            <div class="uk-margin">
+                <label class="uk-form-label">{{ 'app.form.step.label.title'|trans }}</label>
+                <div class="uk-form-controls">
+                    <input name="title" class="uk-input" type="text"
+                           placeholder="{{ 'app.form.step.label.placeholder.title'|trans }}">
+                </div>
+            </div>
+
+            <div class="uk-margin uk-grid uk-child-width-1-2@m">
+                <div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label">{{ 'app.form.step.label.date.time'|trans }}</label>
+                        <div class="uk-form-controls">
+                            <input name="dateTime" class="uk-input" type="text"
+                                   data-uk-fdate-picker=""
+                                   placeholder="{{ 'app.form.step.label.placeholder.date.time'|trans }}">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="uk-form-label">{{ 'app.form.step.label.date.time.to'|trans }}</label>
+                    <div class="uk-form-controls">
+                        <input name="dateTimeTo" class="uk-input" type="text"
+                               data-uk-date-picker=""
+                               placeholder="{{ 'app.form.step.label.placeholder.date.time.to'|trans }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-margin uk-grid uk-child-width-1-2@m">
+                <div>
+                    <label class="uk-form-label">{{ 'app.form.step.label.lat'|trans }}</label>
+                    <div class="uk-form-controls">
+                        <input name="lat" disabled class="uk-input" type="text"
+                               placeholder="{{ 'app.form.step.label.placeholder.lat'|trans }}">
+                    </div>
+                </div>
+                <div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label">{{ 'app.form.step.label.lng'|trans }}</label>
+                        <div class="uk-form-controls">
+                            <input name="lng" disabled class="uk-input" type="text"
+                                   placeholder="{{ 'app.form.step.label.placeholder.lng'|trans }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if transportableTypeList is defined and transportableTypeList is not empty %}
+                {% for transportableType in transportableTypeList %}
+                    <button class="uk-icon-button  uk-margin-small-right"
+                            data-transportable-type="{{ transportableType.getId() }}"
+                            data-uk-icon="mt-car"></button>
+                {% endfor %}
+            {% endif %}
+
+            <div class="uk-margin">
+                <button class="mt-add-step uk-button uk-button-default uk-button-small">
+                    {{ 'app.form.step.button.add'|trans }}
+                </button>
+            </div>
+        </div>
+    </div>
+{% endif %}
