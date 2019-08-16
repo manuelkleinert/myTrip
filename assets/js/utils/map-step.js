@@ -66,7 +66,6 @@ export default function MapStep(args) {
       ajax('/ajax/add-step', {
         method: 'POST',
         headers: { 'X-Requested-With': 'XMLHttpRequest' },
-        contentType: "application/json; charset=utf-8",
         data: JSON.stringify(this.data),
         responseType: 'json',
       }).then((xhr) => {
