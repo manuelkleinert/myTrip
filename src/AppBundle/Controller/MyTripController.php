@@ -103,16 +103,14 @@ class MyTripController extends FrontendController
     public function addStep(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $this->journey = Journey::getById($data['journeyId']);
+        $this->journey = Journey::getById($data['id']);
 
         $response = [
             'message' => 'error.not.login',
             'success' => false,
         ];
 
-
         if($this->journeyAccess($this->journey)) {
-
             $step = New Step();
             $step->setParent(Service::createFolderByPath(
                 sprintf('%s/%s', $this->journey->getFullPath(), 'steps')));
@@ -122,6 +120,7 @@ class MyTripController extends FrontendController
                 round($data['lng'])
             ), 'object'));
             $step->setKey(Service::getUniqueKey($step));
+            $step->setJourney($this->journey);
             $step->setTitle($data['title']);
             $step->setGeoPoint(new Geopoint( $data['lng'], $data['lat']));
             $step->setPublished(true);
@@ -136,12 +135,45 @@ class MyTripController extends FrontendController
         return new JsonResponse($response);
     }
 
-    public function loadSteps(): JsonResponse
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function loadSteps(Request $request): JsonResponse
     {
-        $response = [
-            'message' => 'save.step',
-            'success' => true,
-        ];
+        $data = json_decode($request->getContent(), true);
+        $this->journey = Journey::getById($data['id']);
+
+        $response = [ 'message' => 'no.access', 'success' => false ];
+
+        if($this->journeyAccess($this->journey)) {
+            $stepsList = new Step\Listing();
+            $stepsList->setCondition('journey__id = :id', [ 'id' => $this->journey->getId()]);
+            $stepsList->setOrderKey(['dateTime', 'o_creationDate']);
+            $stepsList->setOrder(['ASC', 'ASC']);
+            $stepsList->load();
+
+            $stepsResponse = [];
+            if ($stepsList) {
+                foreach ($stepsList as $step) {
+                    $stepsResponse[] = [
+                        'id' => $step->getId(),
+                        'title' => $step->getTitle(),
+                        'date' => $step->getDateTime(),
+                        'date' => $step->getDateTimeTo(),
+                        'lat' => $step->getGeoPoint()->getLatitude(),
+                        'lng' => $step->getGeoPoint()->getLongitude(),
+                    ];
+                }
+            }
+
+            $response = [
+                'message' => 'load.step',
+                'success' => true,
+                'data' => $stepsResponse
+            ];
+        }
+
         return new JsonResponse($response);
     }
 

@@ -48,13 +48,14 @@ export default {
 
       if (this.jId !== null) {
         mapStep({
-          journeyId: this.jId,
+          id: this.jId,
           map: this.map,
         });
 
         mapDraw({
-          journeyId: this.jId,
+          id: this.jId,
           map: this.map,
+          accessToken: mapBoxGl.accessToken,
         });
       }
     },

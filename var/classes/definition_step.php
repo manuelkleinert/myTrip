@@ -1,11 +1,11 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-13T20:52:48+02:00
+* Generated at: 2019-08-17T13:53:53+02:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
-* IP: 172.18.0.1
+* IP: 172.20.0.1
 
 
 Fields Summary: 
@@ -15,6 +15,7 @@ Fields Summary:
 - temperature [numeric]
 - wetter [input]
 - text [wysiwyg]
+- journey [manyToOneRelation]
 - transporation [manyToManyObjectRelation]
 - activity_event [manyToOneRelation]
 - place [manyToOneRelation]
@@ -27,7 +28,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'name' => 'Step',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1565722368,
+   'modificationDate' => 1566042833,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -121,7 +122,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -144,7 +145,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -235,6 +236,50 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleSearch' => false,
           )),
           6 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\ManyToOneRelation::__set_state(array(
+             'fieldtype' => 'manyToOneRelation',
+             'width' => '',
+             'assetUploadPath' => '',
+             'relationType' => true,
+             'queryColumnType' => 
+            array (
+              'id' => 'int(11)',
+              'type' => 'enum(\'document\',\'asset\',\'object\')',
+            ),
+             'phpdocType' => '\\Pimcore\\Model\\Document\\Page | \\Pimcore\\Model\\Document\\Snippet | \\Pimcore\\Model\\Document | \\Pimcore\\Model\\Asset | \\Pimcore\\Model\\DataObject\\AbstractObject',
+             'objectsAllowed' => true,
+             'assetsAllowed' => false,
+             'assetTypes' => 
+            array (
+            ),
+             'documentsAllowed' => false,
+             'documentTypes' => 
+            array (
+            ),
+             'lazyLoading' => true,
+             'classes' => 
+            array (
+              0 => 
+              array (
+                'classes' => 'Journey',
+              ),
+            ),
+             'pathFormatterClass' => '',
+             'name' => 'journey',
+             'title' => 'Journey',
+             'tooltip' => '',
+             'mandatory' => true,
+             'noteditable' => false,
+             'index' => false,
+             'locked' => NULL,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          7 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\ManyToManyObjectRelation::__set_state(array(
              'fieldtype' => 'manyToManyObjectRelation',
              'width' => '',
@@ -273,7 +318,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          7 => 
+          8 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\ManyToOneRelation::__set_state(array(
              'fieldtype' => 'manyToOneRelation',
              'width' => '',
@@ -313,7 +358,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          8 => 
+          9 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\ManyToOneRelation::__set_state(array(
              'fieldtype' => 'manyToOneRelation',
              'width' => '',
@@ -357,7 +402,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleGridView' => false,
              'visibleSearch' => false,
           )),
-          9 => 
+          10 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\Geopoint::__set_state(array(
              'fieldtype' => 'geopoint',
              'queryColumnType' => 
@@ -381,7 +426,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => true,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',

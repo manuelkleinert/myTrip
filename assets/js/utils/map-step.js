@@ -5,6 +5,8 @@ import {
   each,
   attr,
   ajax,
+  createEvent,
+  trigger,
 } from 'uikit/src/js/util';
 
 export default function MapStep(args) {
@@ -21,7 +23,7 @@ export default function MapStep(args) {
       on(this.addButton, 'click', this.saveStep.bind(this));
 
       this.data = {
-        journeyId: args.journeyId,
+        id: args.id,
         title: '',
         lat: '',
         lng: '',
@@ -69,7 +71,9 @@ export default function MapStep(args) {
         data: JSON.stringify(this.data),
         responseType: 'json',
       }).then((xhr) => {
-        console.log(xhr);
+        if (xhr.status === 200) {
+          trigger(this.map.getContainer(), createEvent('add-step'));
+        }
       });
     }
   }
