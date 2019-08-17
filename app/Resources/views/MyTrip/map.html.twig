@@ -1,7 +1,7 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
     <div class="map uk-width-1-1" data-uk-height-viewport
-         data-uk-maps="apiKey:pk.eyJ1IjoibXBrODgiLCJhIjoiY2p6MWN4enhrMDFwbjN0cGlhcmY3a3hpZCJ9.dBwvFla9os7o4UITJdy5ig;{% if journeyId is defined and journeyId is not empty %}mtId:{{ journeyId }};{% endif %}">
+         data-uk-maps="apiKey:pk.eyJ1IjoibXBrODgiLCJhIjoiY2p6MWN4enhrMDFwbjN0cGlhcmY3a3hpZCJ9.dBwvFla9os7o4UITJdy5ig;{% if journeyId is defined and journeyId is not empty %}jId:{{ journeyId }};{% endif %}">
 
     </div>
 

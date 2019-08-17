@@ -1,19 +1,20 @@
 import mapBoxGl from 'mapbox-gl';
 import MapBoxGeocoder from 'mapbox-gl-geocoder';
 import mapStep from '../utils/map-step';
+import mapDraw from '../utils/map-draw';
 
 export default {
   args: 'apiKey',
 
   props: {
-    mtId: Number,
+    jId: Number,
     apiKey: String,
     zoom: Number,
     center: String,
   },
 
   data: {
-    mtId: null,
+    jId: null,
     apiKey: '',
     zoom: 12,
     center: [8.310473, 47.050052],
@@ -45,10 +46,15 @@ export default {
         trackUserLocation: true,
       }));
 
-      if (this.mtId !== null) {
+      if (this.jId !== null) {
         mapStep({
-          journeyId: this.mtId,
-          map: this.map
+          journeyId: this.jId,
+          map: this.map,
+        });
+
+        mapDraw({
+          journeyId: this.jId,
+          map: this.map,
         });
       }
     },

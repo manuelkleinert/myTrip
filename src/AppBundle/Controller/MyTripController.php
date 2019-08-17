@@ -3,8 +3,11 @@
 namespace AppBundle\Controller;
 
 use Pimcore\Controller\FrontendController;
+use Pimcore\Model\DataObject\Data\Geopoint;
 use Pimcore\Model\DataObject\Journey;
 use Pimcore\Model\DataObject\MembersUser;
+use Pimcore\Model\DataObject\Service;
+use Pimcore\Model\DataObject\Step;
 use Pimcore\Model\DataObject\TransportableType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -83,7 +86,7 @@ class MyTripController extends FrontendController
             ]);
         }
 
-        if ($this->journeyAccess($this->journey)) {
+        if ($this->journeyAccess($this->journey, true)) {
             return $this->renderTemplate('MyTrip/map.html.twig', [
                 'journeyId' => $this->journey->getId()
             ]);
@@ -95,36 +98,69 @@ class MyTripController extends FrontendController
     /**
      * @param Request $request
      * @return JsonResponse
+     * @throws \Exception
      */
     public function addStep(Request $request): JsonResponse
     {
+        $data = json_decode($request->getContent(), true);
+        $this->journey = Journey::getById($data['journeyId']);
 
-        p_r($request->request);
-        p_r($request->isXmlHttpRequest());
-        p_r($request->query);
-
-        $data = [
+        $response = [
             'message' => 'error.not.login',
             'success' => false,
         ];
 
-        if ($this->loginUser instanceof MembersUser) {
-            $data = [
-                'message' => 'app.step.is.save',
+
+        if($this->journeyAccess($this->journey)) {
+
+            $step = New Step();
+            $step->setParent(Service::createFolderByPath(
+                sprintf('%s/%s', $this->journey->getFullPath(), 'steps')));
+            $step->setKey(Service::getValidKey(sprintf('%s_%s_%s',
+                $data['title'],
+                round($data['lat']),
+                round($data['lng'])
+            ), 'object'));
+            $step->setKey(Service::getUniqueKey($step));
+            $step->setTitle($data['title']);
+            $step->setGeoPoint(new Geopoint( $data['lng'], $data['lat']));
+            $step->setPublished(true);
+            $step->save();
+
+            $response = [
+                'message' => 'save.step',
                 'success' => true,
             ];
         }
 
-        return new JsonResponse($data);
+        return new JsonResponse($response);
+    }
+
+    public function loadSteps(): JsonResponse
+    {
+        $response = [
+            'message' => 'save.step',
+            'success' => true,
+        ];
+        return new JsonResponse($response);
     }
 
     /**
      * @param $journey
+     * @param bool $guest
      * @return bool
      */
-    private function journeyAccess($journey)
+    private function journeyAccess($journey, $guest = false)
     {
-        return $journey instanceof Journey && (!$journey->getPrivate() || $journey->getOwner() === $this->loginUser
-                || in_array($this->loginUser, $this->journey->getShare(), true));
+        if (!$journey instanceof Journey) {
+            return false;
+        }
+
+        if ($guest && !$journey->getPrivate()) {
+            return true;
+        }
+
+        return $this->loginUser instanceof MembersUser && ($journey->getOwner() === $this->loginUser
+            || in_array($this->loginUser, $this->journey->getShare(), true));
     }
 }

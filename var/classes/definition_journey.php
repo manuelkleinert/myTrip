@@ -1,11 +1,11 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-08T21:45:48+02:00
+* Generated at: 2019-08-17T07:52:22+02:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
-* IP: 172.18.0.1
+* IP: 172.20.0.1
 
 
 Fields Summary: 
@@ -25,7 +25,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'name' => 'Journey',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1565293548,
+   'modificationDate' => 1566021142,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',

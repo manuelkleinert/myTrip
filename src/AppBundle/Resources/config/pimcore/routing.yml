@@ -2,7 +2,11 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
-my_trip:
+my_trip_add_step:
     path: /ajax/add-step
     defaults: { _controller: AppBundle\Controller\MyTripController::addStep }
+
+my_trip_load_step:
+    path: /ajax/load-steps
+    defaults: { _controller: AppBundle\Controller\MyTripController::loadSteps }
 

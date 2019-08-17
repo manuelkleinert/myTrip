@@ -22,7 +22,7 @@ return [
     2 => [
         "id" => 2,
         "name" => "mt_journey",
-        "pattern" => "/^\\/([a-z]{2})\\/mt([0-9])/",
+        "pattern" => "/^\\/([a-z]{2})\\/mt([\\d]+)/",
         "reverse" => "/%_locale/mt%id",
         "module" => "AppBundle",
         "controller" => "@AppBundle\\Controller\\MyTripController",
@@ -34,6 +34,6 @@ return [
         ],
         "priority" => 2,
         "creationDate" => 1565955049,
-        "modificationDate" => 1565955466
+        "modificationDate" => 1566021369
     ]
 ];
