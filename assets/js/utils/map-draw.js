@@ -14,21 +14,23 @@ export default function MapDraw(args) {
       this.id = args.id;
       this.accessToken = args.accessToken;
       this.steps = [];
-      this.loadSteps();
 
+      this.loadSteps();
       on(this.map.getContainer(), 'add-step', this.loadSteps.bind(this));
     }
 
     loadSteps() {
-      ajax('/ajax/load-steps', {
+      ajax('/ajax/load-geo-json', {
         method: 'POST',
         headers: { 'X-Requested-With': 'XMLHttpRequest' },
         data: JSON.stringify({ id: this.id }),
         responseType: 'json',
       }).then((req) => {
         if (req.status === 200 && req.response.success) {
-          this.steps = req.response.data;
-          this.draw();
+          // this.steps = req.response.data;
+          // this.draw();
+          console.log(req.response.data);
+          this.map.addSource('test', req.response.data);
         }
       });
     }

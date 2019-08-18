@@ -10,3 +10,7 @@ my_trip_load_step:
     path: /ajax/load-steps
     defaults: { _controller: AppBundle\Controller\MyTripController::loadSteps }
 
+my_trip_load_geojson:
+    path: /ajax/load-geo-json
+    defaults: { _controller: AppBundle\Controller\MyTripController::loadGeoJson }
+
