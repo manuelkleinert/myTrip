@@ -47,7 +47,7 @@ export default function MapDraw(args) {
     }
 
     getRoute(id, start, end) {
-      // const routeId = 'route-' + id; // eslint-disable-line prefer-template
+      const routeId = 'route-' + id; // eslint-disable-line prefer-template
       const url = 'https://api.mapbox.com/directions/v5/mapbox/cycling/' + start[0] + ',' + start[1] + ';' + end[0] + ',' + end[1] + '?steps=true&geometries=geojson&access_token=' + this.accessToken; // eslint-disable-line prefer-template
 
       ajax(url, {
@@ -67,11 +67,10 @@ export default function MapDraw(args) {
           };
 
           // if the route already exists on the map, reset it using setData
-          if (this.map.getSource('test')) {
-            this.map.getSource('test').setData(geoJson);
+          if (this.map.getSource(routeId)) {
+            this.map.getSource(routeId).setData(geoJson);
           } else {
-            this.map.addLayer({
-              id: 'test',
+            this.map.addSource(routeId, {
               type: 'line',
               source: {
                 type: 'geojson',
