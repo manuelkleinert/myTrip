@@ -1,3 +1,4 @@
+import mapBoxGl from 'mapbox-gl';
 import {
   $,
   $$,
@@ -18,10 +19,9 @@ export default function MapStep(args) {
       this.transportableType = $$('button[data-transportable-type]', this.editModal);
       this.addButton = $('button.mt-add-step');
 
-      this.map.on('click', 'points', this.openStep.bind(this));
-      this.map.on('click', this.loadData.bind(this));
-      on(this.transportableType, 'click', this.setTransportableType.bind(this));
+      this.map.on('click', this.mapClickEvent.bind(this));
       on(this.addButton, 'click', this.saveStep.bind(this));
+      on(this.transportableType, 'click', this.setTransportableType.bind(this));
 
       this.data = {
         id: args.id,
@@ -32,25 +32,28 @@ export default function MapStep(args) {
       };
     }
 
-    loadData(e) {
-      console.log(e);
-      this.feature = null;
-      this.features = this.map.queryRenderedFeatures(e.point);
-      this.data.lat = e.lngLat.lat;
-      this.data.lng = e.lngLat.lng;
-      this.data.title = '';
+    mapClickEvent(e) {
+      const bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
+      const selectPoints = this.map.queryRenderedFeatures(bbox, { layers: ['points'] });
 
-      /** @method offcanvas */
-      UIkit.offcanvas(this.editModal).show();
+      if (selectPoints.length > 0) {
+        each(selectPoints, this.openStepLabel.bind(this));
+      } else {
+        this.feature = null;
+        this.features = this.map.queryRenderedFeatures(e.point);
+        this.data.lat = e.lngLat.lat;
+        this.data.lng = e.lngLat.lng;
+        this.data.title = '';
 
-      if (this.features.length) {
-        each(this.features, (obj) => {
-          this.data.title = obj.properties.name_de ? obj.properties.name_de : '';
-          this.feature = obj;
-          return false;
-        });
+        if (this.features.length) {
+          each(this.features, (obj) => {
+            this.data.title = obj.properties.name_de ? obj.properties.name_de : '';
+            this.feature = obj;
+            return false;
+          });
+        }
+        this.setForm();
       }
-      this.setForm();
     }
 
     setTransportableType(e) {
@@ -64,6 +67,9 @@ export default function MapStep(args) {
         const formField = $('[name="' + key + '"]', this.editModal); // eslint-disable-line prefer-template
         if (formField) { formField.value = data; }
       });
+
+      /** @method offcanvas */
+      UIkit.offcanvas(this.editModal).show();
     }
 
     saveStep() {
@@ -72,17 +78,32 @@ export default function MapStep(args) {
         headers: { 'X-Requested-With': 'XMLHttpRequest' },
         data: JSON.stringify(this.data),
         responseType: 'json',
-      }).then((xhr) => {
-        if (xhr.status === 200) {
+      }).then((req) => {
+        if (req.status === 200) {
           trigger(this.map.getContainer(), createEvent('add-step'));
         }
       });
     }
 
-    openStep(e) {
-      console.log('test');
-      console.log(e);
-      console.log(this);
+    openStepLabel(point) {
+      if (point.type === 'Feature') {
+        /** @method offcanvas */
+        UIkit.offcanvas(this.editModal).hide();
+
+        ajax('/ajax/load-step', {
+          method: 'POST',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' },
+          data: JSON.stringify({ id: point.properties.id }),
+          responseType: 'json',
+        }).then((req) => {
+          if (req.status === 200) {
+            new mapBoxGl.Popup()
+              .setLngLat(point.geometry.coordinates)
+              .setHTML(req.response.data.title)
+              .addTo(this.map);
+          }
+        });
+      }
     }
   }
 

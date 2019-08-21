@@ -140,7 +140,40 @@ class MyTripController extends FrontendController
      * @return JsonResponse
      * @throws \Exception
      */
-    public function loadSteps(Request $request): JsonResponse
+    public function loadStep(Request $request): JsonResponse
+    {
+        $response = [ 'message' => 'no.access', 'success' => false ];
+        $data = json_decode($request->getContent(), true);
+        $step = Step::getById($data['id']);
+
+        if ($step instanceof Step) {
+            $this->journey = $step->getJourney();
+            if($this->journeyAccess($this->journey)) {
+                $response = [
+                    'message' => 'load.step',
+                    'success' => true,
+                    'data' => [
+                        'id' => $step->getId(),
+                        'title' => $step->getTitle(),
+                        'text' => $step->getText(),
+                        'date' => $step->getDateTime(),
+                        'dateTo' => $step->getDateTimeTo(),
+                        'lat' => $step->getGeoPoint()->getLatitude(),
+                        'lng' => $step->getGeoPoint()->getLongitude(),
+                    ]
+                ];
+            }
+        }
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function loadStepList(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         $this->journey = Journey::getById($data['id']);

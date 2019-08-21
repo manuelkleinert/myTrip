@@ -7,6 +7,10 @@ my_trip_add_step:
     defaults: { _controller: AppBundle\Controller\MyTripController::addStep }
 
 my_trip_load_step:
+    path: /ajax/load-step
+    defaults: { _controller: AppBundle\Controller\MyTripController::loadStep }
+
+my_trip_load_steps:
     path: /ajax/load-steps
     defaults: { _controller: AppBundle\Controller\MyTripController::loadSteps }
 
