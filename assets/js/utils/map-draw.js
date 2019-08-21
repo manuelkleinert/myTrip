@@ -3,7 +3,7 @@ import {
   each,
   attr,
   addClass,
-  on,
+  // on,
 } from 'uikit/src/js/util';
 import mapBoxGl from 'mapbox-gl';
 
@@ -15,8 +15,88 @@ export default function MapDraw(args) {
       this.accessToken = args.accessToken;
       this.steps = [];
 
-      this.loadSteps();
-      on(this.map.getContainer(), 'add-step', this.loadSteps.bind(this));
+      this.map.addLayer({
+        id: 'test-line',
+        type: 'line',
+        source: {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [{
+              type: 'Feature',
+              properties: { },
+              geometry: {
+                type: 'LineString',
+                coordinates: [
+                  [8.310856819152832, 47.05108985312085],
+                  [8.30390453338623, 47.04780754012035],
+                ],
+              },
+            }],
+          },
+        },
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round',
+        },
+        paint: {
+          'line-color': '#ff0000',
+          'line-width': 8,
+        },
+      });
+
+      this.map.addLayer({
+        id: 'fly',
+        type: 'symbol',
+        source: {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [{
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [-77.03238901390978, 38.913188059745586],
+              },
+              properties: {
+                title: 'Mapbox DC',
+                icon: 'harbor',
+              },
+            }, {
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [-122.414, 37.776],
+              },
+              properties: {
+                title: 'Mapbox SF',
+                icon: 'harbor',
+              },
+            }, {
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [8.310341835021973, 47.05019070951365],
+              },
+              properties: {
+                title: 'TEST',
+                icon: 'harbor',
+              },
+            }],
+          },
+        },
+        layout: {
+          'icon-image': '{icon}-15',
+          'text-field': '{title}',
+          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-offset': [0, 0.6],
+          'text-anchor': 'top',
+        },
+      });
+
+
+      // this.loadSteps();
+      // on(this.map.getContainer(), 'add-step', this.loadSteps.bind(this));
     }
 
     loadSteps() {

@@ -47,15 +47,17 @@ export default {
       }));
 
       if (this.jId !== null) {
-        mapStep({
-          id: this.jId,
-          map: this.map,
-        });
+        this.map.on('load', () => {
+          mapStep({
+            id: this.jId,
+            map: this.map,
+          });
 
-        mapDraw({
-          id: this.jId,
-          map: this.map,
-          accessToken: mapBoxGl.accessToken,
+          mapDraw({
+            id: this.jId,
+            map: this.map,
+            accessToken: mapBoxGl.accessToken,
+          });
         });
       }
     },
