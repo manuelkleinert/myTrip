@@ -198,42 +198,42 @@ class MyTripController extends FrontendController
             $stepsList->setOrder(['ASC', 'ASC']);
             $stepsList->load();
 
-            $geoJson = [
+            $geoJson = [];
+            $geoJson['symbol'] = [
                 'type' => 'FeatureCollection',
-                'features' => []
+                'features' => [],
+            ];
+            $geoJson['line'] = [
+                'type' => 'Feature',
+                'properties' => [],
+                'geometry' => [
+                    'type' => 'LineString',
+                    'coordinates' => []
+                ]
             ];
 
             if ($stepsList) {
                 foreach ($stepsList as $step) {
-//                    $stepsResponse[] = [
-//                        'id' => $step->getId(),
-//                        'title' => $step->getTitle(),
-//                        'date' => $step->getDateTime(),
-//                        'date' => $step->getDateTimeTo(),
-//                        'lat' => $step->getGeoPoint()->getLatitude(),
-//                        'lng' => $step->getGeoPoint()->getLongitude(),
-//                    ];
 
-                    $geoJson['features-point'][] = [
-                        'type' => 'Feature',
-                        'properties' => [],
-                        'geometry' => [
-                            'type' => 'LineString',
-                            'coordinates' => [
-                                [8.310856819152832, 47.05108985312085],
-                                [8.30390453338623, 47.04780754012035],
-                            ]
-                        ]
+                    $geoJson['line']['geometry']['coordinates'][] = [
+                        $step->getGeoPoint()->getLongitude(),
+                        $step->getGeoPoint()->getLatitude(),
                     ];
 
-                    $geoJson['features-symbol'][] = [
+                    $geoJson['symbol']['features'][] = [
                         'type'=> 'Feature',
                         'geometry' => [
                             'type' => 'Point',
-                            'coordinates' => [-77.03238901390978, 38.913188059745586],
+                            'coordinates' => [
+                                $step->getGeoPoint()->getLongitude(),
+                                $step->getGeoPoint()->getLatitude()
+                            ],
                         ],
                         'properties' => [
-                            'title' => 'Mapbox DC',
+                            'id' => $step->getId(),
+                            'title' => $step->getTitle(),
+                            'dataFrom' => $step->getDateTime(),
+                            'dateTo' => $step->getDateTimeTo(),
                             'icon' => 'harbor',
                         ],
                     ];

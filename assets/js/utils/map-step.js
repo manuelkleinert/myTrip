@@ -18,6 +18,7 @@ export default function MapStep(args) {
       this.transportableType = $$('button[data-transportable-type]', this.editModal);
       this.addButton = $('button.mt-add-step');
 
+      this.map.on('click', 'points', this.openStep.bind(this));
       this.map.on('click', this.loadData.bind(this));
       on(this.transportableType, 'click', this.setTransportableType.bind(this));
       on(this.addButton, 'click', this.saveStep.bind(this));
@@ -32,6 +33,7 @@ export default function MapStep(args) {
     }
 
     loadData(e) {
+      console.log(e);
       this.feature = null;
       this.features = this.map.queryRenderedFeatures(e.point);
       this.data.lat = e.lngLat.lat;
@@ -75,6 +77,12 @@ export default function MapStep(args) {
           trigger(this.map.getContainer(), createEvent('add-step'));
         }
       });
+    }
+
+    openStep(e) {
+      console.log('test');
+      console.log(e);
+      console.log(this);
     }
   }
 
