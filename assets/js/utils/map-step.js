@@ -1,4 +1,3 @@
-import mapBoxGl from 'mapbox-gl';
 import {
   $,
   $$,
@@ -9,6 +8,7 @@ import {
   createEvent,
   trigger,
 } from 'uikit/src/js/util';
+import mapBoxGl from 'mapbox-gl';
 
 export default function MapStep(args) {
   class EditStep {
