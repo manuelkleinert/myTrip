@@ -248,11 +248,13 @@ class MyTripController extends FrontendController
             if ($stepsList) {
                 foreach ($stepsList as $step) {
 
+                    // Add Line
                     $geoJson['line']['geometry']['coordinates'][] = [
                         $step->getGeoPoint()->getLongitude(),
                         $step->getGeoPoint()->getLatitude(),
                     ];
 
+                    // Add symbol
                     $geoJson['symbol']['features'][] = [
                         'type'=> 'Feature',
                         'geometry' => [
