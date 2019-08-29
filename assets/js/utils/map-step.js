@@ -64,7 +64,7 @@ export default function MapStep(args) {
 
     setForm() {
       each(this.data, (data, key) => {
-        const formField = $('[name="' + key + '"]', this.editModal); // eslint-disable-line prefer-template
+        const formField = $(`[name="${key}"]`, this.editModal);
         if (formField) { formField.value = data; }
       });
 
