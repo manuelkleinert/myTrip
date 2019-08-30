@@ -26,11 +26,7 @@ Encore
   .enableEslintLoader()
   .splitEntryChunks()
   .configureBabel(() => {}, {
-    includeNodeModules: [
-      'mapbox-gl',
-      'mapbox-gl-geocoder',
-      'uikit',
-    ],
+    includeNodeModules: ['uikit'],
     useBuiltIns: 'usage',
     corejs: 3,
   })
