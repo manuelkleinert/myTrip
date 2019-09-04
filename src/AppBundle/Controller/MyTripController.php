@@ -8,6 +8,7 @@ use Pimcore\Model\DataObject\Journey;
 use Pimcore\Model\DataObject\MembersUser;
 use Pimcore\Model\DataObject\Service;
 use Pimcore\Model\DataObject\Step;
+use Pimcore\Model\DataObject\Transportable;
 use Pimcore\Model\DataObject\TransportableType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -100,10 +101,11 @@ class MyTripController extends FrontendController
      * @return JsonResponse
      * @throws \Exception
      */
-    public function addStep(Request $request): JsonResponse
+    public function updateStep(Request $request): JsonResponse
     {
+        $step = null;
         $data = json_decode($request->getContent(), true);
-        $this->journey = Journey::getById($data['id']);
+        $this->journey = Journey::getById($data['journeyId']);
 
         $response = [
             'message' => 'error.not.login',
@@ -111,25 +113,40 @@ class MyTripController extends FrontendController
         ];
 
         if($this->journeyAccess($this->journey)) {
-            $step = New Step();
-            $step->setParent(Service::createFolderByPath(
-                sprintf('%s/%s', $this->journey->getFullPath(), 'steps')));
-            $step->setKey(Service::getValidKey(sprintf('%s_%s_%s',
-                $data['title'],
-                round($data['lat']),
-                round($data['lng'])
-            ), 'object'));
-            $step->setKey(Service::getUniqueKey($step));
-            $step->setJourney($this->journey);
-            $step->setTitle($data['title']);
-            $step->setGeoPoint(new Geopoint( $data['lng'], $data['lat']));
-            $step->setPublished(true);
-            $step->save();
 
-            $response = [
-                'message' => 'save.step',
-                'success' => true,
-            ];
+            if ($data['stepId']) {
+                $step = Step::getById($data['stepId']);
+            } else {
+                $step = New Step();
+            }
+
+            $transportableObject = TransportableType::getById($data['transportableId']);
+
+            if ($step instanceof Step) {
+                $step->setParent(Service::createFolderByPath(
+                    sprintf('%s/%s', $this->journey->getFullPath(), 'steps')));
+                $step->setKey(Service::getValidKey(sprintf('%s_%s_%s',
+                    $data['title'],
+                    round($data['lat']),
+                    round($data['lng'])
+                ), 'object'));
+                $step->setKey(Service::getUniqueKey($step));
+                $step->setJourney($this->journey);
+                $step->setTitle($data['title']);
+                $step->setGeoPoint(new Geopoint( $data['lng'], $data['lat']));
+                $step->setPublished(true);
+
+                if ($transportableObject instanceof TransportableType) {
+                    $step->setTransporation($transportableObject);
+                }
+
+                $step->save();
+
+                $response = [
+                    'message' => 'save.step',
+                    'success' => true,
+                ];
+            }
         }
 
         return new JsonResponse($response);
@@ -149,17 +166,25 @@ class MyTripController extends FrontendController
         if ($step instanceof Step) {
             $this->journey = $step->getJourney();
             if($this->journeyAccess($this->journey)) {
+
+                $transporationId = '';
+                if ($step->getTransporation() instanceof TransportableType) {
+                    $transporationId = $step->getTransporation()->getId();
+                }
+
                 $response = [
                     'message' => 'load.step',
                     'success' => true,
                     'data' => [
-                        'id' => $step->getId(),
+                        'journeyId' => $this->journey->getId(),
+                        'stepId' => $step->getId(),
                         'title' => $step->getTitle(),
                         'text' => $step->getText(),
                         'date' => $step->getDateTime(),
                         'dateTo' => $step->getDateTimeTo(),
                         'lat' => $step->getGeoPoint()->getLatitude(),
                         'lng' => $step->getGeoPoint()->getLongitude(),
+                        'transportableId' => $transporationId,
                     ]
                 ];
             }

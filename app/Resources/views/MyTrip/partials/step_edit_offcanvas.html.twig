@@ -1,7 +1,9 @@
 {% if user is defined %}
-    <div class="journey-overlay" id=journey-overlay" data-uk-offcanvas="mode: push;">
+    <div id="mt-step-edit" class="mt-step-edit" data-uk-offcanvas>
         <div class="uk-offcanvas-bar">
             <button class="uk-offcanvas-close" type="button" data-uk-close></button>
+
+            <input name="stepId" type="hidden">
 
             <div class="uk-margin">
                 <label class="uk-form-label">{{ 'app.form.step.label.title'|trans }}</label>

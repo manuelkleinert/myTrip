@@ -3,32 +3,42 @@ import {
   $$,
   on,
   each,
-  attr,
   ajax,
+  attr,
   createEvent,
   trigger,
+  html,
+  addClass,
+  removeClass,
+  hasClass,
 } from 'uikit/src/js/util';
-import mapBoxGl from 'mapbox-gl';
 
 export default function MapStep(args) {
   class EditStep {
     constructor() {
       this.map = args.map;
       this.feature = null;
-      this.editModal = $('.journey-overlay');
+
+      this.detailModal = $('#mt-step-detail');
+      this.detailModalEditButteon = $('.mt-edit', this.detailModal);
+      this.editModal = $('#mt-step-edit');
+
       this.transportableType = $$('button[data-transportable-type]', this.editModal);
       this.addButton = $('button.mt-add-step');
 
       this.map.on('click', this.mapClickEvent.bind(this));
+
       on(this.addButton, 'click', this.saveStep.bind(this));
       on(this.transportableType, 'click', this.setTransportableType.bind(this));
+      on(this.detailModalEditButteon, 'click', this.openEditor.bind(this));
 
       this.data = {
-        id: args.id,
+        journeyId: args.id,
+        stepId: '',
         title: '',
         lat: '',
         lng: '',
-        transportableType: null,
+        transportableId: null,
       };
     }
 
@@ -37,57 +47,71 @@ export default function MapStep(args) {
       const selectPoints = this.map.queryRenderedFeatures(bbox, { layers: ['points'] });
 
       if (selectPoints.length > 0) {
-        each(selectPoints, this.openStepLabel.bind(this));
+        each(selectPoints, this.openDetail.bind(this));
       } else {
         this.feature = null;
         this.features = this.map.queryRenderedFeatures(e.point);
+
         this.data.lat = e.lngLat.lat;
         this.data.lng = e.lngLat.lng;
+        this.data.stepId = '';
         this.data.title = '';
-
-        if (this.features.length) {
-          each(this.features, (obj) => {
-            this.data.title = obj.properties.name_de ? obj.properties.name_de : '';
-            this.feature = obj;
-            return false;
-          });
-        }
-        this.setForm();
+        this.openEditor();
       }
     }
 
     setTransportableType(e) {
-      each(this.transportableType, (type) => { type.classList.remove('mt-select'); });
-      e.currentTarget.classList.add('mt-select');
-      this.data.transportableType = attr(e.currentTarget, 'data-transportable-type');
+      each(this.transportableType, (obj) => {
+        if (hasClass($(obj), 'mt-select')) {
+          removeClass($(obj), 'mt-select');
+        }
+      });
+      addClass($(e.currentTarget), 'mt-select');
+      this.data.transportableId = attr($(e.currentTarget), 'data-transportable-type');
     }
 
-    setForm() {
+    openEditor() {
+      if (this.features && this.features.length) {
+        each(this.features, (obj) => {
+          this.data.title = obj.properties.name_de ? obj.properties.name_de : '';
+          this.feature = obj;
+          return false;
+        });
+      }
+
       each(this.data, (data, key) => {
-        const formField = $(`[name="${key}"]`, this.editModal);
+        const formField = $(`[name=${key}]`, this.editModal);
         if (formField) { formField.value = data; }
       });
 
-      /** @method offcanvas */
+      if (this.data.transportableId) {
+        addClass($(`[data-transportable-type=${this.data.transportableId}]`, this.transportableType), 'mt-select');
+      }
+
       UIkit.offcanvas(this.editModal).show();
     }
 
     saveStep() {
-      ajax('/ajax/add-step', {
+      each(this.data, (data, key) => {
+        const formField = $(`[name=${key}]`, this.editModal);
+        if (formField) { this.data[key] = formField.value; }
+      });
+
+      ajax('/ajax/update-step', {
         method: 'POST',
         headers: { 'X-Requested-With': 'XMLHttpRequest' },
         data: JSON.stringify(this.data),
         responseType: 'json',
       }).then((req) => {
         if (req.status === 200) {
+          UIkit.offcanvas(this.editModal).hide();
           trigger(this.map.getContainer(), createEvent('add-step'));
         }
       });
     }
 
-    openStepLabel(point) {
+    openDetail(point) {
       if (point.type === 'Feature') {
-        /** @method offcanvas */
         UIkit.offcanvas(this.editModal).hide();
 
         ajax('/ajax/load-step', {
@@ -97,10 +121,14 @@ export default function MapStep(args) {
           responseType: 'json',
         }).then((req) => {
           if (req.status === 200) {
-            new mapBoxGl.Popup()
-              .setLngLat(point.geometry.coordinates)
-              .setHTML(req.response.data.title)
-              .addTo(this.map);
+            this.data = req.response.data;
+            if (this.data.title || this.data.text) {
+              html($('.uk-modal-title', this.detailModal), this.data.title);
+              html($('.uk-modal-body', this.detailModal), this.data.text);
+              UIkit.modal(this.detailModal).show();
+            } else {
+              this.openEditor();
+            }
           }
         });
       }

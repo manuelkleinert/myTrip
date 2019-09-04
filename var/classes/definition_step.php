@@ -1,11 +1,11 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-17T13:53:53+02:00
+* Generated at: 2019-09-04T17:22:54+02:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
-* IP: 172.20.0.1
+* IP: 192.168.80.1
 
 
 Fields Summary: 
@@ -16,7 +16,7 @@ Fields Summary:
 - wetter [input]
 - text [wysiwyg]
 - journey [manyToOneRelation]
-- transporation [manyToManyObjectRelation]
+- transporation [manyToOneRelation]
 - activity_event [manyToOneRelation]
 - place [manyToOneRelation]
 - geoPoint [geopoint]
@@ -28,7 +28,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'name' => 'Step',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1566042833,
+   'modificationDate' => 1567610574,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -271,7 +271,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => true,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -280,19 +280,24 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleSearch' => false,
           )),
           7 => 
-          Pimcore\Model\DataObject\ClassDefinition\Data\ManyToManyObjectRelation::__set_state(array(
-             'fieldtype' => 'manyToManyObjectRelation',
+          Pimcore\Model\DataObject\ClassDefinition\Data\ManyToOneRelation::__set_state(array(
+             'fieldtype' => 'manyToOneRelation',
              'width' => '',
-             'height' => '',
-             'maxItems' => '',
-             'queryColumnType' => 'text',
-             'phpdocType' => 'array',
+             'assetUploadPath' => '',
              'relationType' => true,
-             'visibleFields' => 
+             'queryColumnType' => 
+            array (
+              'id' => 'int(11)',
+              'type' => 'enum(\'document\',\'asset\',\'object\')',
+            ),
+             'phpdocType' => '\\Pimcore\\Model\\Document\\Page | \\Pimcore\\Model\\Document\\Snippet | \\Pimcore\\Model\\Document | \\Pimcore\\Model\\Asset | \\Pimcore\\Model\\DataObject\\AbstractObject',
+             'objectsAllowed' => true,
+             'assetsAllowed' => false,
+             'assetTypes' => 
             array (
             ),
-             'optimizedAdminLoading' => false,
-             'visibleFieldDefinitions' => 
+             'documentsAllowed' => false,
+             'documentTypes' => 
             array (
             ),
              'lazyLoading' => false,
@@ -300,7 +305,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
             array (
               0 => 
               array (
-                'classes' => 'Transportable',
+                'classes' => 'TransportableType',
               ),
             ),
              'pathFormatterClass' => '',
@@ -310,7 +315,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => false,
+             'locked' => NULL,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',

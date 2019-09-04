@@ -5,10 +5,9 @@ export default function MapSlider(args) {
       this.steps = [];
     }
 
-    uodateSlider(steps) {
+    updateSlider(steps) {
       this.steps = steps;
     }
   }
-
   return new Slider();
 }
