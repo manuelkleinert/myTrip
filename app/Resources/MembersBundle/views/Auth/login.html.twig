@@ -1,0 +1,7 @@
+{% extends '@Members/layout.html.twig' %}
+
+{% block members_user_content %}
+    <div class="uk-flex uk-flex-middle uk-flex-center" data-uk-height-viewport>
+        {{ include('@Members/Auth/login_content.html.twig') }}
+    </div>
+{% endblock members_user_content %}
