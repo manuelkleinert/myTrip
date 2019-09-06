@@ -125,7 +125,7 @@ export default function MapStep(args) {
           headers: { 'X-Requested-With': 'XMLHttpRequest' },
           data: JSON.stringify(this.data),
           responseType: 'json',
-        }).then((req) => {
+        }).then(() => {
           UIkit.offcanvas(this.editModal).hide();
           trigger(this.map.getContainer(), createEvent('remove-step'));
         });

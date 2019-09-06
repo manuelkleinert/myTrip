@@ -14,8 +14,8 @@
             {{ user.getUserName() }}
 
             <div class="uk-grid uk-child-width-1-2@m">
-                <button class="mt-journey-item add-journey">
-                    {{ 'app.journey.add.button.title'|trans }}
+                <button class="uk-button uk-button-default" data-uk-toggle="target: #mt-create-journey" type="button">
+                    {{ 'app.journey.create.button.title'|trans }}
                 </button>
 
                 {% if journeyList is defined and journeyList is not empty %}
@@ -33,6 +33,9 @@
             </div>
 
         {% else %}
+
+            {{ pimcore_area('login-area', { 'type' : 'members_login' }) }}
+
             <a href="/{{ app.request.locale }}/members/register" class="uk-button">
                 {{ 'app.button.registration'|trans }}
             </a>

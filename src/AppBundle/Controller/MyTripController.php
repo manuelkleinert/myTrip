@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\Type\JourneyType;
 use Pimcore\Controller\FrontendController;
 use Pimcore\Model\DataObject\Data\Geopoint;
 use Pimcore\Model\DataObject\Journey;
@@ -65,6 +66,15 @@ class MyTripController extends FrontendController
         $this->journey = Journey::getById($request->get('id'));
 
         if ($this->loginUser instanceof MembersUser) {
+
+            /*$createJourney = $this->createForm(JourneyType::class, null, [
+                'filter' => $request->get('filter'),
+            ]);
+            $createJourney = $createJourney->handleRequest($request);
+            if ($createJourney->isSubmitted() && $createJourney->isValid()) {
+                $data = $createJourney->getData();
+            }*/
+
             $journeyList = new Journey\Listing();
             $journeyList->setCondition('owner__id = :userId OR share LIKE :userIdLike', [
                 'userId' => $this->loginUser->getId(),
@@ -80,6 +90,7 @@ class MyTripController extends FrontendController
             $transportableTypeList->load();
 
             return $this->renderTemplate('MyTrip/map.html.twig', [
+                //'createJourneyForm' => $createJourney->createView(),
                 'user' => $this->loginUser,
                 'transportableTypeList' => $transportableTypeList,
                 'journeyList' => $journeyList,
