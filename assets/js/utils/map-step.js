@@ -25,10 +25,12 @@ export default function MapStep(args) {
 
       this.transportableType = $$('button[data-transportable-type]', this.editModal);
       this.addButton = $('button.mt-add-step');
+      this.removeButton = $('button.mt-remove-step');
 
       this.map.on('click', this.mapClickEvent.bind(this));
 
       on(this.addButton, 'click', this.saveStep.bind(this));
+      on(this.removeButton, 'click', this.removeStep.bind(this));
       on(this.transportableType, 'click', this.setTransportableType.bind(this));
       on(this.detailModalEditButteon, 'click', this.openEditor.bind(this));
 
@@ -66,7 +68,7 @@ export default function MapStep(args) {
           removeClass($(obj), 'mt-select');
         }
       });
-      addClass($(e.currentTarget), 'mt-select');
+      addClass(e.currentTarget, 'mt-select');
       this.data.transportableId = attr($(e.currentTarget), 'data-transportable-type');
     }
 
@@ -86,6 +88,12 @@ export default function MapStep(args) {
 
       if (this.data.transportableId) {
         addClass($(`[data-transportable-type=${this.data.transportableId}]`, this.transportableType), 'mt-select');
+      }
+
+      if (this.data.stepId) {
+        removeClass(this.removeButton, 'uk-hidden');
+      } else {
+        addClass(this.removeButton, 'uk-hidden');
       }
 
       UIkit.offcanvas(this.editModal).show();
@@ -108,6 +116,20 @@ export default function MapStep(args) {
           trigger(this.map.getContainer(), createEvent('add-step'));
         }
       });
+    }
+
+    removeStep() {
+      if (this.data.stepId) {
+        ajax('/ajax/remove-step', {
+          method: 'POST',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' },
+          data: JSON.stringify(this.data),
+          responseType: 'json',
+        }).then((req) => {
+          UIkit.offcanvas(this.editModal).hide();
+          trigger(this.map.getContainer(), createEvent('remove-step'));
+        });
+      }
     }
 
     openDetail(point) {

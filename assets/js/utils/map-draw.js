@@ -9,7 +9,7 @@ export default function MapDraw(args) {
       this.data = [];
 
       this.loadSteps();
-      on(this.map.getContainer(), 'add-step', this.loadSteps.bind(this));
+      on(this.map.getContainer(), 'add-step remove-step', this.loadSteps.bind(this));
     }
 
     loadSteps() {

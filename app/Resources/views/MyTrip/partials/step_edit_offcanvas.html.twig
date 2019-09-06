@@ -55,9 +55,12 @@
 
             {% if transportableTypeList is defined and transportableTypeList is not empty %}
                 {% for transportableType in transportableTypeList %}
-                    <button class="uk-icon-button  uk-margin-small-right"
+                    <button class="uk-icon-button  uk-margin-small-right" type="button"
                             data-transportable-type="{{ transportableType.getId() }}"
-                            data-uk-icon="mt-car"></button>
+                        {% if transportableType.getIcon() is not empty %}
+                            data-uk-icon="mt-{{ transportableType.getIcon() }}"
+                        {% endif %}
+                    ></button>
                 {% endfor %}
             {% endif %}
 
@@ -66,6 +69,10 @@
                     {{ 'app.form.step.button.add'|trans }}
                 </button>
             </div>
+
+
+            <button class="mt-remove-step uk-icon-button uk-margin-top" data-uk-icon="trash"></button>
+
         </div>
     </div>
 {% endif %}

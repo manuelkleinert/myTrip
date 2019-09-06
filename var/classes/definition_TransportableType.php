@@ -1,17 +1,17 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-15T16:54:44+02:00
+* Generated at: 2019-09-06T15:57:31+02:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
-* IP: 172.18.0.1
+* IP: 192.168.32.1
 
 
 Fields Summary: 
 - localizedfields [localizedfields]
 -- title [input]
-- icon [image]
+- icon [select]
 */ 
 
 
@@ -20,7 +20,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'name' => 'TransportableType',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1565880883,
+   'modificationDate' => 1567778251,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -122,12 +122,12 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'referencedFields' => 
             array (
             ),
-             'tooltip' => NULL,
-             'mandatory' => NULL,
-             'noteditable' => NULL,
+             'tooltip' => '',
+             'mandatory' => false,
+             'noteditable' => false,
              'index' => NULL,
-             'locked' => NULL,
-             'style' => NULL,
+             'locked' => false,
+             'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
              'relationType' => false,
@@ -136,14 +136,70 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleSearch' => true,
           )),
           1 => 
-          Pimcore\Model\DataObject\ClassDefinition\Data\Image::__set_state(array(
-             'fieldtype' => 'image',
+          Pimcore\Model\DataObject\ClassDefinition\Data\Select::__set_state(array(
+             'fieldtype' => 'select',
+             'options' => 
+            array (
+              0 => 
+              array (
+                'key' => 'train',
+                'value' => 'train',
+              ),
+              1 => 
+              array (
+                'key' => 'taxi',
+                'value' => 'taxi',
+              ),
+              2 => 
+              array (
+                'key' => 'scooter',
+                'value' => 'scooter',
+              ),
+              3 => 
+              array (
+                'key' => 'car',
+                'value' => 'car',
+              ),
+              4 => 
+              array (
+                'key' => 'camper',
+                'value' => 'camper',
+              ),
+              5 => 
+              array (
+                'key' => 'bus',
+                'value' => 'bus',
+              ),
+              6 => 
+              array (
+                'key' => 'boat',
+                'value' => 'boat',
+              ),
+              7 => 
+              array (
+                'key' => 'bike',
+                'value' => 'bike',
+              ),
+              8 => 
+              array (
+                'key' => 'bicycle',
+                'value' => 'bicycle',
+              ),
+              9 => 
+              array (
+                'key' => 'aircraft',
+                'value' => 'aircraft',
+              ),
+            ),
              'width' => '',
-             'height' => '',
-             'uploadPath' => '',
-             'queryColumnType' => 'int(11)',
-             'columnType' => 'int(11)',
-             'phpdocType' => '\\Pimcore\\Model\\Asset\\Image',
+             'defaultValue' => '',
+             'optionsProviderClass' => '',
+             'optionsProviderData' => '',
+             'queryColumnType' => 'varchar',
+             'columnType' => 'varchar',
+             'columnLength' => 190,
+             'phpdocType' => 'string',
+             'dynamicOptions' => false,
              'name' => 'icon',
              'title' => 'Icon',
              'tooltip' => '',

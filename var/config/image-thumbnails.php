@@ -51,5 +51,33 @@ return [
         "modificationDate" => 1565938723,
         "creationDate" => 1565938546,
         "id" => "transportable-type-icon"
+    ],
+    "edit-transpotable-type-icon" => [
+        "items" => [
+            [
+                "method" => "contain",
+                "arguments" => [
+                    "width" => 20,
+                    "height" => 20,
+                    "forceResize" => FALSE
+                ]
+            ]
+        ],
+        "medias" => [
+
+        ],
+        "name" => "edit-transpotable-type-icon",
+        "description" => "",
+        "group" => "",
+        "format" => "PRINT",
+        "quality" => 85,
+        "highResolution" => 0.0,
+        "preserveColor" => FALSE,
+        "preserveMetaData" => FALSE,
+        "rasterizeSVG" => FALSE,
+        "downloadable" => FALSE,
+        "modificationDate" => 1567777514,
+        "creationDate" => 1567777492,
+        "id" => "edit-transpotable-type-icon"
     ]
 ];

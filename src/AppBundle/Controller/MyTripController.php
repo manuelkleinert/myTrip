@@ -8,13 +8,13 @@ use Pimcore\Model\DataObject\Journey;
 use Pimcore\Model\DataObject\MembersUser;
 use Pimcore\Model\DataObject\Service;
 use Pimcore\Model\DataObject\Step;
-use Pimcore\Model\DataObject\Transportable;
 use Pimcore\Model\DataObject\TransportableType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Exception;
 
 class MyTripController extends FrontendController
 {
@@ -99,7 +99,7 @@ class MyTripController extends FrontendController
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws \Exception
+     * @throws Exception
      */
     public function updateStep(Request $request): JsonResponse
     {
@@ -155,7 +155,33 @@ class MyTripController extends FrontendController
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws \Exception
+     * @throws Exception
+     */
+    public function removeStep(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $response = ['message' => 'error.not.remove.step', 'success' => false];
+
+        $this->journey = Journey::getById($data['journeyId']);
+
+        if($this->journeyAccess($this->journey)) {
+            $step = Step::getById($data['stepId']);
+            if ($step instanceof Step && $this->journey === $step->getJourney()) {
+                $step->delete();
+                $response = [
+                    'message' => 'remove.step',
+                    'success' => true
+                ];
+            }
+        }
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws Exception
      */
     public function loadStep(Request $request): JsonResponse
     {
@@ -196,7 +222,7 @@ class MyTripController extends FrontendController
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws \Exception
+     * @throws Exception
      */
     public function loadStepList(Request $request): JsonResponse
     {
@@ -240,7 +266,7 @@ class MyTripController extends FrontendController
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws \Exception
+     * @throws Exception
      */
     public function loadGeoJson(Request $request): JsonResponse
     {
@@ -294,6 +320,7 @@ class MyTripController extends FrontendController
                             'title' => $step->getTitle(),
                             'dataFrom' => $step->getDateTime(),
                             'dateTo' => $step->getDateTimeTo(),
+                            'iconSize' => [40, 40],
                             'icon' => 'harbor',
                         ],
                     ];
