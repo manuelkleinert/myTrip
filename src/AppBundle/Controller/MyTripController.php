@@ -354,7 +354,9 @@ class MyTripController extends FrontendController
                             ],
                             'properties' => [
                                 'id' => $step->getId(),
-                                'color' => '#ff0000'
+                                'color' => '#ff0000',
+                                'title' => $step->getTitle(),
+                                'distance' => $this->roundDistance($step->getDistance())
                             ]
                         ];
                     }

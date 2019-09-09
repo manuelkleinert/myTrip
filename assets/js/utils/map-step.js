@@ -13,6 +13,7 @@ import {
   removeClass,
   hasClass,
 } from 'uikit/src/js/util';
+import mapBoxGl from 'mapbox-gl';
 
 export default function MapStep(args) {
   class EditStep {
@@ -27,8 +28,14 @@ export default function MapStep(args) {
       this.transportableType = $$('button[data-transportable-type]', this.editModal);
       this.addButton = $('button.mt-add-step');
       this.removeButton = $('button.mt-remove-step');
+      this.popup = new mapBoxGl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+      });
 
       this.map.on('click', this.mapClickEvent.bind(this));
+      this.map.on('mouseenter', 'lines', this.mapMouseEnterLine.bind(this));
+      this.map.on('mouseleave', 'lines', this.mapMouseLeaveLine.bind(this));
 
       on(this.addButton, 'click', this.saveStep.bind(this));
       on(this.removeButton, 'click', this.removeStep.bind(this));
@@ -46,11 +53,11 @@ export default function MapStep(args) {
     }
 
     mapClickEvent(e) {
-      const bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
-      const selectPoints = this.map.queryRenderedFeatures(bbox, { layers: ['points', 'lines'] });
+      const selectArea = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
+      const selectElement = this.map.queryRenderedFeatures(selectArea, { layers: ['points', 'lines'] });
 
-      if (selectPoints.length > 0) {
-        each(selectPoints, this.openDetail.bind(this));
+      if (selectElement.length > 0) {
+        each(selectElement, this.openDetail.bind(this));
       } else {
         this.feature = null;
         this.features = this.map.queryRenderedFeatures(e.point);
@@ -61,6 +68,23 @@ export default function MapStep(args) {
         this.data.title = '';
         this.openEditor();
       }
+    }
+
+    mapMouseEnterLine(e) {
+      if (e.features[0] && e.features[0].geometry.coordinates[0] && e.lngLat) {
+        const feature = e.features[0];
+        const data = feature.properties;
+        this.map.getCanvas().style.cursor = 'pointer';
+        const title = data.distance !== 'null' ? ` ${data.title} - ${data.distance}km` : data.title;
+        if (title) {
+          this.popup.setLngLat(e.lngLat).setHTML(title).addTo(this.map);
+        }
+      }
+    }
+
+    mapMouseLeaveLine() {
+      this.map.getCanvas().style.cursor = '';
+      this.popup.remove();
     }
 
     setTransportableType(e) {
