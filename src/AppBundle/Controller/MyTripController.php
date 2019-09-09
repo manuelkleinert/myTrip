@@ -67,13 +67,20 @@ class MyTripController extends FrontendController
 
         if ($this->loginUser instanceof MembersUser) {
 
-            /*$createJourney = $this->createForm(JourneyType::class, null, [
-                'filter' => $request->get('filter'),
-            ]);
+            $createJourney = $this->createForm(JourneyType::class);
             $createJourney = $createJourney->handleRequest($request);
             if ($createJourney->isSubmitted() && $createJourney->isValid()) {
                 $data = $createJourney->getData();
-            }*/
+
+                $journey = new Journey();
+                $journey->setParent(Service::createFolderByPath(sprintf('journeys/%s', $this->loginUser->getId())));
+                $journey->setKey(Service::getValidKey($data['title'], 'object'));
+                $journey->setTitle($data['title']);
+                $journey->setSubTitle($data['subTitle']);
+                $journey->setOwner($this->loginUser);
+                $journey->setPublished(true);
+                $journey->save();
+            }
 
             $journeyList = new Journey\Listing();
             $journeyList->setCondition('owner__id = :userId OR share LIKE :userIdLike', [
@@ -90,7 +97,7 @@ class MyTripController extends FrontendController
             $transportableTypeList->load();
 
             return $this->renderTemplate('MyTrip/map.html.twig', [
-                //'createJourneyForm' => $createJourney->createView(),
+                'createJourneyForm' => $createJourney->createView(),
                 'user' => $this->loginUser,
                 'transportableTypeList' => $transportableTypeList,
                 'journeyList' => $journeyList,

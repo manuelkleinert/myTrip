@@ -3,8 +3,7 @@
 namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,9 +23,17 @@ class JourneyType extends AbstractType
                 'label' => false,
                 'required' => true,
             ])
-            ->add('from', DateType::class)
-            ->add('to', DateType::class)
-            ->add('private', HiddenType::class)
+            ->add('from', TextType::class, [
+                'label' => false,
+                'required' => false,
+            ])
+            ->add('to', TextType::class, [
+                'label' => false,
+                'required' => false,
+            ])
+            ->add('private', CheckboxType::class, [
+                'required' => false,
+            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'app.journey.create.button',
                 'attr' => ['class' => 'uk-button uk-button-primary']
