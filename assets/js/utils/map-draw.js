@@ -66,7 +66,7 @@ export default function MapDraw(args) {
               'line-cap': 'round',
             },
             paint: {
-              'line-color': '#ff0000',
+              'line-color': ['get', 'color'],
               'line-width': 2,
             },
           });

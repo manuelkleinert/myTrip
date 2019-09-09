@@ -1,11 +1,11 @@
 <?php 
 
 /** 
-* Generated at: 2019-09-04T17:22:54+02:00
+* Generated at: 2019-09-09T15:53:23+02:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
-* IP: 192.168.80.1
+* IP: 192.168.32.1
 
 
 Fields Summary: 
@@ -19,7 +19,9 @@ Fields Summary:
 - transporation [manyToOneRelation]
 - activity_event [manyToOneRelation]
 - place [manyToOneRelation]
+- distance [numeric]
 - geoPoint [geopoint]
+- geoRoute [geopolygon]
 */ 
 
 
@@ -28,7 +30,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'name' => 'Step',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1567610574,
+   'modificationDate' => 1568037203,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -315,7 +317,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -408,6 +410,36 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleSearch' => false,
           )),
           10 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Numeric::__set_state(array(
+             'fieldtype' => 'numeric',
+             'width' => '',
+             'defaultValue' => NULL,
+             'queryColumnType' => 'double',
+             'columnType' => 'double',
+             'phpdocType' => 'float',
+             'integer' => false,
+             'unsigned' => false,
+             'minValue' => NULL,
+             'maxValue' => NULL,
+             'unique' => false,
+             'decimalSize' => NULL,
+             'decimalPrecision' => NULL,
+             'name' => 'distance',
+             'title' => 'Distance (meter)',
+             'tooltip' => '',
+             'mandatory' => false,
+             'noteditable' => false,
+             'index' => false,
+             'locked' => NULL,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          11 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\Geopoint::__set_state(array(
              'fieldtype' => 'geopoint',
              'queryColumnType' => 
@@ -429,6 +461,31 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'title' => 'Geo Point',
              'tooltip' => '',
              'mandatory' => true,
+             'noteditable' => false,
+             'index' => false,
+             'locked' => false,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          12 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Geopolygon::__set_state(array(
+             'fieldtype' => 'geopolygon',
+             'queryColumnType' => 'longtext',
+             'columnType' => 'longtext',
+             'phpdocType' => 'array',
+             'lat' => 0.0,
+             'lng' => 0.0,
+             'zoom' => 1,
+             'mapType' => 'roadmap',
+             'name' => 'geoRoute',
+             'title' => 'geoRoute',
+             'tooltip' => '',
+             'mandatory' => false,
              'noteditable' => false,
              'index' => false,
              'locked' => false,

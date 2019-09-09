@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use GuzzleHttp\Exception\GuzzleException;
 use Exception;
 
 class MyTripController extends FrontendController
@@ -66,7 +67,7 @@ class MyTripController extends FrontendController
     /**
      * @param Request $request
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function mapAction(Request $request): Response
     {
@@ -74,7 +75,6 @@ class MyTripController extends FrontendController
         $this->journey = Journey::getById($request->get('id'));
 
         if ($this->loginUser instanceof MembersUser) {
-
             $createJourney = $this->createForm(JourneyType::class);
             $createJourney = $createJourney->handleRequest($request);
             if ($createJourney->isSubmitted() && $createJourney->isValid()) {
@@ -125,7 +125,7 @@ class MyTripController extends FrontendController
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws Exception
+     * @throws GuzzleException
      */
     public function updateStep(Request $request): JsonResponse
     {
@@ -167,6 +167,7 @@ class MyTripController extends FrontendController
                 }
 
                 $step->save();
+                $this->updateRoutes($this->journey);
 
                 $response = [
                     'message' => 'save.step',
@@ -181,7 +182,7 @@ class MyTripController extends FrontendController
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws Exception
+     * @throws GuzzleException
      */
     public function removeStep(Request $request): JsonResponse
     {
@@ -194,6 +195,7 @@ class MyTripController extends FrontendController
             $step = Step::getById($data['stepId']);
             if ($step instanceof Step && $this->journey === $step->getJourney()) {
                 $step->delete();
+                $this->updateRoutes($this->journey);
                 $response = [
                     'message' => 'remove.step',
                     'success' => true
@@ -234,6 +236,7 @@ class MyTripController extends FrontendController
                         'text' => $step->getText(),
                         'date' => $step->getDateTime(),
                         'dateTo' => $step->getDateTimeTo(),
+                        'distance' => $this->roundDistance($step->getDistance()),
                         'lat' => $step->getGeoPoint()->getLatitude(),
                         'lng' => $step->getGeoPoint()->getLongitude(),
                         'transportableId' => $transporationId,
@@ -258,20 +261,14 @@ class MyTripController extends FrontendController
         $response = [ 'message' => 'no.access', 'success' => false ];
 
         if($this->journeyAccess($this->journey)) {
-            $stepsList = new Step\Listing();
-            $stepsList->setCondition('journey__id = :id', [ 'id' => $this->journey->getId()]);
-            $stepsList->setOrderKey(['dateTime', 'o_creationDate']);
-            $stepsList->setOrder(['ASC', 'ASC']);
-            $stepsList->load();
-
             $stepsResponse = [];
-            if ($stepsList) {
+            if ($stepsList = $this->getStepsByJourney($this->journey)) {
                 foreach ($stepsList as $step) {
                     $stepsResponse[] = [
                         'id' => $step->getId(),
                         'title' => $step->getTitle(),
                         'date' => $step->getDateTime(),
-                        'date' => $step->getDateTimeTo(),
+                        'dateTo' => $step->getDateTimeTo(),
                         'lat' => $step->getGeoPoint()->getLatitude(),
                         'lng' => $step->getGeoPoint()->getLongitude(),
                     ];
@@ -292,59 +289,76 @@ class MyTripController extends FrontendController
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws Exception
      */
     public function loadGeoJson(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         $this->journey = Journey::getById($data['id']);
-
         $response = [ 'message' => 'no.access', 'success' => false ];
 
-        if($this->journeyAccess($this->journey)) {
-            $stepsList = new Step\Listing();
-            $stepsList->setCondition('journey__id = :id', [ 'id' => $this->journey->getId()]);
-            $stepsList->setOrderKey(['dateTime', 'o_creationDate']);
-            $stepsList->setOrder(['ASC', 'ASC']);
-            $stepsList->load();
+        if(!$this->journeyAccess($this->journey)) {
+            return new JsonResponse($response);
+        }
 
+        if($stepList = $this->getStepsByJourney($this->journey)){
             $geoJson = [];
 
             $geoJson['point'] = [
                 'type' => 'FeatureCollection',
-                'features' => [],
+                'features' => []
             ];
 
             $geoJson['line'] = [
-                'type' => 'Feature',
-                'properties' => [],
-                'geometry' => [
-                    'type' => 'LineString',
-                    'coordinates' => []
-                ]
+                'type' => 'FeatureCollection',
+                'features' => []
             ];
 
-            if ($stepsList) {
-                $objectArray = $stepsList->getObjects();
-                foreach ($stepsList as $key => $step) {
+            if ($stepList) {
+                foreach ($stepList as $key => $step) {
+                    $nextStep = $stepList[$key+1];
                     $radius = 6;
 
-                    // Add Line
-                    $geoJson['line']['geometry']['coordinates'][] = [
-                        $step->getGeoPoint()->getLongitude(),
-                        $step->getGeoPoint()->getLatitude(),
-                    ];
+                    // Add Route
+                    if ($nextStep instanceof Step) {
+                        $lineGeometryCoordinates = [];
 
+                        // Add Line
+                        $lineGeometryCoordinates[] = [
+                            $step->getGeoPoint()->getLongitude(),
+                            $step->getGeoPoint()->getLatitude()
+                        ];
 
-                    if ($step->getTransporation() instanceof TransportableType) {
-                        if ($step->getTransporation()->getShowNextRoute()) {
-                            $nextStep = $objectArray[$key+1];
-                            if ($nextStep instanceof Step) {
-                                $this->getDirection($step, $nextStep);
-                                die;
+                        if ($step->getTransporation() instanceof TransportableType
+                            && $step->getGeoRoute()
+                            && $step->getTransporation()->getShowNextRoute()
+                        ) {
+                            foreach ($step->getGeoRoute() as $point) {
+                                $lineGeometryCoordinates[] = [
+                                    $point->getLongitude(),
+                                    $point->getLatitude()
+                                ];
                             }
                         }
+
+                        $lineGeometryCoordinates[] = [
+                            $nextStep->getGeoPoint()->getLongitude(),
+                            $nextStep->getGeoPoint()->getLatitude()
+                        ];
+
+                        $geoJson['line']['features'][] = [
+                            'type' => 'Feature',
+                            'geometry' => [
+                                'type' => 'LineString',
+                                'coordinates' => $lineGeometryCoordinates
+                            ],
+                            'properties' => [
+                                'id' => $step->getId(),
+                                'color' => '#ff0000'
+                            ]
+                        ];
                     }
+
 
                     // Set Radius
                     if ($step->getText() || $step->getText()) {
@@ -378,6 +392,7 @@ class MyTripController extends FrontendController
                 'data' => $geoJson
             ];
         }
+
         return new JsonResponse($response);
     }
 
@@ -386,7 +401,7 @@ class MyTripController extends FrontendController
      * @param Step $end
      * @param string $type
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     private function getDirection(Step $start, Step $end, string $type = 'mapbox/driving'):array
     {
@@ -398,22 +413,93 @@ class MyTripController extends FrontendController
             return null;
         }
 
-        $client = new Client();
-        $res = $client->request('GET', sprintf('https://api.mapbox.com/directions/v5/%s/%s?access_token=%s}',
-            $type,
-            sprintf('%s%%2C%s%%3B%s%%2C%s',
-                $start->getGeoPoint()->getLatitude(),
-                $start->getGeoPoint()->getLongitude(),
-                $end->getGeoPoint()->getLatitude(),
-                $end->getGeoPoint()->getLongitude()),
-            $this->websiteConfig->get('mapToken')
+        $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ]]);
+        $res = $client->request('GET',
+            sprintf('https://api.mapbox.com/directions/v5/%s/%s?geometries=geojson&access_token=%s',
+                $type,
+                sprintf('%s,%s;%s,%s',
+                    $start->getGeoPoint()->getLongitude(),
+                    $start->getGeoPoint()->getLatitude(),
+                    $end->getGeoPoint()->getLongitude(),
+                    $end->getGeoPoint()->getLatitude()),
+                $this->websiteConfig->get('mapToken')
             )
         );
 
-        echo $res->getStatusCode();
-        echo $res->getBody();
+        if ($res->getStatusCode() === 200) {
+            $result = (string) $res->getBody();
+            $data = json_decode($result, true);
+
+            if ($data['routes']) {
+                return reset($data['routes']);
+            }
+        }
 
         return [];
+    }
+
+    /**
+     * @param $journey
+     * @return bool
+     * @throws GuzzleException
+     */
+    private function updateRoutes($journey) {
+        if(!$this->journeyAccess($journey)) {
+            return false;
+        }
+
+        if($stepList = $this->getStepsByJourney($journey)){
+            foreach ($stepList as $key => $step) {
+                $nextStep = $stepList[$key+1];
+                if ($step instanceof Step
+                    && $nextStep instanceof Step
+                    && $step->getTransporation() instanceof TransportableType
+                    && $step->getTransporation()->getShowNextRoute()
+                )
+                {
+                    $route = $this->getDirection($step, $nextStep);
+
+                    if ($route && $route['distance'] && $route['geometry']['coordinates']) {
+                        $data = [];
+                        foreach ($route['geometry']['coordinates'] as $routePoint) {
+                            $data[] = new Geopoint($routePoint[0],$routePoint[1]);
+                        }
+                        $step->setDistance($route['distance']);
+                        $step->setGeoRoute($data);
+                        $step->save();
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param Journey $journey
+     * @return array
+     * @throws Exception
+     */
+    private function getStepsByJourney(Journey $journey):array
+    {
+        $stepsList = new Step\Listing();
+        $stepsList->setCondition('journey__id = :id', [ 'id' => $journey->getId()]);
+        $stepsList->setOrderKey(['dateTime', 'o_creationDate']);
+        $stepsList->setOrder(['ASC', 'ASC']);
+        $stepsList->load();
+
+        if ($stepsList->getCount() === 0) {
+            return null;
+        }
+
+        return $stepsList->getObjects();
+    }
+
+    private function roundDistance($distance) {
+        if ($distance) {
+            return round($distance/1000, 2);
+        }
+        return $distance;
     }
 
     /**

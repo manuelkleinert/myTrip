@@ -5,6 +5,7 @@ import {
   each,
   ajax,
   attr,
+  append,
   createEvent,
   trigger,
   html,
@@ -46,7 +47,7 @@ export default function MapStep(args) {
 
     mapClickEvent(e) {
       const bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
-      const selectPoints = this.map.queryRenderedFeatures(bbox, { layers: ['points'] });
+      const selectPoints = this.map.queryRenderedFeatures(bbox, { layers: ['points', 'lines'] });
 
       if (selectPoints.length > 0) {
         each(selectPoints, this.openDetail.bind(this));
@@ -146,6 +147,9 @@ export default function MapStep(args) {
             this.data = req.response.data;
             if (this.data.title || this.data.text) {
               html($('.uk-modal-title', this.detailModal), this.data.title);
+              if (this.data.distance) {
+                append($('.uk-modal-title', this.detailModal), ` - ${this.data.distance}km`);
+              }
               html($('.uk-modal-body', this.detailModal), this.data.text);
               UIkit.modal(this.detailModal).show();
             } else {
