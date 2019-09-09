@@ -1,7 +1,7 @@
 <?php 
 
 /** 
-* Generated at: 2019-09-06T15:57:31+02:00
+* Generated at: 2019-09-09T10:49:34+02:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
@@ -11,6 +11,7 @@
 Fields Summary: 
 - localizedfields [localizedfields]
 -- title [input]
+- showNextRoute [checkbox]
 - icon [select]
 */ 
 
@@ -20,7 +21,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'name' => 'TransportableType',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1567778251,
+   'modificationDate' => 1568018974,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -136,6 +137,28 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'visibleSearch' => true,
           )),
           1 => 
+          Pimcore\Model\DataObject\ClassDefinition\Data\Checkbox::__set_state(array(
+             'fieldtype' => 'checkbox',
+             'defaultValue' => NULL,
+             'queryColumnType' => 'tinyint(1)',
+             'columnType' => 'tinyint(1)',
+             'phpdocType' => 'boolean',
+             'name' => 'showNextRoute',
+             'title' => 'Show next route to next point',
+             'tooltip' => '',
+             'mandatory' => false,
+             'noteditable' => false,
+             'index' => false,
+             'locked' => NULL,
+             'style' => '',
+             'permissions' => NULL,
+             'datatype' => 'data',
+             'relationType' => false,
+             'invisible' => false,
+             'visibleGridView' => false,
+             'visibleSearch' => false,
+          )),
+          2 => 
           Pimcore\Model\DataObject\ClassDefinition\Data\Select::__set_state(array(
              'fieldtype' => 'select',
              'options' => 
@@ -206,7 +229,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => true,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',

@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Form\Type\JourneyType;
+use GuzzleHttp\Client;
+use Pimcore\Config;
 use Pimcore\Controller\FrontendController;
 use Pimcore\Model\DataObject\Data\Geopoint;
 use Pimcore\Model\DataObject\Journey;
@@ -39,6 +41,11 @@ class MyTripController extends FrontendController
      */
     private $journey;
 
+    /**
+     * @var Config
+     */
+    private $websiteConfig;
+
 
     /**
      * MyTripController constructor.
@@ -53,6 +60,7 @@ class MyTripController extends FrontendController
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
         $this->loginUser = $this->tokenStorage->getToken()->getUser();
+        $this->websiteConfig = Config::getWebsiteConfig();
     }
 
     /**
@@ -284,7 +292,7 @@ class MyTripController extends FrontendController
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function loadGeoJson(Request $request): JsonResponse
     {
@@ -301,10 +309,12 @@ class MyTripController extends FrontendController
             $stepsList->load();
 
             $geoJson = [];
-            $geoJson['symbol'] = [
+
+            $geoJson['point'] = [
                 'type' => 'FeatureCollection',
                 'features' => [],
             ];
+
             $geoJson['line'] = [
                 'type' => 'Feature',
                 'properties' => [],
@@ -315,7 +325,9 @@ class MyTripController extends FrontendController
             ];
 
             if ($stepsList) {
-                foreach ($stepsList as $step) {
+                $objectArray = $stepsList->getObjects();
+                foreach ($stepsList as $key => $step) {
+                    $radius = 6;
 
                     // Add Line
                     $geoJson['line']['geometry']['coordinates'][] = [
@@ -323,8 +335,24 @@ class MyTripController extends FrontendController
                         $step->getGeoPoint()->getLatitude(),
                     ];
 
+
+                    if ($step->getTransporation() instanceof TransportableType) {
+                        if ($step->getTransporation()->getShowNextRoute()) {
+                            $nextStep = $objectArray[$key+1];
+                            if ($nextStep instanceof Step) {
+                                $this->getDirection($step, $nextStep);
+                                die;
+                            }
+                        }
+                    }
+
+                    // Set Radius
+                    if ($step->getText() || $step->getText()) {
+                        $radius = 8;
+                    }
+
                     // Add symbol
-                    $geoJson['symbol']['features'][] = [
+                    $geoJson['point']['features'][] = [
                         'type'=> 'Feature',
                         'geometry' => [
                             'type' => 'Point',
@@ -338,8 +366,7 @@ class MyTripController extends FrontendController
                             'title' => $step->getTitle(),
                             'dataFrom' => $step->getDateTime(),
                             'dateTo' => $step->getDateTimeTo(),
-                            'iconSize' => [40, 40],
-                            'icon' => 'harbor',
+                            'radius' => $radius
                         ],
                     ];
                 }
@@ -355,11 +382,46 @@ class MyTripController extends FrontendController
     }
 
     /**
+     * @param Step $start
+     * @param Step $end
+     * @param string $type
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    private function getDirection(Step $start, Step $end, string $type = 'mapbox/driving'):array
+    {
+        if (!$start instanceof Step && !$end instanceof Step) {
+            return null;
+        }
+
+        if (!$start->getGeoPoint() instanceof Geopoint && !$end->getGeoPoint() instanceof Geopoint) {
+            return null;
+        }
+
+        $client = new Client();
+        $res = $client->request('GET', sprintf('https://api.mapbox.com/directions/v5/%s/%s?access_token=%s}',
+            $type,
+            sprintf('%s%%2C%s%%3B%s%%2C%s',
+                $start->getGeoPoint()->getLatitude(),
+                $start->getGeoPoint()->getLongitude(),
+                $end->getGeoPoint()->getLatitude(),
+                $end->getGeoPoint()->getLongitude()),
+            $this->websiteConfig->get('mapToken')
+            )
+        );
+
+        echo $res->getStatusCode();
+        echo $res->getBody();
+
+        return [];
+    }
+
+    /**
      * @param $journey
      * @param bool $guest
      * @return bool
      */
-    private function journeyAccess($journey, $guest = false)
+    private function journeyAccess($journey, $guest = false):bool
     {
         if (!$journey instanceof Journey) {
             return false;

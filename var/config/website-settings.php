@@ -50,5 +50,15 @@ return [
         "siteId" => 0,
         "creationDate" => 0,
         "modificationDate" => 1524042225
+    ],
+    6 => [
+        "id" => 6,
+        "name" => "mapToken",
+        "language" => "",
+        "type" => "text",
+        "data" => "pk.eyJ1IjoibXBrODgiLCJhIjoiY2p6MWN4enhrMDFwbjN0cGlhcmY3a3hpZCJ9.dBwvFla9os7o4UITJdy5ig",
+        "siteId" => 0,
+        "creationDate" => 0,
+        "modificationDate" => 1568021000
     ]
 ];

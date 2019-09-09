@@ -29,21 +29,21 @@ export default function MapDraw(args) {
 
     drawPoints() {
       if (this.map.getSource('points')) {
-        this.map.getSource('points').setData(this.data.symbol);
+        this.map.getSource('points').setData(this.data.point);
       } else {
         this.map.addLayer({
           id: 'points',
-          type: 'symbol',
+          type: 'circle',
           source: {
             type: 'geojson',
-            data: this.data.symbol,
+            data: this.data.point,
           },
-          layout: {
-            'icon-image': '{icon}-15',
-            'text-field': '{title}',
-            'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-            'text-offset': [0, 0.6],
-            'text-anchor': 'top',
+          paint: {
+            'circle-radius': ['get', 'radius'],
+            'circle-color': '#ffffff',
+            'circle-blur': 1,
+            'circle-stroke-width': 2,
+            'circle-stroke-color': '#ff0000',
           },
         });
       }
