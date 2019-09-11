@@ -1,5 +1,5 @@
 {% if user is defined %}
-    <div id="mt-step-edit" class="mt-step-edit" data-uk-offcanvas>
+    <div id="mt-step-edit" class="mt-step-edit uk-offcanvas" data-uk-offcanvas="bg-close:false;">
         <div class="uk-offcanvas-bar">
             <button class="uk-offcanvas-close" type="button" data-uk-close></button>
 
@@ -16,20 +16,37 @@
             <div class="uk-margin uk-grid uk-child-width-1-2@m">
                 <div>
                     <div class="uk-margin">
-                        <label class="uk-form-label">{{ 'app.form.step.label.date.time'|trans }}</label>
+                        <label class="uk-form-label">{{ 'app.form.step.label.date.from'|trans }}</label>
                         <div class="uk-form-controls">
-                            <input name="dateTime" class="uk-input" type="text"
-                                   data-uk-fdate-picker=""
-                                   placeholder="{{ 'app.form.step.label.placeholder.date.time'|trans }}">
+                            <input name="dateFrom" class="uk-input" type="text"
+                                   placeholder="{{ 'app.form.step.label.placeholder.date.from'|trans }}">
                         </div>
                     </div>
                 </div>
                 <div>
-                    <label class="uk-form-label">{{ 'app.form.step.label.date.time.to'|trans }}</label>
+                    <label class="uk-form-label">{{ 'app.form.step.label.time.from'|trans }}</label>
                     <div class="uk-form-controls">
-                        <input name="dateTimeTo" class="uk-input" type="text"
-                               data-uk-date-picker=""
-                               placeholder="{{ 'app.form.step.label.placeholder.date.time.to'|trans }}">
+                        <input name="timeFrom" class="uk-input" type="text"
+                               placeholder="{{ 'app.form.step.label.placeholder.time.from'|trans }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-margin uk-grid uk-child-width-1-2@m">
+                <div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label">{{ 'app.form.step.label.date.to'|trans }}</label>
+                        <div class="uk-form-controls">
+                            <input name="dateTo" class="uk-input" type="text"
+                                   placeholder="{{ 'app.form.step.label.placeholder.date.to'|trans }}">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="uk-form-label">{{ 'app.form.step.label.time.to'|trans }}</label>
+                    <div class="uk-form-controls">
+                        <input name="timeTo" class="uk-input" type="text"
+                               placeholder="{{ 'app.form.step.label.placeholder.time.to'|trans }}">
                     </div>
                 </div>
             </div>

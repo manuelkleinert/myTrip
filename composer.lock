@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d5e69437651905f23b76de835bec4f9a",
+    "content-hash": "37774dbb8653b16cc8e1a93577597710",
     "packages": [
         {
             "name": "amnuts/opcache-gui",
@@ -343,12 +343,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/coreshop/PimcoreBundle.git",
-                "reference": "930cd37a56cb190763368c5325d850b10aaf7fa8"
+                "reference": "982c3d042826bf7549559ef5faea26803acb4744"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coreshop/PimcoreBundle/zipball/930cd37a56cb190763368c5325d850b10aaf7fa8",
-                "reference": "930cd37a56cb190763368c5325d850b10aaf7fa8",
+                "url": "https://api.github.com/repos/coreshop/PimcoreBundle/zipball/982c3d042826bf7549559ef5faea26803acb4744",
+                "reference": "982c3d042826bf7549559ef5faea26803acb4744",
                 "shasum": ""
             },
             "require": {
@@ -386,7 +386,7 @@
                 "ecommerce",
                 "pimcore"
             ],
-            "time": "2019-09-05T14:59:43+00:00"
+            "time": "2019-09-07T08:56:53+00:00"
         },
         {
             "name": "coreshop/registry",
@@ -1139,16 +1139,16 @@
         },
         {
             "name": "doctrine/common",
-            "version": "v2.10.0",
+            "version": "v2.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "30e33f60f64deec87df728c02b107f82cdafad9d"
+                "reference": "b8ca1dcf6b0dc8a2af7a09baac8d0c48345df4ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/30e33f60f64deec87df728c02b107f82cdafad9d",
-                "reference": "30e33f60f64deec87df728c02b107f82cdafad9d",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/b8ca1dcf6b0dc8a2af7a09baac8d0c48345df4ff",
+                "reference": "b8ca1dcf6b0dc8a2af7a09baac8d0c48345df4ff",
                 "shasum": ""
             },
             "require": {
@@ -1164,14 +1164,16 @@
             },
             "require-dev": {
                 "doctrine/coding-standard": "^1.0",
-                "phpunit/phpunit": "^6.3",
+                "phpstan/phpstan": "^0.11",
+                "phpstan/phpstan-phpunit": "^0.11",
+                "phpunit/phpunit": "^7.0",
                 "squizlabs/php_codesniffer": "^3.0",
                 "symfony/phpunit-bridge": "^4.0.5"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.10.x-dev"
+                    "dev-master": "2.11.x-dev"
                 }
             },
             "autoload": {
@@ -1185,16 +1187,16 @@
             ],
             "authors": [
                 {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
                     "name": "Roman Borschel",
                     "email": "roman@code-factory.org"
                 },
                 {
                     "name": "Benjamin Eberlei",
                     "email": "kontakt@beberlei.de"
-                },
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com"
                 },
                 {
                     "name": "Jonathan Wage",
@@ -1216,7 +1218,7 @@
                 "doctrine",
                 "php"
             ],
-            "time": "2018-11-21T01:24:55+00:00"
+            "time": "2019-09-10T10:10:14+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -2348,16 +2350,16 @@
         },
         {
             "name": "google/apiclient",
-            "version": "v2.2.4",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client.git",
-                "reference": "d6c7563bdf88d6a0719ea63e21c74dc86032364e"
+                "reference": "ea5c94d975c150b6eb892abb5536d24205376d4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client/zipball/d6c7563bdf88d6a0719ea63e21c74dc86032364e",
-                "reference": "d6c7563bdf88d6a0719ea63e21c74dc86032364e",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client/zipball/ea5c94d975c150b6eb892abb5536d24205376d4e",
+                "reference": "ea5c94d975c150b6eb892abb5536d24205376d4e",
                 "shasum": ""
             },
             "require": {
@@ -2366,7 +2368,7 @@
                 "google/auth": "^1.0",
                 "guzzlehttp/guzzle": "~5.3.1||~6.0",
                 "guzzlehttp/psr7": "^1.2",
-                "monolog/monolog": "^1.17",
+                "monolog/monolog": "^1.17|^2.0",
                 "php": ">=5.4",
                 "phpseclib/phpseclib": "~0.3.10||~2.0"
             },
@@ -2405,20 +2407,20 @@
             "keywords": [
                 "google"
             ],
-            "time": "2019-08-19T18:09:46+00:00"
+            "time": "2019-09-09T16:04:18+00:00"
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.112",
+            "version": "v0.113",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "0cc6d74aa99f5af8385c7b87599b97460e036dc2"
+                "reference": "93f926106f53ebb56e68f0219189dbf55fae0a11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/0cc6d74aa99f5af8385c7b87599b97460e036dc2",
-                "reference": "0cc6d74aa99f5af8385c7b87599b97460e036dc2",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/93f926106f53ebb56e68f0219189dbf55fae0a11",
+                "reference": "93f926106f53ebb56e68f0219189dbf55fae0a11",
                 "shasum": ""
             },
             "require": {
@@ -2442,7 +2444,7 @@
             "keywords": [
                 "google"
             ],
-            "time": "2019-08-31T00:23:10+00:00"
+            "time": "2019-09-08T00:23:09+00:00"
         },
         {
             "name": "google/auth",
@@ -3235,16 +3237,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.25.0",
+            "version": "1.25.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "c5dcc05defbaf8780c728c1ea31b1a0704d44f56"
+                "reference": "70e65a5470a42cfec1a7da00d30edb6e617e8dcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/c5dcc05defbaf8780c728c1ea31b1a0704d44f56",
-                "reference": "c5dcc05defbaf8780c728c1ea31b1a0704d44f56",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/70e65a5470a42cfec1a7da00d30edb6e617e8dcf",
+                "reference": "70e65a5470a42cfec1a7da00d30edb6e617e8dcf",
                 "shasum": ""
             },
             "require": {
@@ -3309,7 +3311,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2019-09-06T12:21:24+00:00"
+            "time": "2019-09-06T13:49:17+00:00"
         },
         {
             "name": "mpratt/embera",
@@ -4101,16 +4103,16 @@
         },
         {
             "name": "pimcore/pimcore",
-            "version": "v6.1.2",
+            "version": "v6.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pimcore/pimcore.git",
-                "reference": "f053bb3cc083f7fc1eb8d2b9ffebbb77b936a40d"
+                "reference": "cd64d281e51d009a970f043c6043b7ad6b30078c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pimcore/pimcore/zipball/f053bb3cc083f7fc1eb8d2b9ffebbb77b936a40d",
-                "reference": "f053bb3cc083f7fc1eb8d2b9ffebbb77b936a40d",
+                "url": "https://api.github.com/repos/pimcore/pimcore/zipball/cd64d281e51d009a970f043c6043b7ad6b30078c",
+                "reference": "cd64d281e51d009a970f043c6043b7ad6b30078c",
                 "shasum": ""
             },
             "require": {
@@ -4245,7 +4247,7 @@
                 "e-commerce",
                 "rad"
             ],
-            "time": "2019-08-19T12:47:17+00:00"
+            "time": "2019-09-05T09:42:28+00:00"
         },
         {
             "name": "pimple/pimple",

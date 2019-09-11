@@ -7,40 +7,40 @@
         <button class="uk-offcanvas-close" type="button" data-uk-close></button>
         {% if user is defined %}
 
-            <div class="uk-border-circle">
-                <span data-uk-icon="user"></span>
+            <div class="uk-margin-bottom">
+                <div class="uk-border-circle">
+                    <span data-uk-icon="user"></span>
+                </div>
+
+                {{ user.getUserName() }}
             </div>
 
-            {{ user.getUserName() }}
-
-            <div class="uk-grid uk-child-width-1-2@m">
-                <button class="uk-button uk-button-default" data-uk-toggle="target: #mt-create-journey" type="button">
-                    {{ 'app.journey.create.button.title'|trans }}
-                </button>
-
+            <div class="uk-grid uk-child-width-1-2@m  uk-margin-bottom">
                 {% if journeyList is defined and journeyList is not empty %}
                     {% for journey in journeyList %}
-                        <a class="mt-journey-item" href="{{ pimcore_url({
-                            _locale: app.request.locale,
-                            id:journey.getId()
-                        }, 'mt_journey') }}">
-                            {{ journey.getTitle() }}
-                            {{ journey.getFrom() }}
-                            {{ journey.getTo() }}
-                        </a>
+                        <div>
+                            <a class="uk-display-block" href="{{
+                                pimcore_url({_locale: app.request.locale,id:journey.getId()}, 'mt_journey') }}">
+
+                                {{ journey.getTitle() }}
+                                {{ journey.getFrom() }}
+                                {{ journey.getTo() }}
+                            </a>
+                        </div>
                     {% endfor %}
                 {% endif %}
             </div>
+
+            <button class="uk-button uk-button-default uk-margin-bottom" data-uk-toggle="target: #mt-create-journey" type="button">
+                {{ 'app.journey.create.button.title'|trans }}
+            </button>
 
         {% else %}
 
             {{ pimcore_area('login-area', { 'type' : 'members_login' }) }}
 
-            <a href="/{{ app.request.locale }}/members/register" class="uk-button">
+            <a href="/{{ app.request.locale }}/members/register" class="uk-button uk-button-default uk-margin-top">
                 {{ 'app.button.registration'|trans }}
-            </a>
-            <a href="/{{ app.request.locale }}/members/login" class="uk-button">
-                {{ 'app.button.login'|trans }}
             </a>
         {% endif %}
     </div>
