@@ -1,7 +1,9 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
     <div class="map uk-width-1-1" data-uk-height-viewport
-         data-uk-maps="apiKey:{{ pimcore_website_config('mapToken') }};{% if journeyId is defined and journeyId is not empty %}jId:{{ journeyId }};{% endif %}">
+         data-uk-maps="
+         apiKey:{{ pimcore_website_config('mapToken') }};
+        {% if journeyId is defined and journeyId is not empty %}jId:{{ journeyId }};{% endif %}">
     </div>
 
     {% include 'MyTrip/partials/profile.html.twig' %}

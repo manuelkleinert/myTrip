@@ -14,16 +14,35 @@ import {
   hasClass,
 } from 'uikit/src/js/util';
 import mapBoxGl from 'mapbox-gl';
+import flatpickr from 'flatpickr';
+import { German } from 'flatpickr/dist/l10n/de';
 
 export default function MapStep(args) {
   class EditStep {
     constructor() {
+      flatpickr.localize(German);
       this.map = args.map;
       this.feature = null;
+      this.dateSettings = {
+        dateFormat: 'd.m.Y',
+      };
+
+      this.timeSettings = {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: 'H:i',
+        minDate: '00:00',
+        maxDate: '24:00',
+      };
 
       this.detailModal = $('#mt-step-detail');
       this.detailModalEditButteon = $('.mt-edit', this.detailModal);
       this.editModal = $('#mt-step-edit');
+
+      this.inputDateFrom = $('[name=dateFrom]', this.editModal);
+      this.inputDateTo = $('[name=dateTo]', this.editModal);
+      this.inputTimeFrom = $('[name=timeFrom]', this.editModal);
+      this.inputTimeTo = $('[name=timeTo]', this.editModal);
 
       this.transportableType = $$('button[data-transportable-type]', this.editModal);
       this.addButton = $('button.mt-add-step');
@@ -121,6 +140,11 @@ export default function MapStep(args) {
         addClass(this.removeButton, 'uk-hidden');
       }
 
+      flatpickr(this.inputDateFrom, this.dateSettings);
+      flatpickr(this.inputDateTo, this.dateSettings);
+      flatpickr(this.inputTimeFrom, this.timeSettings);
+      flatpickr(this.inputTimeTo, this.timeSettings);
+
       UIkit.offcanvas(this.editModal).show();
     }
 
@@ -174,7 +198,7 @@ export default function MapStep(args) {
               if (this.data.distance) {
                 append($('.uk-modal-title', this.detailModal), ` - ${this.data.distance}km`);
               }
-              html($('.uk-modal-body', this.detailModal), this.data.text);
+              html($('.uk-modal-body .mt-content', this.detailModal), this.data.text);
               UIkit.modal(this.detailModal).show();
             } else {
               this.openEditor();

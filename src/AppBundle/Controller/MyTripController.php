@@ -3,7 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Form\Type\JourneyType;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Pimcore\Config;
 use Pimcore\Controller\FrontendController;
 use Pimcore\Model\DataObject\Data\Geopoint;
@@ -166,7 +168,15 @@ class MyTripController extends FrontendController
                     $step->setTransporation($transportableObject);
                 }
 
+                $dateFrom = Carbon::createFromFormat('d.m.Y H:i',
+                    sprintf('%s %s', $data['dateFrom'], $data['timeFrom']));
+                $dateTo = Carbon::createFromFormat('d.m.Y H:i',
+                    sprintf('%s %s', $data['dateTo'], $data['timeTo']));
+
+                $step->setDateTime($dateFrom);
+                $step->setDateTimeTo($dateTo);
                 $step->save();
+
                 $this->updateRoutes($this->journey);
 
                 $response = [
@@ -226,6 +236,7 @@ class MyTripController extends FrontendController
                     $transporationId = $step->getTransporation()->getId();
                 }
 
+
                 $response = [
                     'message' => 'load.step',
                     'success' => true,
@@ -234,8 +245,10 @@ class MyTripController extends FrontendController
                         'stepId' => $step->getId(),
                         'title' => $step->getTitle(),
                         'text' => $step->getText(),
-                        'date' => $step->getDateTime(),
-                        'dateTo' => $step->getDateTimeTo(),
+                        'dateFrom' => $step->getDateTime() instanceof Carbon ? $step->getDateTime()->format('d.m.Y') : '',
+                        'dateTo' => $step->getDateTimeTo() instanceof Carbon ? $step->getDateTimeTo()->format('d.m.Y') : '',
+                        'timeFrom' => $step->getDateTime() instanceof Carbon ? $step->getDateTime()->format('H:i') : '',
+                        'timeTo' => $step->getDateTimeTo() instanceof Carbon ? $step->getDateTimeTo()->format('H:i') : '',
                         'distance' => $this->roundDistance($step->getDistance()),
                         'lat' => $step->getGeoPoint()->getLatitude(),
                         'lng' => $step->getGeoPoint()->getLongitude(),
@@ -415,26 +428,32 @@ class MyTripController extends FrontendController
             return null;
         }
 
-        $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ]]);
-        $res = $client->request('GET',
-            sprintf('https://api.mapbox.com/directions/v5/%s/%s?geometries=geojson&access_token=%s',
-                $type,
-                sprintf('%s,%s;%s,%s',
-                    $start->getGeoPoint()->getLongitude(),
-                    $start->getGeoPoint()->getLatitude(),
-                    $end->getGeoPoint()->getLongitude(),
-                    $end->getGeoPoint()->getLatitude()),
-                $this->websiteConfig->get('mapToken')
-            )
-        );
+        $client = new Client();
 
-        if ($res->getStatusCode() === 200) {
-            $result = (string) $res->getBody();
-            $data = json_decode($result, true);
+        try {
+            $res = $client->request('GET',
+                sprintf('https://api.mapbox.com/directions/v5/%s/%s?geometries=geojson&access_token=%s',
+                    $type,
+                    sprintf('%s,%s;%s,%s',
+                        $start->getGeoPoint()->getLongitude(),
+                        $start->getGeoPoint()->getLatitude(),
+                        $end->getGeoPoint()->getLongitude(),
+                        $end->getGeoPoint()->getLatitude()),
+                    $this->websiteConfig->get('mapToken')
+                )
+            );
 
-            if ($data['routes']) {
-                return reset($data['routes']);
+            if ($res->getStatusCode() === 200) {
+                $result = (string) $res->getBody();
+                $data = json_decode($result, true);
+
+                if ($data['routes']) {
+                    return reset($data['routes']);
+                }
             }
+        }
+        catch (ClientException $e) {
+            $response = $e->getResponse();
         }
 
         return [];
