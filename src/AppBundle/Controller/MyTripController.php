@@ -153,11 +153,13 @@ class MyTripController extends FrontendController
             if ($step instanceof Step) {
                 $step->setParent(Service::createFolderByPath(
                     sprintf('%s/%s', $this->journey->getFullPath(), 'steps')));
+
                 $step->setKey(Service::getValidKey(sprintf('%s_%s_%s',
                     $data['title'],
                     round($data['lat']),
                     round($data['lng'])
                 ), 'object'));
+
                 $step->setKey(Service::getUniqueKey($step));
                 $step->setJourney($this->journey);
                 $step->setTitle($data['title']);
@@ -168,10 +170,15 @@ class MyTripController extends FrontendController
                     $step->setTransporation($transportableObject);
                 }
 
-                $dateFrom = Carbon::createFromFormat('d.m.Y H:i',
-                    sprintf('%s %s', $data['dateFrom'], $data['timeFrom']));
-                $dateTo = Carbon::createFromFormat('d.m.Y H:i',
-                    sprintf('%s %s', $data['dateTo'], $data['timeTo']));
+                if ($data['dateFrom'] && $data['timeFrom']) {
+                    $dateFrom = Carbon::createFromFormat('d.m.Y H:i',
+                        sprintf('%s %s', $data['dateFrom'], $data['timeFrom']));
+                }
+
+                if ($data['dateTo'] && $data['timeTo']) {
+                    $dateTo = Carbon::createFromFormat('d.m.Y H:i',
+                        sprintf('%s %s', $data['dateTo'], $data['timeTo']));
+                }
 
                 $step->setDateTime($dateFrom);
                 $step->setDateTimeTo($dateTo);
@@ -254,6 +261,45 @@ class MyTripController extends FrontendController
                         'lng' => $step->getGeoPoint()->getLongitude(),
                         'transportableId' => $transporationId,
                     ]
+                ];
+            }
+        }
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function getNextDate() {
+        $lastStep = null;
+        $response = ['message' => 'error.date.not.found', 'success' => false];
+
+        $stepList = new Step\Listing();
+        $stepList->setLimit(1);
+        $stepList->setCondition('dateTime IS NOT NULL OR dateTimeTo IS NOT NULL');
+        $stepList->setOrderKey(['dateTimeTo', 'dateTime']);
+        $stepList->setOrder(['ASC', 'ASC']);
+
+        if ($stepList->getCount()) {
+            $lastStep = reset($stepList->getObjects());
+        }
+
+        if ($lastStep instanceof Step) {
+            if ($lastStep->getDateTimeTo() instanceof Carbon) {
+                $response = [
+                    'date' => $lastStep->getDateTimeTo()->addDay(1)->format('d.m.Y'),
+                    'time' => $lastStep->getDateTimeTo()->format('H:i'),
+                    'message' => 'success.date.found',
+                    'success' => true
+                ];
+            } else if ($lastStep->getDateTime() instanceof Carbon) {
+                $response = [
+                    'date' => $lastStep->getDateTime()->addDay(1)->format('d.m.Y'),
+                    'time' => $lastStep->getDateTime()->format('H:i'),
+                    'message' => 'success.date.found',
+                    'success' => true
                 ];
             }
         }
