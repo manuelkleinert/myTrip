@@ -22,7 +22,10 @@ export default function MapStep(args) {
     constructor() {
       flatpickr.localize(German);
       this.map = args.map;
-      this.feature = null;
+      this.editMode = false;
+      this.lastDate = null;
+      this.lastTime = null;
+
       this.dateSettings = {
         dateFormat: 'd.m.Y',
       };
@@ -36,7 +39,8 @@ export default function MapStep(args) {
       };
 
       this.detailModal = $('#mt-step-detail');
-      this.detailModalEditButteon = $('.mt-edit', this.detailModal);
+      this.openEditButteon = $('.mt-edit', this.detailModal);
+      this.closeEditorButton = $('.mt-edit-close', this.editModal);
       this.editModal = $('#mt-step-edit');
 
       this.inputDateFrom = $('[name=dateFrom]', this.editModal);
@@ -47,6 +51,7 @@ export default function MapStep(args) {
       this.transportableType = $$('button[data-transportable-type]', this.editModal);
       this.addButton = $('button.mt-add-step');
       this.removeButton = $('button.mt-remove-step');
+
       this.popup = new mapBoxGl.Popup({
         closeButton: false,
         closeOnClick: false,
@@ -58,8 +63,17 @@ export default function MapStep(args) {
 
       on(this.addButton, 'click', this.saveStep.bind(this));
       on(this.removeButton, 'click', this.removeStep.bind(this));
-      on(this.transportableType, 'click', this.setTransportableType.bind(this));
-      on(this.detailModalEditButteon, 'click', this.openEditor.bind(this));
+      on(this.transportableType, 'click', (e) => {
+        this.setTransportableType(attr(e.currentTarget, 'data-transportable-type'), true);
+      }).bind(this);
+      on(this.openEditButteon, 'click', this.openEditor.bind(this));
+      on(this.closeEditorButton, 'click', this.closeEditor.bind(this));
+
+      this.editDateFrom = flatpickr(this.inputDateFrom, this.dateSettings);
+      this.editDateTo = flatpickr(this.inputDateTo, this.dateSettings);
+
+      flatpickr(this.inputTimeFrom, this.timeSettings);
+      flatpickr(this.inputTimeTo, this.timeSettings);
 
       this.data = {
         journeyId: args.id,
@@ -77,14 +91,20 @@ export default function MapStep(args) {
 
       if (selectElement.length > 0) {
         each(selectElement, this.openDetail.bind(this));
+      } else if (this.editMode) {
+        if (!this.data.title) {
+          this.setTitleByFeatures(this.map.queryRenderedFeatures(e.point));
+        }
+        this.data.lat = e.lngLat.lat;
+        this.data.lng = e.lngLat.lng;
+        this.setEditor();
       } else {
-        this.feature = null;
-        this.features = this.map.queryRenderedFeatures(e.point);
-
+        this.setTitleByFeatures(this.map.queryRenderedFeatures(e.point));
         this.data.lat = e.lngLat.lat;
         this.data.lng = e.lngLat.lng;
         this.data.stepId = '';
         this.data.title = '';
+
         this.openEditor();
       }
     }
@@ -106,46 +126,65 @@ export default function MapStep(args) {
       this.popup.remove();
     }
 
-    setTransportableType(e) {
+    setTransportableType(transportableId, $toggle = false) {
       each(this.transportableType, (obj) => {
         if (hasClass($(obj), 'mt-select')) {
           removeClass($(obj), 'mt-select');
         }
       });
-      addClass(e.currentTarget, 'mt-select');
-      this.data.transportableId = attr($(e.currentTarget), 'data-transportable-type');
+
+      if (transportableId !== this.data.transportableId || !$toggle) {
+        addClass($(`[data-transportable-type="${transportableId}"]`, this.editModal), 'mt-select');
+        this.data.transportableId = transportableId;
+      } else {
+        this.data.transportableId = null;
+      }
     }
 
-    openEditor() {
-      if (this.features && this.features.length) {
-        each(this.features, (obj) => {
-          this.data.title = obj.properties.name_de ? obj.properties.name_de : '';
-          this.feature = obj;
-          return false;
+    setEditor() {
+      if (!this.data.timeFrom) { this.data.timeFrom = '00:00'; }
+      if (!this.data.timeTo) { this.data.timeTo = '00:00'; }
+
+      each(this.data, (data, key) => {
+        if (!this.editMode || (key === 'lat' || key === 'lng')) {
+          const formField = $(`[name=${key}]`, this.editModal);
+          if (formField) { formField.value = data; }
+        }
+      });
+
+      const dateFromField = $('[name=dateFrom]', this.editModal);
+      const dateToField = $('[name=dateTo]', this.editModal);
+      if (!this.data.dateFrom || !this.data.dateTo) {
+        this.getNextDate(() => {
+          if (!dateFromField.value) {
+            this.editDateFrom.setDate(this.lastDate);
+            dateFromField.value = this.lastDate;
+          }
+          if (!dateToField.value) {
+            this.editDateTo.setDate(this.lastDate);
+            dateToField.value = this.lastDate;
+          }
         });
       }
 
-      each(this.data, (data, key) => {
-        const formField = $(`[name=${key}]`, this.editModal);
-        if (formField) { formField.value = data; }
-      });
-
-      if (this.data.transportableId) {
-        addClass($(`[data-transportable-type=${this.data.transportableId}]`, this.transportableType), 'mt-select');
-      }
+      this.setTransportableType(this.data.transportableId);
 
       if (this.data.stepId) {
         removeClass(this.removeButton, 'uk-hidden');
       } else {
         addClass(this.removeButton, 'uk-hidden');
       }
+    }
 
-      flatpickr(this.inputDateFrom, this.dateSettings);
-      flatpickr(this.inputDateTo, this.dateSettings);
-      flatpickr(this.inputTimeFrom, this.timeSettings);
-      flatpickr(this.inputTimeTo, this.timeSettings);
-
+    openEditor() {
+      this.setEditor();
+      this.editMode = true;
       UIkit.offcanvas(this.editModal).show();
+    }
+
+    closeEditor() {
+      this.editMode = false;
+      UIkit.offcanvas(this.editModal).hide();
     }
 
     saveStep() {
@@ -162,6 +201,7 @@ export default function MapStep(args) {
       }).then((req) => {
         if (req.status === 200) {
           UIkit.offcanvas(this.editModal).hide();
+          this.editMode = false;
           trigger(this.map.getContainer(), createEvent('add-step'));
         }
       });
@@ -175,7 +215,7 @@ export default function MapStep(args) {
           data: JSON.stringify(this.data),
           responseType: 'json',
         }).then(() => {
-          UIkit.offcanvas(this.editModal).hide();
+          this.closeEditor();
           trigger(this.map.getContainer(), createEvent('remove-step'));
         });
       }
@@ -183,7 +223,7 @@ export default function MapStep(args) {
 
     openDetail(point) {
       if (point.type === 'Feature') {
-        UIkit.offcanvas(this.editModal).hide();
+        this.closeEditor();
 
         ajax('/ajax/load-step', {
           method: 'POST',
@@ -193,6 +233,7 @@ export default function MapStep(args) {
         }).then((req) => {
           if (req.status === 200) {
             this.data = req.response.data;
+
             if (this.data.title || this.data.text) {
               html($('.uk-modal-title', this.detailModal), this.data.title);
               if (this.data.distance) {
@@ -206,6 +247,33 @@ export default function MapStep(args) {
           }
         });
       }
+    }
+
+    getNextDate(fn) {
+      ajax('/ajax/next-date', {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        data: JSON.stringify({ id: this.data.journeyId }),
+        responseType: 'json',
+      }).then((req) => {
+        if (req.status === 200) {
+          this.lastDate = req.response.date;
+          this.lastTime = req.response.time;
+          if (fn) { fn(); }
+        }
+      });
+    }
+
+    setTitleByFeatures(features) {
+      this.title = null;
+      if (features && features.length) {
+        each(features, (obj) => {
+          if (obj.properties && obj.properties.name_de && this.title !== null) {
+            this.title = obj.properties.name_de;
+          }
+        });
+      }
+      return true;
     }
   }
 

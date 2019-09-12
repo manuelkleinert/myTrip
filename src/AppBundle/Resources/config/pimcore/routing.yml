@@ -18,3 +18,7 @@ my_trip_load_geojson:
     path: /ajax/load-geo-json
     defaults: { _controller: AppBundle\Controller\MyTripController::loadGeoJson }
 
+my_trip_get_next_date:
+    path: /ajax/next-date
+    defaults: { _controller: AppBundle\Controller\MyTripController::getNextDate }
+
