@@ -6,7 +6,7 @@ export default function MapDraw(args) {
       this.map = args.map;
       this.id = args.id;
       this.accessToken = args.accessToken;
-      this.data = [];
+      this.geoJson = [];
 
       this.loadSteps();
       on(this.map.getContainer(), 'add-step remove-step', this.loadSteps.bind(this));
@@ -20,23 +20,30 @@ export default function MapDraw(args) {
         responseType: 'json',
       }).then((req) => {
         if (req.status === 200 && req.response.success) {
-          this.data = req.response.data;
+          this.geoJson = req.response.geoJson;
           this.drawLine();
           this.drawPoints();
+
+          console.log(this.geoJson.point);
+          // const coordinates = this.geoJson.point.features.shift().geometry.coordinates;
+          // const bounds = coordinates.reduce((bounds, coord) => {
+          //   return bounds.extend(coord);
+          // }, new mapboxgl.LngLatBounds(coordinates.shift(), coordinates.shift()));
+          // this.map.fitBounds(bounds, { padding: 20 });
         }
       });
     }
 
     drawPoints() {
       if (this.map.getSource('points')) {
-        this.map.getSource('points').setData(this.data.point);
+        this.map.getSource('points').setData(this.geoJson.point);
       } else {
         this.map.addLayer({
           id: 'points',
           type: 'circle',
           source: {
             type: 'geojson',
-            data: this.data.point,
+            data: this.geoJson.point,
           },
           paint: {
             'circle-radius': ['get', 'radius'],
@@ -50,16 +57,16 @@ export default function MapDraw(args) {
     }
 
     drawLine() {
-      if (this.data.line) {
+      if (this.geoJson.line) {
         if (this.map.getSource('lines')) {
-          this.map.getSource('lines').setData(this.data.line);
+          this.map.getSource('lines').setData(this.geoJson.line);
         } else {
           this.map.addLayer({
             id: 'lines',
             type: 'line',
             source: {
               type: 'geojson',
-              data: this.data.line,
+              data: this.geoJson.line,
             },
             layout: {
               'line-join': 'round',

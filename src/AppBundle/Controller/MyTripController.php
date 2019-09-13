@@ -450,7 +450,7 @@ class MyTripController extends FrontendController
             $response = [
                 'message' => 'load.step',
                 'success' => true,
-                'data' => $geoJson
+                'geoJson' => $geoJson,
             ];
         }
 
