@@ -293,12 +293,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/coreshop/Pimcore.git",
-                "reference": "0546c2f8633abbdffe023acc1ce1e150bd7a39be"
+                "reference": "2e1ba079ad7b750314c28e44774b0c85d312ccc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coreshop/Pimcore/zipball/0546c2f8633abbdffe023acc1ce1e150bd7a39be",
-                "reference": "0546c2f8633abbdffe023acc1ce1e150bd7a39be",
+                "url": "https://api.github.com/repos/coreshop/Pimcore/zipball/2e1ba079ad7b750314c28e44774b0c85d312ccc3",
+                "reference": "2e1ba079ad7b750314c28e44774b0c85d312ccc3",
                 "shasum": ""
             },
             "require": {
@@ -335,7 +335,7 @@
                 "ecommerce",
                 "pimcore"
             ],
-            "time": "2019-06-07T06:36:50+00:00"
+            "time": "2019-09-15T16:10:06+00:00"
         },
         {
             "name": "coreshop/pimcore-bundle",
@@ -343,12 +343,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/coreshop/PimcoreBundle.git",
-                "reference": "982c3d042826bf7549559ef5faea26803acb4744"
+                "reference": "1da06d4695e72752e1f3817a9053adf97cdf23d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coreshop/PimcoreBundle/zipball/982c3d042826bf7549559ef5faea26803acb4744",
-                "reference": "982c3d042826bf7549559ef5faea26803acb4744",
+                "url": "https://api.github.com/repos/coreshop/PimcoreBundle/zipball/1da06d4695e72752e1f3817a9053adf97cdf23d5",
+                "reference": "1da06d4695e72752e1f3817a9053adf97cdf23d5",
                 "shasum": ""
             },
             "require": {
@@ -386,11 +386,11 @@
                 "ecommerce",
                 "pimcore"
             ],
-            "time": "2019-09-07T08:56:53+00:00"
+            "time": "2019-09-15T16:09:54+00:00"
         },
         {
             "name": "coreshop/registry",
-            "version": "2.0.8",
+            "version": "2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/coreshop/Registry.git",
@@ -443,12 +443,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/coreshop/SEO.git",
-                "reference": "e37ec7713453d1cc57736642cc03f8c289d8ebb8"
+                "reference": "a2ef0e4bd98915898ac2554b830d0ea1d569ad01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coreshop/SEO/zipball/e37ec7713453d1cc57736642cc03f8c289d8ebb8",
-                "reference": "e37ec7713453d1cc57736642cc03f8c289d8ebb8",
+                "url": "https://api.github.com/repos/coreshop/SEO/zipball/a2ef0e4bd98915898ac2554b830d0ea1d569ad01",
+                "reference": "a2ef0e4bd98915898ac2554b830d0ea1d569ad01",
                 "shasum": ""
             },
             "require": {
@@ -486,7 +486,7 @@
                 "ecommerce",
                 "pimcore"
             ],
-            "time": "2019-05-08T11:21:18+00:00"
+            "time": "2019-09-15T16:10:06+00:00"
         },
         {
             "name": "coreshop/seo-bundle",
@@ -494,12 +494,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/coreshop/SEOBundle.git",
-                "reference": "c284fd99edfea4b52adbf80b1e320d19a97d71e6"
+                "reference": "5f71fff6ee2ac8aa3a2070c57f8dd20dc5029164"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coreshop/SEOBundle/zipball/c284fd99edfea4b52adbf80b1e320d19a97d71e6",
-                "reference": "c284fd99edfea4b52adbf80b1e320d19a97d71e6",
+                "url": "https://api.github.com/repos/coreshop/SEOBundle/zipball/5f71fff6ee2ac8aa3a2070c57f8dd20dc5029164",
+                "reference": "5f71fff6ee2ac8aa3a2070c57f8dd20dc5029164",
                 "shasum": ""
             },
             "require": {
@@ -536,7 +536,7 @@
                 "ecommerce",
                 "pimcore"
             ],
-            "time": "2019-08-29T17:49:44+00:00"
+            "time": "2019-09-15T16:09:54+00:00"
         },
         {
             "name": "dachcom-digital/emailizr",
@@ -2350,16 +2350,16 @@
         },
         {
             "name": "google/apiclient",
-            "version": "v2.3.0",
+            "version": "v2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client.git",
-                "reference": "ea5c94d975c150b6eb892abb5536d24205376d4e"
+                "reference": "cd3c37998020d91ae4eafca4f26a92da4dabba83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client/zipball/ea5c94d975c150b6eb892abb5536d24205376d4e",
-                "reference": "ea5c94d975c150b6eb892abb5536d24205376d4e",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client/zipball/cd3c37998020d91ae4eafca4f26a92da4dabba83",
+                "reference": "cd3c37998020d91ae4eafca4f26a92da4dabba83",
                 "shasum": ""
             },
             "require": {
@@ -2407,20 +2407,20 @@
             "keywords": [
                 "google"
             ],
-            "time": "2019-09-09T16:04:18+00:00"
+            "time": "2019-09-11T17:38:10+00:00"
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.113",
+            "version": "v0.114",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "93f926106f53ebb56e68f0219189dbf55fae0a11"
+                "reference": "22746bfd8d8d5a4f8bbe5e22559d9976810c177c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/93f926106f53ebb56e68f0219189dbf55fae0a11",
-                "reference": "93f926106f53ebb56e68f0219189dbf55fae0a11",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/22746bfd8d8d5a4f8bbe5e22559d9976810c177c",
+                "reference": "22746bfd8d8d5a4f8bbe5e22559d9976810c177c",
                 "shasum": ""
             },
             "require": {
@@ -2444,7 +2444,7 @@
             "keywords": [
                 "google"
             ],
-            "time": "2019-09-08T00:23:09+00:00"
+            "time": "2019-09-16T00:23:14+00:00"
         },
         {
             "name": "google/auth",
@@ -3020,16 +3020,16 @@
         },
         {
             "name": "lorenzo/pinky",
-            "version": "1.0.4",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lorenzo/pinky.git",
-                "reference": "95405cb96facac27ba5a294d2219bc0db2ee53e9"
+                "reference": "2bc1a9d5696d6496df5d5682962929165a823e57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lorenzo/pinky/zipball/95405cb96facac27ba5a294d2219bc0db2ee53e9",
-                "reference": "95405cb96facac27ba5a294d2219bc0db2ee53e9",
+                "url": "https://api.github.com/repos/lorenzo/pinky/zipball/2bc1a9d5696d6496df5d5682962929165a823e57",
+                "reference": "2bc1a9d5696d6496df5d5682962929165a823e57",
                 "shasum": ""
             },
             "require": {
@@ -3063,7 +3063,7 @@
                 "template",
                 "zurb"
             ],
-            "time": "2019-04-03T11:09:52+00:00"
+            "time": "2019-09-16T21:23:31+00:00"
         },
         {
             "name": "maxmind-db/reader",
@@ -4011,16 +4011,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "2.0.21",
+            "version": "2.0.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "9f1287e68b3f283339a9f98f67515dd619e5bf9d"
+                "reference": "c78eb5058d5bb1a183133c36d4ba5b6675dfa099"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/9f1287e68b3f283339a9f98f67515dd619e5bf9d",
-                "reference": "9f1287e68b3f283339a9f98f67515dd619e5bf9d",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/c78eb5058d5bb1a183133c36d4ba5b6675dfa099",
+                "reference": "c78eb5058d5bb1a183133c36d4ba5b6675dfa099",
                 "shasum": ""
             },
             "require": {
@@ -4099,7 +4099,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2019-07-12T12:53:49+00:00"
+            "time": "2019-09-17T03:41:22+00:00"
         },
         {
             "name": "pimcore/pimcore",
