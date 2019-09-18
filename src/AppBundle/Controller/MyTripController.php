@@ -274,38 +274,46 @@ class MyTripController extends FrontendController
     }
 
     /**
+     * @param Request $request
      * @return JsonResponse
      * @throws Exception
      */
-    public function getNextDate() {
+    public function getNextDate(Request $request) {
         $lastStep = null;
         $response = ['message' => 'error.date.not.found', 'success' => false];
 
-        $stepList = new Step\Listing();
-        $stepList->setLimit(1);
-        $stepList->setCondition('dateTime IS NOT NULL OR dateTimeTo IS NOT NULL');
-        $stepList->setOrderKey(['dateTimeTo', 'dateTime']);
-        $stepList->setOrder(['ASC', 'ASC']);
+        $data = json_decode($request->getContent(), true);
+        $this->journey = Journey::getById($data['id']);
 
-        if ($stepList->getCount()) {
-            $lastStep = reset($stepList->getObjects());
-        }
+        if($this->journeyAccess($this->journey)) {
+            $stepList = new Step\Listing();
+            $stepList->setLimit(1);
+            $stepList->setCondition('dateTime IS NOT NULL OR dateTimeTo IS NOT NULL AND journey__id = :id', [
+                'id' => $data['id']
+            ]);
+            $stepList->setOrderKey(['dateTimeTo', 'dateTime', 'o_id']);
+            $stepList->setOrder(['DESC', 'DESC', 'DESC']);
 
-        if ($lastStep instanceof Step) {
-            if ($lastStep->getDateTimeTo() instanceof Carbon) {
-                $response = [
-                    'date' => $lastStep->getDateTimeTo()->addDay(1)->format('d.m.Y'),
-                    'time' => $lastStep->getDateTimeTo()->format('H:i'),
-                    'message' => 'success.date.found',
-                    'success' => true
-                ];
-            } else if ($lastStep->getDateTime() instanceof Carbon) {
-                $response = [
-                    'date' => $lastStep->getDateTime()->addDay(1)->format('d.m.Y'),
-                    'time' => $lastStep->getDateTime()->format('H:i'),
-                    'message' => 'success.date.found',
-                    'success' => true
-                ];
+            if ($stepList->getCount()) {
+                $lastStep = reset($stepList->getObjects());
+            }
+
+            if ($lastStep instanceof Step) {
+                if ($lastStep->getDateTimeTo() instanceof Carbon) {
+                    $response = [
+                        'date' => $lastStep->getDateTimeTo()->addDay(1)->format('d.m.Y'),
+                        'time' => $lastStep->getDateTimeTo()->format('H:i'),
+                        'message' => 'success.date.found',
+                        'success' => true
+                    ];
+                } else if ($lastStep->getDateTime() instanceof Carbon) {
+                    $response = [
+                        'date' => $lastStep->getDateTime()->addDay(1)->format('d.m.Y'),
+                        'time' => $lastStep->getDateTime()->format('H:i'),
+                        'message' => 'success.date.found',
+                        'success' => true
+                    ];
+                }
             }
         }
 
@@ -321,13 +329,12 @@ class MyTripController extends FrontendController
     {
         $data = json_decode($request->getContent(), true);
         $this->journey = Journey::getById($data['id']);
-
         $response = [ 'message' => 'no.access', 'success' => false ];
 
         if($this->journeyAccess($this->journey)) {
             $stepsResponse = [];
-            if ($stepsList = $this->getStepsByJourney($this->journey)) {
-                foreach ($stepsList as $step) {
+            if ($stepList = $this->getStepsByJourney($this->journey)) {
+                foreach ($stepList as $step) {
                     $stepsResponse[] = [
                         'id' => $step->getId(),
                         'title' => $step->getTitle(),
@@ -554,17 +561,20 @@ class MyTripController extends FrontendController
      */
     private function getStepsByJourney(Journey $journey):array
     {
-        $stepsList = new Step\Listing();
-        $stepsList->setCondition('journey__id = :id', [ 'id' => $journey->getId()]);
-        $stepsList->setOrderKey(['dateTime', 'o_creationDate']);
-        $stepsList->setOrder(['ASC', 'ASC']);
-        $stepsList->load();
-
-        if ($stepsList->getCount() === 0) {
+        if (!$journey instanceof Journey) {
             return null;
         }
 
-        return $stepsList->getObjects();
+        $stepList = new Step\Listing();
+        $stepList->setCondition('journey__id = :id', ['id' => $journey->getId()]);
+        $stepList->setOrderKey(['dateTimeTo', 'dateTime', 'o_id']);
+        $stepList->setOrder(['ASC', 'ASC', 'ASC']);
+
+        if ($stepList->getCount() === 0) {
+            return null;
+        }
+
+        return $stepList->getObjects();
     }
 
     private function roundDistance($distance) {

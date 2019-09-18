@@ -5,7 +5,8 @@ import {
   each,
   append,
   html,
-  attr
+  attr,
+  empty,
 } from 'uikit/src/js/util';
 
 export default function MapStepList(args) {
@@ -18,7 +19,27 @@ export default function MapStepList(args) {
       this.list = $('#mt-step-list');
 
       this.loadSteps();
+
+      this.map.on('mousemove', this.getPointInArea.bind(this));
+      this.map.on('touchmove', this.getPointInArea.bind(this));
+
       on(this.map.getContainer(), 'add-step remove-step', this.loadSteps.bind(this));
+    }
+
+    getPointInArea() {
+      const selectArea = [[0, 0], [window.innerWidth, window.innerHeight]];
+      const pointsInnerArea = this.map.queryRenderedFeatures(selectArea, { layers: ['points'] });
+      let nextPoint = null;
+
+      if (pointsInnerArea.length === 1) {
+        nextPoint = pointsInnerArea;
+      } else if (pointsInnerArea.length > 1) {
+        nextPoint = pointsInnerArea.shift();
+      }
+      console.log(nextPoint);
+        // if (nextPoint.property.id) {
+        //   UIkit.scroll(this.list).scrollTo($(`li[data-id="${nextPoint.property.id}"]`, this.list));
+        // }
     }
 
     loadSteps() {
@@ -29,24 +50,16 @@ export default function MapStepList(args) {
         responseType: 'json',
       }).then((req) => {
         if (req.status === 200 && req.response.success) {
-          console.log(req.response);
           this.steps = req.response.data;
-
+          empty(this.list);
           each(this.steps, (data) => {
             const stepElement = $('<li>');
             html(stepElement, data.title);
-            attr(stepElement,'data-id', data.id);
+            attr(stepElement, 'data-id', data.id);
             append(this.list, stepElement);
           });
 
-
-
-          // console.log(this.geoJson.point);
-          // const coordinates = this.geoJson.point.features.shift().geometry.coordinates;
-          // const bounds = coordinates.reduce((bounds, coord) => {
-          //   return bounds.extend(coord);
-          // }, new mapboxgl.LngLatBounds(coordinates.shift(), coordinates.shift()));
-          // this.map.fitBounds(bounds, { padding: 20 });
+          UIkit.scrollspyNav($('li', this.list), { y: [-100, 100], scale: [0.8, 1, 0.8] });
         }
       });
     }
