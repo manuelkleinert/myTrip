@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Form\Type\JourneyType;
+use AppBundle\Form\Type\StepEditType;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -77,10 +78,13 @@ class MyTripController extends FrontendController
         $this->journey = Journey::getById($request->get('id'));
 
         if ($this->loginUser instanceof MembersUser) {
-            $createJourney = $this->createForm(JourneyType::class);
-            $createJourney = $createJourney->handleRequest($request);
-            if ($createJourney->isSubmitted() && $createJourney->isValid()) {
-                $data = $createJourney->getData();
+
+            $createJourneyForm = $this->createForm(JourneyType::class);
+            $stepEditForm = $this->createForm(StepEditType::class);
+
+            $createJourneyForm = $createJourneyForm->handleRequest($request);
+            if ($createJourneyForm->isSubmitted() && $createJourneyForm->isValid()) {
+                $data = $createJourneyForm->getData();
 
                 $journey = new Journey();
                 $journey->setParent(Service::createFolderByPath(sprintf('journeys/%s', $this->loginUser->getId())));
@@ -107,7 +111,8 @@ class MyTripController extends FrontendController
             $transportableTypeList->load();
 
             return $this->renderTemplate('MyTrip/map.html.twig', [
-                'createJourneyForm' => $createJourney->createView(),
+                'createJourneyForm' => $createJourneyForm->createView(),
+                'editStepForm' => $stepEditForm->createView(),
                 'user' => $this->loginUser,
                 'transportableTypeList' => $transportableTypeList,
                 'journeyList' => $journeyList,

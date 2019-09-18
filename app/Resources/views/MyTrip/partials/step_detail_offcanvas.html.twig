@@ -1,0 +1,15 @@
+<div id="mt-step-detail" class="mt-step-detail uk-offcanvas" data-uk-offcanvas="bg-close:false; flip:true;">
+    <div class="uk-offcanvas-bar">
+        <button class="mt-detail-close uk-position-top-right uk-position-small" type="button" data-uk-close></button>
+
+        <h2 class="uk-modal-title"></h2>
+
+        <div class="mt-content"></div>
+
+        {% if user is defined %}
+            <button class="mt-edit uk-button uk-button-default" type="button">
+                {{ 'app.step.edit.button'|trans }}
+            </button>
+        {% endif %}
+    </div>
+</div>

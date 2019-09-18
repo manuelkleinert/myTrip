@@ -40,16 +40,18 @@ export default function MapStep(args) {
 
       this.detailModal = $('#mt-step-detail');
       this.openEditButteon = $('.mt-edit', this.detailModal);
-      this.closeEditorButton = $('.mt-edit-close', this.editModal);
-      this.editModal = $('#mt-step-edit');
+      this.closeDetailButton = $('.mt-detail-close', this.detailModal);
 
-      this.inputDateFrom = $('[name=dateFrom]', this.editModal);
-      this.inputDateTo = $('[name=dateTo]', this.editModal);
-      this.inputTimeFrom = $('[name=timeFrom]', this.editModal);
-      this.inputTimeTo = $('[name=timeTo]', this.editModal);
+      this.editModal = $('#mt-step-edit');
+      this.closeEditorButton = $('.mt-edit-close', this.editModal);
+
+      this.inputDateFrom = $('[name="step_edit[dateFrom]"]', this.editModal);
+      this.inputDateTo = $('[name="step_edit[dateTo]"]', this.editModal);
+      this.inputTimeFrom = $('[name="step_edit[timeFrom]"]', this.editModal);
+      this.inputTimeTo = $('[name="step_edit[timeTo]"]', this.editModal);
 
       this.transportableType = $$('button[data-transportable-type]', this.editModal);
-      this.addButton = $('button.mt-add-step');
+      this.addButton = $('#step_edit_update');
       this.removeButton = $('button.mt-remove-step');
 
       this.popup = new mapBoxGl.Popup({
@@ -66,6 +68,9 @@ export default function MapStep(args) {
       on(this.transportableType, 'click', (e) => {
         this.setTransportableType(attr(e.currentTarget, 'data-transportable-type'), true);
       }).bind(this);
+
+      on(this.closeDetailButton, 'click', UIkit.offcanvas(this.detailModal).hide);
+
       on(this.openEditButteon, 'click', this.openEditor.bind(this));
       on(this.closeEditorButton, 'click', this.closeEditor.bind(this));
 
@@ -86,11 +91,11 @@ export default function MapStep(args) {
     }
 
     mapClickEvent(e) {
-      const selectArea = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
-      const selectElement = this.map.queryRenderedFeatures(selectArea, { layers: ['points', 'lines'] });
+      const selectArea = [[e.point.x - 10, e.point.y - 10], [e.point.x + 10, e.point.y + 10]];
+      const selectPoint = this.map.queryRenderedFeatures(selectArea, { layers: ['points'] });
 
-      if (selectElement.length > 0) {
-        each(selectElement, this.openDetail.bind(this));
+      if (selectPoint.length > 0) {
+        each(selectPoint, this.openDetail.bind(this));
       } else if (this.editMode) {
         if (!this.data.title) {
           this.setTitleByFeatures(this.map.queryRenderedFeatures(e.point));
@@ -104,7 +109,6 @@ export default function MapStep(args) {
         this.data.lng = e.lngLat.lng;
         this.data.stepId = '';
         this.data.title = '';
-
         this.openEditor();
       }
     }
@@ -113,8 +117,7 @@ export default function MapStep(args) {
       if (e.features[0] && e.features[0].geometry.coordinates[0] && e.lngLat) {
         const feature = e.features[0];
         const data = feature.properties;
-        this.map.getCanvas().style.cursor = 'pointer';
-        const title = data.distance !== 'null' ? ` ${data.title} - ${data.distance}km` : data.title;
+        const title = data.distance !== 'null' ? `${data.distance} km` : data.title;
         if (title) {
           this.popup.setLngLat(e.lngLat).setHTML(title).addTo(this.map);
         }
@@ -147,13 +150,13 @@ export default function MapStep(args) {
 
       each(this.data, (data, key) => {
         if (!this.editMode || (key === 'lat' || key === 'lng')) {
-          const formField = $(`[name=${key}]`, this.editModal);
+          const formField = $(`[name="step_edit[${key}]"]`, this.editModal);
           if (formField) { formField.value = data; }
         }
       });
 
-      const dateFromField = $('[name=dateFrom]', this.editModal);
-      const dateToField = $('[name=dateTo]', this.editModal);
+      const dateFromField = $('[name="step_edit[dateFrom]"]', this.editModal);
+      const dateToField = $('[name="step_edit[dateTo]"]', this.editModal);
       if (!this.data.dateFrom || !this.data.dateTo) {
         this.getNextDate(() => {
           if (!dateFromField.value) {
@@ -189,7 +192,7 @@ export default function MapStep(args) {
 
     saveStep() {
       each(this.data, (data, key) => {
-        const formField = $(`[name=${key}]`, this.editModal);
+        const formField = $(`[name="step_edit[${key}]"]`, this.editModal);
         if (formField) { this.data[key] = formField.value; }
       });
 
@@ -239,8 +242,8 @@ export default function MapStep(args) {
               if (this.data.distance) {
                 append($('.uk-modal-title', this.detailModal), ` - ${this.data.distance}km`);
               }
-              html($('.uk-modal-body .mt-content', this.detailModal), this.data.text);
-              UIkit.modal(this.detailModal).show();
+              html($('.mt-content', this.detailModal), this.data.text);
+              UIkit.offcanvas(this.detailModal).show();
             } else {
               this.openEditor();
             }

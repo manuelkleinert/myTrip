@@ -3,70 +3,34 @@
         <div class="uk-offcanvas-bar">
             <button class="mt-edit-close uk-position-top-right uk-position-small" type="button" data-uk-close></button>
 
-            <input name="stepId" type="hidden">
+            {{ form_start(editStepForm) }}
 
-            <div class="uk-margin">
-                <label class="uk-form-label">{{ 'app.form.step.label.title'|trans }}</label>
-                <div class="uk-form-controls">
-                    <input name="title" class="uk-input" type="text"
-                           placeholder="{{ 'app.form.step.label.placeholder.title'|trans }}">
+            {{ form_row(editStepForm.title) }}
+
+            <div class="uk-margin uk-grid uk-child-width-1-2@m">
+                <div>
+                    {{ form_row(editStepForm.dateFrom) }}
+                </div>
+                <div>
+                    {{ form_row(editStepForm.timeFrom) }}
                 </div>
             </div>
 
             <div class="uk-margin uk-grid uk-child-width-1-2@m">
                 <div>
-                    <div class="uk-margin">
-                        <label class="uk-form-label">{{ 'app.form.step.label.date.from'|trans }}</label>
-                        <div class="uk-form-controls">
-                            <input name="dateFrom" class="uk-input" type="text"
-                                   placeholder="{{ 'app.form.step.label.placeholder.date.from'|trans }}">
-                        </div>
-                    </div>
+                    {{ form_row(editStepForm.dateTo) }}
                 </div>
                 <div>
-                    <label class="uk-form-label">{{ 'app.form.step.label.time.from'|trans }}</label>
-                    <div class="uk-form-controls">
-                        <input name="timeFrom" class="uk-input" type="text"
-                               placeholder="{{ 'app.form.step.label.placeholder.time.from'|trans }}">
-                    </div>
+                    {{ form_row(editStepForm.timeTo) }}
                 </div>
             </div>
 
             <div class="uk-margin uk-grid uk-child-width-1-2@m">
                 <div>
-                    <div class="uk-margin">
-                        <label class="uk-form-label">{{ 'app.form.step.label.date.to'|trans }}</label>
-                        <div class="uk-form-controls">
-                            <input name="dateTo" class="uk-input" type="text"
-                                   placeholder="{{ 'app.form.step.label.placeholder.date.to'|trans }}">
-                        </div>
-                    </div>
+                    {{ form_row(editStepForm.lat) }}
                 </div>
                 <div>
-                    <label class="uk-form-label">{{ 'app.form.step.label.time.to'|trans }}</label>
-                    <div class="uk-form-controls">
-                        <input name="timeTo" class="uk-input" type="text"
-                               placeholder="{{ 'app.form.step.label.placeholder.time.to'|trans }}">
-                    </div>
-                </div>
-            </div>
-
-            <div class="uk-margin uk-grid uk-child-width-1-2@m">
-                <div>
-                    <label class="uk-form-label">{{ 'app.form.step.label.lat'|trans }}</label>
-                    <div class="uk-form-controls">
-                        <input name="lat" disabled class="uk-input" type="text"
-                               placeholder="{{ 'app.form.step.label.placeholder.lat'|trans }}">
-                    </div>
-                </div>
-                <div>
-                    <div class="uk-margin">
-                        <label class="uk-form-label">{{ 'app.form.step.label.lng'|trans }}</label>
-                        <div class="uk-form-controls">
-                            <input name="lng" disabled class="uk-input" type="text"
-                                   placeholder="{{ 'app.form.step.label.placeholder.lng'|trans }}">
-                        </div>
-                    </div>
+                    {{ form_row(editStepForm.lng) }}
                 </div>
             </div>
 
@@ -82,11 +46,10 @@
             {% endif %}
 
             <div class="uk-margin">
-                <button class="mt-add-step uk-button uk-button-default uk-button-small">
-                    {{ 'app.form.step.button.add'|trans }}
-                </button>
+                {{ form_row(editStepForm.update) }}
             </div>
 
+            {{ form_end(editStepForm) }}
 
             <button class="mt-remove-step uk-icon-button uk-margin-top" data-uk-icon="trash"></button>
 

@@ -2,6 +2,7 @@ import mapBoxGl from 'mapbox-gl';
 import MapBoxGeocoder from 'mapbox-gl-geocoder';
 import mapStep from '../utils/map-step';
 import mapDraw from '../utils/map-draw';
+import mapStepList from '../utils/map-step-list';
 
 export default {
   args: 'apiKey',
@@ -57,6 +58,11 @@ export default {
             id: this.jId,
             map: this.map,
             accessToken: mapBoxGl.accessToken,
+          });
+
+          mapStepList({
+            id: this.jId,
+            map: this.map,
           });
         });
       }

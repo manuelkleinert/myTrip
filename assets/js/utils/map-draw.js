@@ -8,11 +8,11 @@ export default function MapDraw(args) {
       this.accessToken = args.accessToken;
       this.geoJson = [];
 
-      this.loadSteps();
-      on(this.map.getContainer(), 'add-step remove-step', this.loadSteps.bind(this));
+      this.loadGeoJson();
+      on(this.map.getContainer(), 'add-step remove-step', this.loadGeoJson.bind(this));
     }
 
-    loadSteps() {
+    loadGeoJson() {
       ajax('/ajax/load-geo-json', {
         method: 'POST',
         headers: { 'X-Requested-With': 'XMLHttpRequest' },
@@ -24,7 +24,7 @@ export default function MapDraw(args) {
           this.drawLine();
           this.drawPoints();
 
-          console.log(this.geoJson.point);
+          // console.log(this.geoJson.point);
           // const coordinates = this.geoJson.point.features.shift().geometry.coordinates;
           // const bounds = coordinates.reduce((bounds, coord) => {
           //   return bounds.extend(coord);
