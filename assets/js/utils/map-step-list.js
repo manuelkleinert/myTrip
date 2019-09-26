@@ -28,18 +28,14 @@ export default function MapStepList(args) {
 
     getPointInArea() {
       const selectArea = [[0, 0], [window.innerWidth, window.innerHeight]];
-      const pointsInnerArea = this.map.queryRenderedFeatures(selectArea, { layers: ['points'] });
-      let nextPoint = null;
+      const features = this.map.queryRenderedFeatures(selectArea, { layers: ['points'] });
 
-      if (pointsInnerArea.length === 1) {
-        nextPoint = pointsInnerArea;
-      } else if (pointsInnerArea.length > 1) {
-        nextPoint = pointsInnerArea.shift();
+      if (features.length > 0) {
+        const nextPoint = features.shift();
+        if (nextPoint && nextPoint.properties != null) {
+          UIkit.scroll(this.list).scrollTo(`li[data-id="${nextPoint.properties.id}"]`);
+        }
       }
-      console.log(nextPoint);
-        // if (nextPoint.property.id) {
-        //   UIkit.scroll(this.list).scrollTo($(`li[data-id="${nextPoint.property.id}"]`, this.list));
-        // }
     }
 
     loadSteps() {
