@@ -7,6 +7,7 @@ import {
   html,
   attr,
   empty,
+  scrollTop, removeClass, addClass,
 } from 'uikit/src/js/util';
 
 export default function MapStepList(args) {
@@ -30,10 +31,14 @@ export default function MapStepList(args) {
       const selectArea = [[0, 0], [window.innerWidth, window.innerHeight]];
       const features = this.map.queryRenderedFeatures(selectArea, { layers: ['points'] });
 
+      removeClass($('li', this.list), 'active');
+
       if (features.length > 0) {
         const nextPoint = features.shift();
         if (nextPoint && nextPoint.properties != null) {
-          UIkit.scroll(this.list).scrollTo(`li[data-id="${nextPoint.properties.id}"]`);
+          const activeItem = $(`li[data-id="${nextPoint.properties.id}"]`);
+          addClass(activeItem, 'active');
+          scrollTop(this.list, activeItem.offsetTop);
         }
       }
     }
@@ -55,7 +60,7 @@ export default function MapStepList(args) {
             append(this.list, stepElement);
           });
 
-          UIkit.scrollspyNav($('li', this.list), { y: [-100, 100], scale: [0.8, 1, 0.8] });
+          UIkit.scrollspyNav(this.list, { cls: 'li', y: [-100, 100], scale: [0.8, 1, 0.8] });
         }
       });
     }
