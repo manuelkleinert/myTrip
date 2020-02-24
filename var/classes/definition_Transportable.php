@@ -1,11 +1,10 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-08T13:01:52+02:00
+* Generated at: 2020-02-24T16:24:58+01:00
 * Inheritance: no
 * Variants: no
 * Changed by: admin (2)
-* IP: 172.18.0.1
 
 
 Fields Summary: 
@@ -23,10 +22,11 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'name' => 'Transportable',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1565262112,
+   'modificationDate' => 1582557898,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
+   'implementsInterfaces' => NULL,
    'listingParentClass' => '',
    'useTraits' => '',
    'listingUseTraits' => '',
@@ -43,7 +43,6 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
      'labelWidth' => 100,
      'layout' => NULL,
      'border' => false,
-     'icon' => NULL,
      'name' => 'pimcore_root',
      'type' => NULL,
      'region' => NULL,
@@ -63,7 +62,6 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
          'labelWidth' => 100,
          'layout' => NULL,
          'border' => false,
-         'icon' => '',
          'name' => 'Layout',
          'type' => NULL,
          'region' => NULL,
@@ -138,19 +136,24 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'recursive' => false,
              'sortBy' => 'byid',
              'width' => '',
-             'height' => NULL,
-             'maxItems' => NULL,
+             'height' => '',
+             'maxItems' => '',
              'assetUploadPath' => NULL,
              'queryColumnType' => 'text',
              'phpdocType' => 'array',
              'relationType' => true,
              'objectsAllowed' => NULL,
              'assetsAllowed' => NULL,
-             'assetTypes' => NULL,
+             'assetTypes' => 
+            array (
+            ),
              'documentsAllowed' => NULL,
-             'documentTypes' => NULL,
-             'lazyLoading' => NULL,
-             'classes' => NULL,
+             'documentTypes' => 
+            array (
+            ),
+             'classes' => 
+            array (
+            ),
              'pathFormatterClass' => NULL,
              'name' => 'transportableType',
              'title' => 'Type',
@@ -158,7 +161,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'mandatory' => false,
              'noteditable' => false,
              'index' => false,
-             'locked' => NULL,
+             'locked' => false,
              'style' => '',
              'permissions' => NULL,
              'datatype' => 'data',
@@ -239,9 +242,11 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
           )),
         ),
          'locked' => false,
+         'icon' => '',
       )),
     ),
      'locked' => false,
+     'icon' => NULL,
   )),
    'icon' => '',
    'previewUrl' => '',

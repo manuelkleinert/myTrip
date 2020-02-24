@@ -1,7 +1,7 @@
 <?php 
 
 /** 
-* Generated at: 2019-08-09T18:40:31+02:00
+* Generated at: 2020-02-24T16:24:59+01:00
 * Inheritance: no
 * Variants: no
 * Changed by: system (0)
@@ -14,14 +14,15 @@ Fields Summary:
 
 
 return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
-   'id' => 9,
+   'id' => '9',
    'name' => 'MembersGroup',
    'description' => NULL,
-   'creationDate' => NULL,
-   'modificationDate' => 1565368831,
-   'userOwner' => NULL,
+   'creationDate' => 0,
+   'modificationDate' => 1582557899,
+   'userOwner' => 0,
    'userModification' => 0,
    'parentClass' => '\\MembersBundle\\Adapter\\Group\\AbstractGroup',
+   'implementsInterfaces' => NULL,
    'listingParentClass' => '',
    'useTraits' => '',
    'listingUseTraits' => '',
@@ -38,7 +39,6 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
      'labelWidth' => 100,
      'layout' => NULL,
      'border' => false,
-     'icon' => NULL,
      'name' => 'pimcore_root',
      'type' => NULL,
      'region' => NULL,
@@ -58,7 +58,6 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
          'labelWidth' => 100,
          'layout' => NULL,
          'border' => false,
-         'icon' => NULL,
          'name' => 'Layout',
          'type' => NULL,
          'region' => NULL,
@@ -131,9 +130,11 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
           )),
         ),
          'locked' => false,
+         'icon' => NULL,
       )),
     ),
      'locked' => false,
+     'icon' => NULL,
   )),
    'icon' => '/bundles/members/img/objectGroup.svg',
    'previewUrl' => NULL,
