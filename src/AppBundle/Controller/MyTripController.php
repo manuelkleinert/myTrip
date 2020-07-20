@@ -24,11 +24,6 @@ use Exception;
 class MyTripController extends FrontendController
 {
     /**
-     * @var object|string
-     */
-    private $loginUser;
-
-    /**
      * @var Journey
      */
     private $journey;
@@ -54,11 +49,10 @@ class MyTripController extends FrontendController
      */
     public function mapAction(Request $request): Response
     {
-        $this->loginUser = $this->getUser();
         $this->get('coreshop.seo.presentation')->updateSeoMetadata($this->document);
         $this->journey = Journey::getById($request->get('id'));
 
-        if ($this->loginUser instanceof MembersUser) {
+        if ($this->getUser() instanceof MembersUser) {
 
             $createJourneyForm = $this->createForm(JourneyType::class);
             $stepEditForm = $this->createForm(StepEditType::class);
@@ -68,19 +62,19 @@ class MyTripController extends FrontendController
                 $data = $createJourneyForm->getData();
 
                 $journey = new Journey();
-                $journey->setParent(Service::createFolderByPath(sprintf('journeys/%s', $this->loginUser->getId())));
+                $journey->setParent(Service::createFolderByPath(sprintf('journeys/%s', $this->getUser()->getId())));
                 $journey->setKey(Service::getValidKey($data['title'], 'object'));
                 $journey->setTitle($data['title']);
                 $journey->setSubTitle($data['subTitle']);
-                $journey->setOwner($this->loginUser);
+                $journey->setOwner($this->getUser());
                 $journey->setPublished(true);
                 $journey->save();
             }
 
             $journeyList = new Journey\Listing();
             $journeyList->setCondition('owner__id = :userId OR share LIKE :userIdLike', [
-                'userId' => $this->loginUser->getId(),
-                'userIdLike' => sprintf('%%,%s,%%', $this->loginUser->getId())
+                'userId' => $this->getUser() ->getId(),
+                'userIdLike' => sprintf('%%,%s,%%', $this->getUser()->getId())
             ]);
             $journeyList->setOrderKey('from');
             $journeyList->setOrder('DESC');
@@ -94,7 +88,7 @@ class MyTripController extends FrontendController
             return $this->renderTemplate('MyTrip/map.html.twig', [
                 'createJourneyForm' => $createJourneyForm->createView(),
                 'editStepForm' => $stepEditForm->createView(),
-                'user' => $this->loginUser,
+                'user' => $this->getUser(),
                 'transportableTypeList' => $transportableTypeList,
                 'journeyList' => $journeyList,
                 'journeyId' => $this->journeyAccess($this->journey) ? $this->journey->getId() : null
@@ -579,7 +573,9 @@ class MyTripController extends FrontendController
             return true;
         }
 
-        return $this->loginUser instanceof MembersUser && ($journey->getOwner() === $this->loginUser
-            || in_array($this->loginUser, $this->journey->getShare(), true));
+
+
+        return $this->getUser() instanceof MembersUser && ($journey->getOwner() === $this->getUser()
+                || in_array($this->getUser(), $this->journey->getShare(), true));
     }
 }
