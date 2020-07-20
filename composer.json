@@ -18,10 +18,8 @@
   "require": {
     "php": ">=7.2",
     "ext-json": "*",
-    "coreshop/pimcore": "2.2.0-RC.1",
-    "coreshop/pimcore-bundle": "2.2.0-RC.1",
-    "coreshop/seo": "2.2.0-RC.1",
-    "coreshop/seo-bundle": "2.1.x-dev",
+    "coreshop/pimcore-bundle": "^2.1.6",
+    "coreshop/seo-bundle": "^2.1.6",
     "dachcom-digital/members": "~3.0.0",
     "danielstjules/stringy": "^3.1",
     "guzzlehttp/guzzle": "^6.3",

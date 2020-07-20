@@ -17,9 +17,7 @@ use Pimcore\Model\DataObject\Step;
 use Pimcore\Model\DataObject\TransportableType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use GuzzleHttp\Exception\GuzzleException;
 use Exception;
 
@@ -29,16 +27,6 @@ class MyTripController extends FrontendController
      * @var object|string
      */
     private $loginUser;
-
-    /**
-     * @var Session
-     */
-    private $session;
-
-    /**
-     * @var TokenStorage
-     */
-    private $tokenStorage;
 
     /**
      * @var Journey
@@ -53,17 +41,9 @@ class MyTripController extends FrontendController
 
     /**
      * MyTripController constructor.
-     * @param Session $session
-     * @param TokenStorage $tokenStorage
      */
-    public function __construct(
-        Session $session,
-        TokenStorage $tokenStorage
-    )
+    public function __construct()
     {
-        $this->session = $session;
-        $this->tokenStorage = $tokenStorage;
-        $this->loginUser = $this->tokenStorage->getToken()->getUser();
         $this->websiteConfig = Config::getWebsiteConfig();
     }
 
@@ -74,6 +54,7 @@ class MyTripController extends FrontendController
      */
     public function mapAction(Request $request): Response
     {
+        $this->loginUser = $this->getUser();
         $this->get('coreshop.seo.presentation')->updateSeoMetadata($this->document);
         $this->journey = Journey::getById($request->get('id'));
 
@@ -295,7 +276,7 @@ class MyTripController extends FrontendController
             $stepList->setOrder(['DESC', 'DESC', 'DESC']);
 
             if ($stepList->getCount()) {
-                $lastStep = reset($stepList->getObjects());
+                $lastStep = $stepList->load()[0];
             }
 
             if ($lastStep instanceof Step) {
@@ -473,10 +454,9 @@ class MyTripController extends FrontendController
      * @param Step $start
      * @param Step $end
      * @param string $type
-     * @return array
-     * @throws GuzzleException
+     * @return array|null
      */
-    private function getDirection(Step $start, Step $end, string $type = 'mapbox/driving'):array
+    private function getDirection(Step $start, Step $end, string $type = 'mapbox/driving'): ?array
     {
         if (!$start instanceof Step && !$end instanceof Step) {
             return null;
@@ -559,7 +539,7 @@ class MyTripController extends FrontendController
      * @return array
      * @throws Exception
      */
-    private function getStepsByJourney(Journey $journey):array
+    private function getStepsByJourney(Journey $journey): ?array
     {
         if (!$journey instanceof Journey) {
             return null;
